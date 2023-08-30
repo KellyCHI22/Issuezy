@@ -10,6 +10,11 @@ router.post('/users/signup', userController.signUp);
 router.post('/users/signin', userController.signIn);
 
 // * projects
+router.post(
+  '/projects/:id/members',
+  authenticated,
+  projectController.addMember
+);
 router.get('/projects', authenticated, projectController.getProjects);
 router.post('/projects', authenticated, projectController.postProject);
 
