@@ -20,6 +20,8 @@ router.post(
   authenticated,
   projectController.addMember
 );
+router.get('/projects/:id', authenticated, projectController.getProject);
+router.patch('/projects/:id', authenticated, projectController.patchProject);
 router.delete('/projects/:id', authenticated, projectController.deleteProject);
 router.get('/projects', authenticated, projectController.getProjects);
 router.post('/projects', authenticated, projectController.postProject);

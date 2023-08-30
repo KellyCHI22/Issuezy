@@ -7,8 +7,20 @@ const projectController = {
       res.json({ status: 'success', data });
     });
   },
+  getProject: (req, res, next) => {
+    projectService.getProject(req, (err, data) => {
+      if (err) return next(err);
+      res.json({ status: 'success', data });
+    });
+  },
   postProject: (req, res, next) => {
     projectService.postProject(req, (err, data) => {
+      if (err) return next(err);
+      res.json({ status: 'success', data });
+    });
+  },
+  patchProject: (req, res, next) => {
+    projectService.patchProject(req, (err, data) => {
       if (err) return next(err);
       res.json({ status: 'success', data });
     });

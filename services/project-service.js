@@ -40,6 +40,29 @@ const projectService = {
       cb(err);
     }
   },
+  getProject: async (req, cb) => {
+    // todo will need to add issues
+    try {
+      const project = await Project.findByPk(req.params.id, {
+        include: [
+          { model: User, as: 'Creator', attributes: ['id', 'name'] },
+          {
+            model: User,
+            as: 'Members',
+            attributes: ['id', 'name'],
+            through: { attributes: [] },
+          },
+        ],
+        order: [['createdAt', 'DESC']],
+        attributes: ['id', 'name', 'description', 'creatorId', 'createdAt'],
+        nest: true,
+      });
+      if (!project) throw customError(400, 'Project does not exist!');
+      cb(null, { project });
+    } catch (err) {
+      cb(err);
+    }
+  },
   postProject: async (req, cb) => {
     try {
       const { name, description, isPublic } = req.body;
@@ -59,12 +82,30 @@ const projectService = {
       cb(err);
     }
   },
+  patchProject: async (req, cb) => {
+    // todo will need to check if the current user is the project owner
+    try {
+      const { name, description, isPublic } = req.body;
+      if (name.trim().length === 0 || description.trim().length === 0)
+        throw customError(400, 'All fields are required!');
+      const project = await Project.findByPk(req.params.id);
+      if (!project) throw customError(400, 'Project does not exist!');
+      const updatedProjected = await project.update({
+        name,
+        description,
+        isPublic,
+      });
+      cb(null, { updatedProjected });
+    } catch (err) {
+      cb(err);
+    }
+  },
   deleteProject: async (req, cb) => {
     // todo will need to check if the current user is the project owner
     try {
       const project = await Project.findByPk(req.params.id);
       if (!project) throw customError(400, 'Project does not exist!');
-      const deletedProject = await project.destroy();
+      const deletedProject = await project.update({ isDeleted: true });
       cb(null, { deletedProject });
     } catch (err) {
       cb(err);
