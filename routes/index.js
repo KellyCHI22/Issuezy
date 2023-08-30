@@ -10,6 +10,11 @@ router.post('/users/signup', userController.signUp);
 router.post('/users/signin', userController.signIn);
 
 // * projects
+router.delete(
+  '/projects/:id/members',
+  authenticated,
+  projectController.removeMember
+);
 router.post(
   '/projects/:id/members',
   authenticated,

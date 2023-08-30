@@ -105,6 +105,30 @@ const projectService = {
       cb(err);
     }
   },
+  removeMember: async (req, cb) => {
+    try {
+      // todo only project owner can remove members
+      const userId = parseInt(req.body.userId);
+      const projectId = parseInt(req.params.id);
+      if (!userId) throw customError(400, 'Bad request!');
+
+      // * check if membership actually exist
+      const membership = await Membership.findOne({
+        where: {
+          projectId,
+          userId,
+        },
+      });
+      if (!membership)
+        throw customError(400, 'This membership has not been created yet');
+
+      // * delete the membership
+      const deletedMembership = await membership.destroy();
+      cb(null, { deletedMembership });
+    } catch (err) {
+      cb(err);
+    }
+  },
 };
 
 module.exports = projectService;

@@ -25,6 +25,12 @@ const projectController = {
       res.json({ status: 'success', data });
     });
   },
+  removeMember: (req, res, next) => {
+    projectService.removeMember(req, (err, data) => {
+      if (err) return next(err);
+      res.json({ status: 'success', data });
+    });
+  },
 };
 
 module.exports = projectController;
