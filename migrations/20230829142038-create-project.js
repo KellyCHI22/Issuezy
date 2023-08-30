@@ -19,6 +19,10 @@ module.exports = {
       creator_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
       },
       is_public: {
         allowNull: false,

@@ -59,6 +59,17 @@ const projectService = {
       cb(err);
     }
   },
+  deleteProject: async (req, cb) => {
+    // todo will need to check if the current user is the project owner
+    try {
+      const project = await Project.findByPk(req.params.id);
+      if (!project) throw customError(400, 'Project does not exist!');
+      const deletedProject = await project.destroy();
+      cb(null, { deletedProject });
+    } catch (err) {
+      cb(err);
+    }
+  },
   addMember: async (req, cb) => {
     try {
       // todo only project owner can add new members

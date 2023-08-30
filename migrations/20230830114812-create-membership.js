@@ -12,10 +12,21 @@ module.exports = {
       user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       project_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Projects',
+          key: 'id',
+        },
+        // membership referencing project id will be deleted as well when the project is deleted
+        onDelete: 'CASCADE',
       },
       created_at: {
         allowNull: false,
