@@ -1,39 +1,33 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Project extends Model {
+  class Category extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Project.belongsTo(models.User, {
-        foreignKey: 'creatorId',
-        as: 'Creator',
-      });
-      Project.belongsToMany(models.User, {
-        through: models.Membership,
+      // define association here
+      Category.belongsTo(models.Project, {
         foreignKey: 'projectId',
-        as: 'Members',
+        as: 'Project',
       });
-      Project.hasMany(models.Category, { foreignKey: 'projectId' });
     }
   }
-  Project.init(
+  Category.init(
     {
       name: DataTypes.STRING,
-      description: DataTypes.TEXT,
-      creatorId: DataTypes.INTEGER,
-      isPublic: DataTypes.BOOLEAN,
+      projectId: DataTypes.INTEGER,
+      isDefault: DataTypes.BOOLEAN,
       isDeleted: DataTypes.BOOLEAN,
     },
     {
       sequelize,
-      modelName: 'Project',
-      tableName: 'Projects',
+      modelName: 'Category',
+      tableName: 'Categories',
       underscored: true,
     }
   );
-  return Project;
+  return Category;
 };
