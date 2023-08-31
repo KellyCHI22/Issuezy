@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user-controller');
 const projectController = require('../controllers/project-controller');
+const categoryController = require('../controllers/category-controller');
 const { apiErrorHandler } = require('../middlewares/error-handler');
 const { authenticated } = require('../middlewares/auth');
 
@@ -20,6 +21,14 @@ router.post(
   authenticated,
   projectController.addMember
 );
+
+// * categories
+router.get(
+  '/projects/:id/categories',
+  authenticated,
+  categoryController.getCategories
+);
+
 router.get('/projects/:id', authenticated, projectController.getProject);
 router.patch('/projects/:id', authenticated, projectController.patchProject);
 router.delete('/projects/:id', authenticated, projectController.deleteProject);
