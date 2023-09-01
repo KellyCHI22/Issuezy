@@ -46,6 +46,16 @@ router.post(
 );
 
 // * issues
+router.patch(
+  '/projects/:id/issues/:iid',
+  authenticated,
+  issueController.patchIssue
+);
+router.delete(
+  '/projects/:id/issues/:iid',
+  authenticated,
+  issueController.deleteIssue
+);
 router.get('/projects/:id/issues', authenticated, issueController.getIssues);
 router.post('/projects/:id/issues', authenticated, issueController.postIssue);
 

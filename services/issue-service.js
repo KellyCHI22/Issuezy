@@ -41,19 +41,17 @@ const issueService = {
   },
   postIssue: async (req, cb) => {
     try {
-      // ? assignee id is optional?
       // todo add input validations
-      const { title, description, status, priority, categoryId, assigneeId } =
-        req.body;
+      const { title, description, status, priority, categoryId } = req.body;
       const projectId = req.params.id;
       const reporterId = req.user.id;
       if (title.trim().length === 0 || description.trim().length === 0)
         throw customError(400, 'All fields are required!');
 
+      const project = await Project.findByPk(projectId);
       const category = await Category.findByPk(categoryId);
-      const assignedUser = await User.findByPk(assigneeId);
+      if (!project) throw customError(400, 'Project does not exist!');
       if (!category) throw customError(400, 'Category does not exist!');
-      if (!assignedUser) throw customError(400, 'Assigned user not exist!');
 
       const newIssue = await Issue.create({
         title,
@@ -63,9 +61,56 @@ const issueService = {
         categoryId,
         projectId,
         reporterId,
-        assigneeId,
       });
       cb(null, { newIssue });
+    } catch (err) {
+      cb(err);
+    }
+  },
+  patchIssue: async (req, cb) => {
+    try {
+      // todo add input validations
+      // todo auth only certain people (?) can edit issues
+      const { title, description, status, priority, categoryId } = req.body;
+      const projectId = req.params.id;
+      const issueId = req.params.iid;
+      if (title.trim().length === 0 || description.trim().length === 0)
+        throw customError(400, 'All fields are required!');
+
+      const project = await Project.findByPk(projectId);
+      const category = await Category.findByPk(categoryId);
+      const issue = await Issue.findByPk(issueId);
+      if (!project) throw customError(400, 'Project does not exist!');
+      if (!category) throw customError(400, 'Category does not exist!');
+      if (!issue) throw customError(400, 'Issue does not exist!');
+
+      const udpatedIssue = await issue.update({
+        title,
+        description,
+        status,
+        priority,
+        categoryId,
+      });
+      cb(null, { udpatedIssue });
+    } catch (err) {
+      cb(err);
+    }
+  },
+  deleteIssue: async (req, cb) => {
+    try {
+      // todo auth only certain people (?) can delete issues
+      const projectId = req.params.id;
+      const issueId = req.params.iid;
+
+      const project = await Project.findByPk(projectId);
+      const issue = await Issue.findByPk(issueId);
+      if (!project) throw customError(400, 'Project does not exist!');
+      if (!issue) throw customError(400, 'Issue does not exist!');
+
+      const deletedIssue = await issue.update({
+        isDeleted: true,
+      });
+      cb(null, { deletedIssue });
     } catch (err) {
       cb(err);
     }
