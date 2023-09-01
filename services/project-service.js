@@ -1,13 +1,18 @@
 const { Op } = require('sequelize');
-const { User, Project, Membership } = require('../models');
+const { User, Project, Membership, Category } = require('../models');
 const { customError } = require('../helpers/error-helper');
 
 const projectService = {
   getProjects: async (req, cb) => {
     // ! will add more constraints after?
+    // ? problem retrieve private projects but not retrieving the list of members!
     try {
       const userId = req.user.id;
       // * users can see all public projects AND private projects they are a member of
+      const memberships = await Membership.findAll({ where: { userId } });
+      const participatedProjects = memberships.map(
+        (membership) => membership.projectId
+      );
       const projects = await Project.findAll({
         where: {
           [Op.or]: [
@@ -16,9 +21,9 @@ const projectService = {
               isDeleted: false, // Not deleted projects
             },
             {
+              id: participatedProjects,
               isPublic: false, // Private projects
               isDeleted: false, // Not deleted projects
-              '$Members.id$': userId, // * Logged-in user is a member
             },
           ],
         },
@@ -43,22 +48,41 @@ const projectService = {
   getProject: async (req, cb) => {
     // todo will need to add issues
     try {
-      const project = await Project.findByPk(req.params.id, {
-        include: [
-          { model: User, as: 'Creator', attributes: ['id', 'name'] },
-          {
-            model: User,
-            as: 'Members',
-            attributes: ['id', 'name'],
-            through: { attributes: [] },
+      const [project, categories] = await Promise.all([
+        Project.findByPk(req.params.id, {
+          include: [
+            { model: User, as: 'Creator', attributes: ['id', 'name'] },
+            {
+              model: User,
+              as: 'Members',
+              attributes: ['id', 'name'],
+              through: { attributes: [] },
+            },
+          ],
+          order: [['createdAt', 'DESC']],
+          attributes: ['id', 'name', 'description', 'creatorId', 'createdAt'],
+          nest: true,
+        }),
+        Category.findAll({
+          where: {
+            [Op.or]: [
+              {
+                isDefault: true,
+                isDeleted: false,
+              },
+              {
+                isDefault: false,
+                isDeleted: false,
+                projectId: req.params.id,
+              },
+            ],
           },
-        ],
-        order: [['createdAt', 'DESC']],
-        attributes: ['id', 'name', 'description', 'creatorId', 'createdAt'],
-        nest: true,
-      });
+          attributes: ['id', 'name'],
+          raw: true,
+        }),
+      ]);
       if (!project) throw customError(400, 'Project does not exist!');
-      cb(null, { project });
+      cb(null, { project: { ...project.toJSON(), categories } });
     } catch (err) {
       cb(err);
     }
@@ -105,6 +129,8 @@ const projectService = {
     try {
       const project = await Project.findByPk(req.params.id);
       if (!project) throw customError(400, 'Project does not exist!');
+      if (project.isDeleted)
+        throw customError(400, 'Project has already been deleted!');
       const deletedProject = await project.update({ isDeleted: true });
       cb(null, { deletedProject });
     } catch (err) {
@@ -149,6 +175,7 @@ const projectService = {
   removeMember: async (req, cb) => {
     try {
       // todo only project owner can remove members
+      // todo cannot remove project owner
       const userId = parseInt(req.body.userId);
       const projectId = parseInt(req.params.id);
       if (!userId) throw customError(400, 'Bad request!');
