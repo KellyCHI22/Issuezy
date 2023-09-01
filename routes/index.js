@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/user-controller');
 const projectController = require('../controllers/project-controller');
 const categoryController = require('../controllers/category-controller');
+const issueController = require('../controllers/issue-controller');
 const { apiErrorHandler } = require('../middlewares/error-handler');
 const { authenticated } = require('../middlewares/auth');
 
@@ -43,6 +44,10 @@ router.post(
   authenticated,
   categoryController.postCategory
 );
+
+// * issues
+router.get('/projects/:id/issues', authenticated, issueController.getIssues);
+router.post('/projects/:id/issues', authenticated, issueController.postIssue);
 
 router.get('/projects/:id', authenticated, projectController.getProject);
 router.patch('/projects/:id', authenticated, projectController.patchProject);
