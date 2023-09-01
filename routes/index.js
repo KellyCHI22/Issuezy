@@ -23,10 +23,25 @@ router.post(
 );
 
 // * categories
+router.patch(
+  '/projects/:id/categories/:cid',
+  authenticated,
+  categoryController.patchCategory
+);
+router.delete(
+  '/projects/:id/categories/:cid',
+  authenticated,
+  categoryController.deleteCategory
+);
 router.get(
   '/projects/:id/categories',
   authenticated,
   categoryController.getCategories
+);
+router.post(
+  '/projects/:id/categories',
+  authenticated,
+  categoryController.postCategory
 );
 
 router.get('/projects/:id', authenticated, projectController.getProject);
