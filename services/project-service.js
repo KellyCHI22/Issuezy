@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { User, Project, Membership, Category } = require('../models');
+const { User, Project, Membership, Category, Issue } = require('../models');
 const { customError } = require('../helpers/error-helper');
 
 const projectService = {
@@ -34,6 +34,10 @@ const projectService = {
             as: 'Members',
             attributes: ['id', 'name'],
             through: { attributes: [] },
+          },
+          {
+            model: Issue,
+            attributes: ['id', 'title'],
           },
         ],
         order: [['createdAt', 'DESC']],
