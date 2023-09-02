@@ -4,6 +4,7 @@ const userController = require('../controllers/user-controller');
 const projectController = require('../controllers/project-controller');
 const categoryController = require('../controllers/category-controller');
 const issueController = require('../controllers/issue-controller');
+const commentController = require('../controllers/comment-controller');
 const { apiErrorHandler } = require('../middlewares/error-handler');
 const { authenticated } = require('../middlewares/auth');
 
@@ -46,6 +47,18 @@ router.post(
 );
 
 // * issues
+// * comments
+router.post(
+  '/projects/:id/issues/:iid/comments',
+  authenticated,
+  commentController.postComment
+);
+router.get(
+  '/projects/:id/issues/:iid/comments',
+  authenticated,
+  commentController.getComments
+);
+
 router.patch(
   '/projects/:id/issues/:iid',
   authenticated,
