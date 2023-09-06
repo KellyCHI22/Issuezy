@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { ModeToggle } from "./ModeToggle";
+import { LayoutGrid, CheckSquare, Settings } from "lucide-react";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -15,13 +16,22 @@ export default function SideMenu({ className }: SidebarProps) {
           </h2>
           <div className="space-y-1">
             <Button variant="secondary" className="w-full justify-start">
-              <Link to="/projects">Projects</Link>
+              <Link to="/projects" className="flex items-center">
+                <LayoutGrid className="mr-2 h-4 w-4" />
+                <span>Projects</span>
+              </Link>
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Link to="/tasks">My Tasks</Link>
+              <Link to="/tasks" className="flex items-center">
+                <CheckSquare className="mr-2 h-4 w-4" />
+                <span>My Tasks</span>
+              </Link>
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Link to="/projects">Account</Link>
+              <Link to="/projects" className="flex items-center">
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Account</span>
+              </Link>
             </Button>
             <div className="px-4">
               <ModeToggle />
