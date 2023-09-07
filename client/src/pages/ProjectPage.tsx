@@ -10,7 +10,7 @@ export default function ProjectPage() {
         <div className="items-end justify-between space-y-2 lg:flex">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">Project One</h2>
-            <p className="my-2 text-muted-foreground">
+            <p className="mt-2 text-muted-foreground">
               This is the description of the project
             </p>
           </div>
