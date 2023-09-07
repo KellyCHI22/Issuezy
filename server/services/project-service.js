@@ -41,7 +41,14 @@ const projectService = {
           },
         ],
         order: [['createdAt', 'DESC']],
-        attributes: ['id', 'name', 'description', 'creatorId', 'createdAt'],
+        attributes: [
+          'id',
+          'name',
+          'description',
+          'creatorId',
+          'isPublic',
+          'createdAt',
+        ],
         nest: true,
       });
       cb(null, { projects });
