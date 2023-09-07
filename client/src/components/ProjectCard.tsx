@@ -6,21 +6,46 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { formatTime } from "@/lib/utils";
+import { Badge } from "./ui/badge";
+import UserAvatar from "./UserAvatar";
 
 export default function ProjectCard({ project }) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{project.name}</CardTitle>
-        <CardDescription>{project.description}</CardDescription>
+    <Card className="border-transparent hover:border-solid hover:border-violet-600 dark:bg-gray-900">
+      <CardHeader className="flex flex-row items-center justify-between">
+        <span>
+          <Badge>{project.isPublic ? "public" : "private"}</Badge>
+        </span>
+        <span className="align-text-top text-zinc-400">
+          {formatTime(project.createdAt)}
+        </span>
       </CardHeader>
-      <CardContent>
-        <p>Created by: {project.Creator.name}</p>
-        <p>Members: {project.Members.length}</p>
-        <p>Issues: {project.Issues.length}</p>
+      <CardContent className="mb-3 space-y-4">
+        <CardTitle>{project.name}</CardTitle>
+        <CardDescription className="line-clamp-2 h-10 overflow-hidden">
+          {project.description}
+        </CardDescription>
       </CardContent>
-      <CardFooter>
-        <p>Created at: {project.createdAt}</p>
+      <CardFooter className="grid auto-rows-max grid-cols-3 grid-rows-1 gap-2">
+        <p className="flex h-full flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 p-2  dark:bg-gray-800">
+          <span className="text-sm text-zinc-400">Creator</span>
+          <span className="overflow-hidden text-ellipsis whitespace-nowrap text-center">
+            <UserAvatar />
+          </span>
+        </p>
+        <p className="flex h-full flex-col items-center rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
+          <span className="text-sm text-zinc-400">Members</span>
+          <p className="grid h-[40px] w-[40px] items-center text-center font-bold">
+            <span>{project.Members.length}</span>
+          </p>
+        </p>
+        <p className="flex h-full flex-col items-center rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
+          <span className="text-sm text-zinc-400">Issues</span>
+          <p className="grid h-[40px] w-[40px] items-center text-center font-bold">
+            <span>{project.Issues.length}</span>
+          </p>
+        </p>
       </CardFooter>
     </Card>
   );

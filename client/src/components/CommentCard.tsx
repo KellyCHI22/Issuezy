@@ -6,20 +6,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { formatTime } from "@/lib/utils";
+import UserAvatar from "./UserAvatar";
 
 export default function CommentCard({ comment }) {
   return (
-    <Card>
-      <CardHeader>
-        {/* <CardTitle>{comment.User.name}</CardTitle> */}
-        <CardDescription>{comment.User.name}</CardDescription>
+    <Card className="dark:bg-gray-900">
+      <CardHeader className="">
+        <CardDescription className="flex flex-row items-start justify-between">
+          <p className="flex items-center gap-3">
+            <UserAvatar />
+            <span>{comment.User.name}</span>
+          </p>
+          <span>{formatTime(comment.createdAt)}</span>
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <p>{comment.text}</p>
       </CardContent>
-      <CardFooter>
-        <p>Created at: {comment.createdAt}</p>
-      </CardFooter>
+      <CardFooter></CardFooter>
     </Card>
   );
 }

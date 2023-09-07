@@ -21,7 +21,7 @@ export function CommentSheet() {
       </SheetTrigger>
       <SheetContent
         side={isMobile ? "bottom" : "right"}
-        className="dark:bg-zinc-900"
+        className="dark:bg-gray-900"
       >
         <SheetHeader>
           <SheetTitle>Add Comment</SheetTitle>
