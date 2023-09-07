@@ -1,7 +1,18 @@
 import { formatTime } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "./ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
+import UserAvatar from "./UserAvatar";
+import { Button } from "./ui/button";
+import { MoreHorizontal } from "lucide-react";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -37,7 +48,7 @@ export function PriorityBadge({ priority }: { priority: string }) {
 export const columns: ColumnDef<Issue>[] = [
   {
     accessorKey: "title",
-    header: "Title",
+    header: () => <div>Title</div>,
     cell: ({ row }) => {
       const title = row.getValue<string>("title");
       return (
@@ -52,7 +63,7 @@ export const columns: ColumnDef<Issue>[] = [
   },
   {
     accessorKey: "Category.name",
-    header: () => <div className="flex w-[12ch] justify-center">Category</div>,
+    header: () => <div className="flex justify-center">Category</div>,
     cell: ({ row }) => {
       const { name } = row.original.Category;
       return (
@@ -91,7 +102,11 @@ export const columns: ColumnDef<Issue>[] = [
     header: () => <div className="text-center">Reporter</div>,
     cell: ({ row }) => {
       const { name } = row.original.Reporter;
-      return <div className="text-center">{name}</div>;
+      return (
+        <div className="mx-auto w-fit">
+          <UserAvatar />
+        </div>
+      );
     },
   },
   {
@@ -99,16 +114,41 @@ export const columns: ColumnDef<Issue>[] = [
     header: () => <div className="text-center">Assignee</div>,
     cell: ({ row }) => {
       const { name } = row.original.Assignee;
-      return <div className="text-center">{name}</div>;
+      return (
+        <div className="mx-auto w-fit">
+          <UserAvatar />
+        </div>
+      );
     },
   },
   {
     accessorKey: "createdAt",
-    header: () => <div className="text-center">Created At</div>,
+    header: () => <div className="text-center">Created</div>,
     cell: ({ row }) => {
       const createdTime: string = row.getValue("createdAt");
       const formatted = formatTime(createdTime);
       return <div className="text-center">{formatted}</div>;
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
     },
   },
 ];
