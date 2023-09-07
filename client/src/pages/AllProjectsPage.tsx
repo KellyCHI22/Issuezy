@@ -1,105 +1,8 @@
+import { ProjectSheet } from "@/components/ProjectSheet";
 import ProjectCard from "@/components/ProjectCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-
-const projects = [
-  {
-    id: 7,
-    name: "project 7",
-    description: "This is project 7 and its public",
-    creatorId: 1,
-    createdAt: "2023-08-30T15:00:35.000Z",
-    Creator: {
-      id: 1,
-      name: "user1",
-    },
-    Members: [
-      {
-        id: 1,
-        name: "user1",
-      },
-    ],
-    Issues: [],
-  },
-  {
-    id: 6,
-    name: "project 6",
-    description: "This is project 6 and its private",
-    creatorId: 1,
-    createdAt: "2023-08-30T14:54:43.000Z",
-    Creator: {
-      id: 1,
-      name: "user1",
-    },
-    Members: [
-      {
-        id: 2,
-        name: "user2",
-      },
-      {
-        id: 3,
-        name: "user3",
-      },
-      {
-        id: 1,
-        name: "user1",
-      },
-    ],
-    Issues: [
-      {
-        id: 6,
-        title: "this is the second issue",
-      },
-      {
-        id: 7,
-        title: "this is the second issue",
-      },
-      {
-        id: 8,
-        title: "this is the eighth issue",
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: "project 5",
-    description: "This is project 5 and its private",
-    creatorId: 1,
-    createdAt: "2023-08-30T14:18:29.000Z",
-    Creator: {
-      id: 1,
-      name: "user1",
-    },
-    Members: [
-      {
-        id: 3,
-        name: "user3",
-      },
-      {
-        id: 1,
-        name: "user1",
-      },
-    ],
-    Issues: [
-      {
-        id: 1,
-        title: "this is the first issue",
-      },
-      {
-        id: 2,
-        title: "this is the second issue",
-      },
-      {
-        id: 4,
-        title: "this is the second issue",
-      },
-      {
-        id: 5,
-        title: "this is the second issue",
-      },
-    ],
-  },
-];
+import { projects } from "@/dummyData";
 
 export default function AllProjectsPage() {
   return (
@@ -112,9 +15,9 @@ export default function AllProjectsPage() {
               Here is s a list of your projects!
             </p>
           </div>
-          <Button className="">Add Project</Button>
+          <ProjectSheet />
         </div>
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 lg:overflow-y-scroll">
           {projects.map((project) => (
             <Link to={`/projects/${project.id}`}>
               {" "}

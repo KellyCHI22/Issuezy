@@ -1,65 +1,11 @@
 import CommentCard from "@/components/CommentCard";
-import { Button } from "@/components/ui/button";
-
-const comments = [
-  {
-    id: 1,
-    text: "This is another comment",
-    issueId: 6,
-    userId: 2,
-    isDeleted: false,
-    createdAt: "2023-09-02T20:15:09.000Z",
-    updatedAt: "2023-09-02T20:15:09.000Z",
-    User: {
-      id: 3,
-      name: "user3",
-    },
-  },
-  {
-    id: 2,
-    text: "This is another comment",
-    issueId: 6,
-    userId: 2,
-    isDeleted: false,
-    createdAt: "2023-09-02T20:15:09.000Z",
-    updatedAt: "2023-09-02T20:15:09.000Z",
-    User: {
-      id: 3,
-      name: "user3",
-    },
-  },
-  {
-    id: 3,
-    text: "This is another comment",
-    issueId: 6,
-    userId: 2,
-    isDeleted: false,
-    createdAt: "2023-09-02T20:15:09.000Z",
-    updatedAt: "2023-09-02T20:15:09.000Z",
-    User: {
-      id: 3,
-      name: "user3",
-    },
-  },
-  {
-    id: 4,
-    text: "This is another comment",
-    issueId: 6,
-    userId: 2,
-    isDeleted: false,
-    createdAt: "2023-09-02T20:15:09.000Z",
-    updatedAt: "2023-09-02T20:15:09.000Z",
-    User: {
-      id: 3,
-      name: "user3",
-    },
-  },
-];
+import { CommentSheet } from "@/components/CommentSheet";
+import { comments } from "@/dummyData";
 
 export default function IssuePage() {
   return (
     <div className="lg:h-screen">
-      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex lg:mr-60">
+      <div className="h-full flex-1 flex-col space-y-4 p-8 md:flex lg:mr-60">
         <div className="items-end justify-between space-y-2 lg:flex">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">Issue One</h2>
@@ -67,10 +13,10 @@ export default function IssuePage() {
               This is the description of the issue
             </p>
           </div>
-          <Button className="">Add comment</Button>
+          <CommentSheet />
         </div>
         <h3 className="text-xl font-bold tracking-tight">Comments</h3>
-        <div className="space-y-5 overflow-y-scroll">
+        <div className="space-y-5 lg:overflow-y-scroll">
           {comments.map((comment) => (
             <CommentCard key={comment.id} comment={comment} />
           ))}
