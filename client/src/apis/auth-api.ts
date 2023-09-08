@@ -22,3 +22,10 @@ export async function userSignup({ name, email, password, passwordCheck }) {
   });
   return data;
 }
+
+export async function checkPermission({ token }) {
+  const { data } = await axiosInstance.post(`${baseURL}/users/permission`, {
+    token
+  });
+  return data;
+}
