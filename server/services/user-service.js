@@ -57,6 +57,24 @@ const userService = {
       return cb(err);
     }
   },
+  checkPermission: async (req, cb) => {
+    const { token } = req.body;
+    if (token) {
+      try {
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        if (decode) {
+          delete decode.iat;
+          delete decode.exp;
+          delete decode.email;
+          return cb(null, { decode });
+        }
+      } catch {
+        cb(customError(401, 'Invalid token'));
+      }
+    } else {
+      cb(customError(400, 'Please provide a token'));
+    }
+  },
 };
 
 module.exports = userService;

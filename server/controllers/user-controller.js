@@ -13,6 +13,12 @@ const userController = {
       res.json({ status: 'success', data });
     });
   },
+  checkPermission: (req, res, next) => {
+    userService.checkPermission(req, (err, data) => {
+      if (err) return next(err);
+      res.json({ status: 'success', data });
+    });
+  },
 };
 
 module.exports = userController;

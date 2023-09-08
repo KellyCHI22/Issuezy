@@ -11,6 +11,7 @@ const { authenticated } = require('../middlewares/auth');
 // * signup and signin
 router.post('/users/signup', userController.signUp);
 router.post('/users/signin', userController.signIn);
+router.post('/users/permission', userController.checkPermission);
 
 // * projects
 router.delete(
