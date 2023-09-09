@@ -27,13 +27,21 @@ import { AlertMessage } from "./AlertMassage";
 
 const signupFormSchema = z
   .object({
-    name: z
+    firstname: z
       .string()
       .min(1, {
-        message: "Name cannot be blank",
+        message: "First name cannot be blank",
       })
-      .max(25, {
-        message: "Name cannot be more than 25 characters",
+      .max(20, {
+        message: "First name cannot be more than 20 characters",
+      }),
+    lastname: z
+      .string()
+      .min(1, {
+        message: "Last name cannot be blank",
+      })
+      .max(20, {
+        message: "Last name cannot be more than 20 characters",
       }),
     email: z.string().email().min(1, {
       message: "Email cannot be blank",
@@ -64,7 +72,8 @@ export function SignupCard() {
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
     defaultValues: {
-      name: "",
+      firstname: "",
+      lastname: "",
       email: "",
       password: "",
       passwordCheck: "",
@@ -75,10 +84,6 @@ export function SignupCard() {
     console.log(values);
     signupMutation.mutate(values);
   }
-
-  const handleSubmit = () => {
-    // signupMutation.mutate({ name, email, password, passwordCheck });
-  };
 
   return (
     <Card className="w-[calc(100%-1.5rem)] dark:bg-gray-900 lg:w-[400px] lg:p-3">
@@ -96,19 +101,34 @@ export function SignupCard() {
             {signupError && (
               <AlertMessage variant="destructive" message={signupError} />
             )}
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem className="grid">
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input type="text" placeholder="John Doe" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="flex gap-3">
+              <FormField
+                control={form.control}
+                name="firstname"
+                render={({ field }) => (
+                  <FormItem className="grid">
+                    <FormLabel>First name</FormLabel>
+                    <FormControl>
+                      <Input type="text" placeholder="John Doe" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="lastname"
+                render={({ field }) => (
+                  <FormItem className="grid">
+                    <FormLabel>Last name</FormLabel>
+                    <FormControl>
+                      <Input type="text" placeholder="John Doe" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
               name="email"

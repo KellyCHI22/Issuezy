@@ -13,9 +13,16 @@ export async function userLogin({ email, password }) {
   return data;
 }
 
-export async function userSignup({ name, email, password, passwordCheck }) {
+export async function userSignup({
+  firstname,
+  lastname,
+  email,
+  password,
+  passwordCheck,
+}) {
   const { data } = await axiosInstance.post(`${baseURL}/users/signup`, {
-    name,
+    firstname,
+    lastname,
     email,
     password,
     passwordCheck,
@@ -25,7 +32,7 @@ export async function userSignup({ name, email, password, passwordCheck }) {
 
 export async function checkPermission({ token }) {
   const { data } = await axiosInstance.post(`${baseURL}/users/permission`, {
-    token
+    token,
   });
   return data;
 }
