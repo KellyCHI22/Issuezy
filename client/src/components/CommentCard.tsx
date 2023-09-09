@@ -15,7 +15,7 @@ export default function CommentCard({ comment }) {
       <CardHeader className="">
         <CardDescription className="flex flex-row items-start justify-between">
           <p className="flex items-center gap-3">
-            <UserAvatar />
+            <UserAvatar user={comment.User} />
             <span>{comment.User.name}</span>
           </p>
           <span>{formatTime(comment.createdAt)}</span>

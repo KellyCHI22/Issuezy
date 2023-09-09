@@ -33,7 +33,7 @@ export default function ProjectCard({ project }) {
         <div className="flex h-full flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 p-2  dark:bg-gray-800">
           <span className="text-sm text-zinc-400">Creator</span>
           <span className="overflow-hidden text-ellipsis whitespace-nowrap text-center">
-            <UserAvatar />
+            <UserAvatar user={project.Creator} />
           </span>
         </div>
         <div className="flex h-full flex-col items-center rounded-lg bg-gray-100 p-3 dark:bg-gray-800">

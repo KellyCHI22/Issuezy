@@ -27,8 +27,8 @@ export type Issue = {
   assigneeId: number | undefined | null;
   createdAt: string;
   updatedAt: string;
-  Reporter: { id: number; name: string };
-  Assignee: { id: number; name: string };
+  Reporter: { id: number; firstname: string; lastname: string };
+  Assignee: { id: number; firstname: string; lastname: string };
   Category: { id: number; name: string };
 };
 
@@ -101,10 +101,9 @@ export const columns: ColumnDef<Issue>[] = [
     accessorKey: "Reporter.name",
     header: () => <div className="text-center">Reporter</div>,
     cell: ({ row }) => {
-      const { name } = row.original.Reporter;
       return (
         <div className="mx-auto w-fit">
-          <UserAvatar />
+          <UserAvatar user={row.original.Reporter} />
         </div>
       );
     },
@@ -113,10 +112,9 @@ export const columns: ColumnDef<Issue>[] = [
     accessorKey: "Assignee.name",
     header: () => <div className="text-center">Assignee</div>,
     cell: ({ row }) => {
-      const { name } = row.original.Assignee;
       return (
         <div className="mx-auto w-fit">
-          <UserAvatar />
+          <UserAvatar user={row.original.Assignee} />
         </div>
       );
     },

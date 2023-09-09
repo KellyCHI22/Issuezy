@@ -181,8 +181,7 @@ export const projects = [
 export const issues: Issue[] = [
   {
     id: 5,
-    title:
-      "this is the second issue this this is the second issue this is the second issue",
+    title: "this is the second issue",
     description: "none",
     status: "open",
     priority: 2,
@@ -193,11 +192,13 @@ export const issues: Issue[] = [
     updatedAt: "2023-09-01T15:13:55.000Z",
     Reporter: {
       id: 1,
-      name: "user1",
+      firstname: "Jessica",
+      lastname: "Chen",
     },
     Assignee: {
       id: 1,
-      name: "user1",
+      firstname: "Jessica",
+      lastname: "Chen",
     },
     Category: {
       id: 3,
@@ -217,11 +218,13 @@ export const issues: Issue[] = [
     updatedAt: "2023-09-01T15:13:26.000Z",
     Reporter: {
       id: 1,
-      name: "user1",
+      firstname: "Jessica",
+      lastname: "Chen",
     },
     Assignee: {
       id: 3,
-      name: "user3",
+      firstname: "Joanne",
+      lastname: "Wang",
     },
     Category: {
       id: 3,
@@ -241,11 +244,13 @@ export const issues: Issue[] = [
     updatedAt: "2023-09-01T15:07:04.000Z",
     Reporter: {
       id: 1,
-      name: "user1",
+      firstname: "Jessica",
+      lastname: "Chen",
     },
     Assignee: {
       id: 3,
-      name: "user3",
+      firstname: "Joanne",
+      lastname: "Wang",
     },
     Category: {
       id: 3,
@@ -257,78 +262,6 @@ export const issues: Issue[] = [
     title: "this is the first issue",
     description: "none",
     status: "open",
-    priority: 2,
-    categoryId: 4,
-    reporterId: 1,
-    assigneeId: 3,
-    createdAt: "2023-09-01T15:04:44.000Z",
-    updatedAt: "2023-09-01T15:04:44.000Z",
-    Reporter: {
-      id: 1,
-      name: "user1",
-    },
-    Assignee: {
-      id: 3,
-      name: "user3",
-    },
-    Category: {
-      id: 4,
-      name: "task",
-    },
-  },
-  {
-    id: 9,
-    title: "this is the first issue",
-    description: "none",
-    status: "open",
-    priority: 3,
-    categoryId: 4,
-    reporterId: 1,
-    assigneeId: 3,
-    createdAt: "2023-09-01T15:04:44.000Z",
-    updatedAt: "2023-09-01T15:04:44.000Z",
-    Reporter: {
-      id: 1,
-      name: "user1",
-    },
-    Assignee: {
-      id: 3,
-      name: "user3",
-    },
-    Category: {
-      id: 4,
-      name: "task",
-    },
-  },
-  {
-    id: 10,
-    title: "this is the first issue",
-    description: "none",
-    status: "open",
-    priority: 3,
-    categoryId: 4,
-    reporterId: 1,
-    assigneeId: 3,
-    createdAt: "2023-09-01T15:04:44.000Z",
-    updatedAt: "2023-09-01T15:04:44.000Z",
-    Reporter: {
-      id: 1,
-      name: "user1",
-    },
-    Assignee: {
-      id: 3,
-      name: "user3",
-    },
-    Category: {
-      id: 4,
-      name: "task",
-    },
-  },
-  {
-    id: 11,
-    title: "this is the first issue",
-    description: "none",
-    status: "open",
     priority: 1,
     categoryId: 4,
     reporterId: 1,
@@ -337,204 +270,13 @@ export const issues: Issue[] = [
     updatedAt: "2023-09-01T15:04:44.000Z",
     Reporter: {
       id: 1,
-      name: "user1",
+      firstname: "Jessica",
+      lastname: "Chen",
     },
     Assignee: {
       id: 3,
-      name: "user3",
-    },
-    Category: {
-      id: 4,
-      name: "task",
-    },
-  },
-  {
-    id: 12,
-    title: "this is the first issue",
-    description: "none",
-    status: "open",
-    priority: 2,
-    categoryId: 4,
-    reporterId: 1,
-    assigneeId: 3,
-    createdAt: "2023-09-01T15:04:44.000Z",
-    updatedAt: "2023-09-01T15:04:44.000Z",
-    Reporter: {
-      id: 1,
-      name: "user1",
-    },
-    Assignee: {
-      id: 3,
-      name: "user3",
-    },
-    Category: {
-      id: 4,
-      name: "task",
-    },
-  },
-  {
-    id: 15,
-    title: "this is the first issue",
-    description: "none",
-    status: "open",
-    priority: 3,
-    categoryId: 4,
-    reporterId: 1,
-    assigneeId: 3,
-    createdAt: "2023-09-01T15:04:44.000Z",
-    updatedAt: "2023-09-01T15:04:44.000Z",
-    Reporter: {
-      id: 1,
-      name: "user1",
-    },
-    Assignee: {
-      id: 3,
-      name: "user3",
-    },
-    Category: {
-      id: 4,
-      name: "task",
-    },
-  },
-  {
-    id: 15,
-    title: "this is the first issue",
-    description: "none",
-    status: "open",
-    priority: 3,
-    categoryId: 4,
-    reporterId: 1,
-    assigneeId: 3,
-    createdAt: "2023-09-01T15:04:44.000Z",
-    updatedAt: "2023-09-01T15:04:44.000Z",
-    Reporter: {
-      id: 1,
-      name: "user1",
-    },
-    Assignee: {
-      id: 3,
-      name: "user3",
-    },
-    Category: {
-      id: 4,
-      name: "task",
-    },
-  },
-  {
-    id: 15,
-    title: "this is the first issue",
-    description: "none",
-    status: "open",
-    priority: 3,
-    categoryId: 4,
-    reporterId: 1,
-    assigneeId: 3,
-    createdAt: "2023-09-01T15:04:44.000Z",
-    updatedAt: "2023-09-01T15:04:44.000Z",
-    Reporter: {
-      id: 1,
-      name: "user1",
-    },
-    Assignee: {
-      id: 3,
-      name: "user3",
-    },
-    Category: {
-      id: 4,
-      name: "task",
-    },
-  },
-  {
-    id: 15,
-    title: "this is the first issue",
-    description: "none",
-    status: "open",
-    priority: 3,
-    categoryId: 4,
-    reporterId: 1,
-    assigneeId: 3,
-    createdAt: "2023-09-01T15:04:44.000Z",
-    updatedAt: "2023-09-01T15:04:44.000Z",
-    Reporter: {
-      id: 1,
-      name: "user1",
-    },
-    Assignee: {
-      id: 3,
-      name: "user3",
-    },
-    Category: {
-      id: 4,
-      name: "task",
-    },
-  },
-
-  {
-    id: 15,
-    title: "this is the first issue",
-    description: "none",
-    status: "open",
-    priority: 3,
-    categoryId: 4,
-    reporterId: 1,
-    assigneeId: 3,
-    createdAt: "2023-09-01T15:04:44.000Z",
-    updatedAt: "2023-09-01T15:04:44.000Z",
-    Reporter: {
-      id: 1,
-      name: "user1",
-    },
-    Assignee: {
-      id: 3,
-      name: "user3",
-    },
-    Category: {
-      id: 4,
-      name: "task",
-    },
-  },
-  {
-    id: 15,
-    title: "this is the first issue",
-    description: "none",
-    status: "open",
-    priority: 3,
-    categoryId: 4,
-    reporterId: 1,
-    assigneeId: 3,
-    createdAt: "2023-09-01T15:04:44.000Z",
-    updatedAt: "2023-09-01T15:04:44.000Z",
-    Reporter: {
-      id: 1,
-      name: "user1",
-    },
-    Assignee: {
-      id: 3,
-      name: "user3",
-    },
-    Category: {
-      id: 4,
-      name: "task",
-    },
-  },
-  {
-    id: 15,
-    title: "this is the first issue",
-    description: "none",
-    status: "open",
-    priority: 3,
-    categoryId: 4,
-    reporterId: 1,
-    assigneeId: 3,
-    createdAt: "2023-09-01T15:04:44.000Z",
-    updatedAt: "2023-09-01T15:04:44.000Z",
-    Reporter: {
-      id: 1,
-      name: "user1",
-    },
-    Assignee: {
-      id: 3,
-      name: "user3",
+      firstname: "Joanne",
+      lastname: "Wang",
     },
     Category: {
       id: 4,
@@ -554,7 +296,8 @@ export const comments = [
     updatedAt: "2023-09-02T20:15:09.000Z",
     User: {
       id: 3,
-      name: "user3",
+      firstname: "Joanne",
+      lastname: "Wang",
     },
   },
   {
@@ -567,7 +310,8 @@ export const comments = [
     updatedAt: "2023-09-02T20:15:09.000Z",
     User: {
       id: 3,
-      name: "user3",
+      firstname: "Joanne",
+      lastname: "Wang",
     },
   },
   {
@@ -580,7 +324,8 @@ export const comments = [
     updatedAt: "2023-09-02T20:15:09.000Z",
     User: {
       id: 3,
-      name: "user3",
+      firstname: "Joanne",
+      lastname: "Wang",
     },
   },
   {
@@ -593,7 +338,8 @@ export const comments = [
     updatedAt: "2023-09-02T20:15:09.000Z",
     User: {
       id: 3,
-      name: "user3",
+      firstname: "Joanne",
+      lastname: "Wang",
     },
   },
 ];
