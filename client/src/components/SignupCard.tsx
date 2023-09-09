@@ -2,99 +2,166 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ModeToggle } from "./ModeToggle";
 import { userSignup } from "@/apis/auth-api";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { AlertMessage } from "./AlertMassage";
+
+const signupFormSchema = z
+  .object({
+    name: z
+      .string()
+      .min(1, {
+        message: "Name cannot be blank",
+      })
+      .max(25, {
+        message: "Name cannot be more than 25 characters",
+      }),
+    email: z.string().email().min(1, {
+      message: "Email cannot be blank",
+    }),
+    password: z.string().min(1, {
+      message: "Password cannot be blank",
+    }),
+    passwordCheck: z.string().min(1, {
+      message: "Confirm password cannot be blank",
+    }),
+  })
+  .refine((data) => data.password === data.passwordCheck, {
+    message: "Passwords don't match",
+    path: ["passwordCheck"],
+  });
 
 export function SignupCard() {
+  const [signupError, setSignupError] = useState<string>("");
   const navigate = useNavigate();
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [passwordCheck, setPasswordCheck] = useState<string>("");
   const signupMutation = useMutation({
     mutationFn: userSignup,
     onSuccess: (data) => {
       navigate("/login");
     },
-    onError: (error) => console.log(error.response.data),
+    onError: (error) => setSignupError(error.response.data.message),
   });
 
+  const form = useForm<z.infer<typeof signupFormSchema>>({
+    resolver: zodResolver(signupFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      passwordCheck: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof signupFormSchema>) {
+    console.log(values);
+    signupMutation.mutate(values);
+  }
+
   const handleSubmit = () => {
-    signupMutation.mutate({ name, email, password, passwordCheck });
+    // signupMutation.mutate({ name, email, password, passwordCheck });
   };
 
   return (
     <Card className="w-[calc(100%-1.5rem)] dark:bg-gray-900 lg:w-[400px] lg:p-3">
-      <CardHeader className="space-y-1">
-        <ModeToggle />
-        <CardTitle className="text-center text-2xl">
+      <CardHeader className="relative space-y-1">
+        <div className="absolute left-6 top-6">
+          <ModeToggle />
+        </div>
+        <CardTitle className="pt-7 text-center text-2xl">
           Create an account
         </CardTitle>
-        <CardDescription className="text-center">
-          Issue management has never been so easy
-        </CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-4">
-        <div className="grid gap-2">
-          <Label htmlFor="name">Name</Label>
-          <Input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="John Doe"
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="johndoe@example.com"
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="password-check">Confirm password</Label>
-          <Input
-            id="password-check"
-            type="password"
-            value={passwordCheck}
-            onChange={(e) => setPasswordCheck(e.target.value)}
-          />
-        </div>
-      </CardContent>
-      <CardFooter className="flex flex-col">
-        <Button className="w-full" onClick={handleSubmit}>
-          Sign Up
-        </Button>
-        <div className="mt-3 text-sm text-muted-foreground">
-          Already have an account?{" "}
-          <Link to="/login" className="underline hover:text-primary">
-            login
-          </Link>
-        </div>
-      </CardFooter>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <CardContent className="grid gap-4">
+            {signupError && (
+              <AlertMessage variant="destructive" message={signupError} />
+            )}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="grid">
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input type="text" placeholder="John Doe" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="grid">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="johndoe@example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="grid">
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="passwordCheck"
+              render={({ field }) => (
+                <FormItem className="grid">
+                  <FormLabel>Confirm password</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+          <CardFooter className="flex flex-col">
+            <Button className="w-full" type="submit">
+              Sign up
+            </Button>
+            <div className="mt-3 text-sm text-muted-foreground">
+              Already have an account?{" "}
+              <Link to="/login" className="underline hover:text-primary">
+                login
+              </Link>
+            </div>
+          </CardFooter>
+        </form>
+      </Form>
     </Card>
   );
 }
