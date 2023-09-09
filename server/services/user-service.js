@@ -5,10 +5,11 @@ const { customError } = require('../helpers/error-helper');
 
 const userService = {
   signUpUser: async (req, cb) => {
-    const { name, email, password, passwordCheck } = req.body;
+    const { firstname, lastname, email, password, passwordCheck } = req.body;
     try {
       if (
-        name.trim().length === 0 ||
+        firstname.trim().length === 0 ||
+        lastname.trim().length === 0 ||
         email.trim().length === 0 ||
         password.trim().length === 0 ||
         passwordCheck.trim().length === 0
@@ -21,7 +22,8 @@ const userService = {
       if (user) throw customError(400, 'Email already exists!');
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = await User.create({
-        name,
+        firstname,
+        lastname,
         email,
         password: hashedPassword,
       });
