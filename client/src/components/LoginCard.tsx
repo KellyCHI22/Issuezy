@@ -14,6 +14,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { userLogin } from "@/apis/auth-api";
 import { useMutation } from "@tanstack/react-query";
 import { ModeToggle } from "./ModeToggle";
+import logoLight from "../assets/logo-light.png";
+import logoDark from "../assets/logo-dark.png";
 
 export function LoginCard() {
   const navigate = useNavigate();
@@ -34,12 +36,13 @@ export function LoginCard() {
 
   return (
     <Card className="w-[calc(100%-1.5rem)] dark:bg-gray-900 lg:w-[400px] lg:p-3">
-      <CardHeader className="space-y-1">
-        <ModeToggle />
+      <CardHeader className="relative space-y-1">
+        <div className="absolute left-6 top-6">
+          <ModeToggle />
+        </div>
+        <img src={logoLight} className="mx-auto h-36 w-36 dark:hidden" />
+        <img src={logoDark} className="mx-auto hidden h-36 w-36 dark:block " />
         <CardTitle className="text-center text-2xl">Welcome back</CardTitle>
-        <CardDescription className="text-center">
-          Ready for another new task?
-        </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid gap-2">

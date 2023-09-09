@@ -3,6 +3,8 @@ import { Button } from "./ui/button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ModeToggle } from "./ModeToggle";
 import { LayoutGrid, CheckSquare, Settings, LogOut } from "lucide-react";
+import logoLight from "../assets/logo-light.png";
+import logoDark from "../assets/logo-dark.png";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -17,6 +19,8 @@ export default function SideMenu({ className }: SidebarProps) {
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
+          <img src={logoLight} className="mb-5 h-24 w-24 dark:hidden" />
+          <img src={logoDark} className="mb-5 hidden h-24 w-24 dark:block" />
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
             Hi, Kelly
           </h2>
