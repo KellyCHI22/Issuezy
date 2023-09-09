@@ -19,6 +19,12 @@ const userController = {
       res.json({ status: 'success', data });
     });
   },
+  getCurrentUser: (req, res, next) => {
+    userService.getCurrentUser(req, (err, data) => {
+      if (err) return next(err);
+      res.json({ status: 'success', data });
+    });
+  },
 };
 
 module.exports = userController;

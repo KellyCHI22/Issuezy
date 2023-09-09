@@ -8,10 +8,11 @@ const commentController = require('../controllers/comment-controller');
 const { apiErrorHandler } = require('../middlewares/error-handler');
 const { authenticated } = require('../middlewares/auth');
 
-// * signup and signin
+// * auth related
 router.post('/users/signup', userController.signUp);
 router.post('/users/signin', userController.signIn);
 router.post('/users/permission', userController.checkPermission);
+router.get('/users/current', authenticated, userController.getCurrentUser);
 
 // * projects
 router.delete(

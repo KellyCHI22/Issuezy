@@ -77,6 +77,19 @@ const userService = {
       cb(customError(400, 'Please provide a token'));
     }
   },
+  getCurrentUser: async (req, cb) => {
+    try {
+      const userId = req.user.id;
+      const currentUser = await User.findByPk(userId, {
+        attributes: ['id', 'firstname', 'lastname', 'email', 'createdAt'],
+        raw: true,
+      });
+      if (!currentUser) throw customError(400, 'User does not exist!');
+      return cb(null, { currentUser });
+    } catch (err) {
+      return cb(err);
+    }
+  },
 };
 
 module.exports = userService;
