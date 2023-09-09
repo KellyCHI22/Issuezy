@@ -28,11 +28,15 @@ const projectService = {
           ],
         },
         include: [
-          { model: User, as: 'Creator', attributes: ['id', 'name'] },
+          {
+            model: User,
+            as: 'Creator',
+            attributes: ['id', 'firstname', 'lastname'],
+          },
           {
             model: User,
             as: 'Members',
-            attributes: ['id', 'name'],
+            attributes: ['id', 'firstname', 'lastname'],
             through: { attributes: [] },
           },
           {
@@ -62,11 +66,15 @@ const projectService = {
       const [project, categories] = await Promise.all([
         Project.findByPk(req.params.id, {
           include: [
-            { model: User, as: 'Creator', attributes: ['id', 'name'] },
+            {
+              model: User,
+              as: 'Creator',
+              attributes: ['id', 'firstname', 'lastname'],
+            },
             {
               model: User,
               as: 'Members',
-              attributes: ['id', 'name'],
+              attributes: ['id', 'firstname', 'lastname'],
               through: { attributes: [] },
             },
           ],

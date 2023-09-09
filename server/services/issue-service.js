@@ -12,8 +12,16 @@ const issueService = {
       const issues = await Issue.findAll({
         where: { projectId, isDeleted: false },
         include: [
-          { model: User, as: 'Reporter', attributes: ['id', 'name'] },
-          { model: User, as: 'Assignee', attributes: ['id', 'name'] },
+          {
+            model: User,
+            as: 'Reporter',
+            attributes: ['id', 'firstname', 'lastname'],
+          },
+          {
+            model: User,
+            as: 'Assignee',
+            attributes: ['id', 'firstname', 'lastname'],
+          },
           {
             model: Category,
             as: 'Category',
