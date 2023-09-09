@@ -19,7 +19,7 @@ export default function AllProjectsPage() {
   }
 
   return (
-    <div className="overflow-y-scroll lg:h-screen">
+    <div className="lg:h-screen lg:overflow-y-scroll">
       <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
         <div className="items-end justify-between space-y-2 lg:flex">
           <div>
