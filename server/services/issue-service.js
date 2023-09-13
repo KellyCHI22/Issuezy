@@ -50,7 +50,7 @@ const issueService = {
   postIssue: async (req, cb) => {
     try {
       // todo add input validations
-      const { title, description, status, priority, categoryId } = req.body;
+      const { title, description, priority, categoryId } = req.body;
       const projectId = req.params.id;
       const reporterId = req.user.id;
       if (title.trim().length === 0 || description.trim().length === 0)
@@ -64,7 +64,7 @@ const issueService = {
       const newIssue = await Issue.create({
         title,
         description,
-        status,
+        status: 'open',
         priority,
         categoryId,
         projectId,
@@ -123,6 +123,7 @@ const issueService = {
       cb(err);
     }
   },
+  // todo assignIssue
 };
 
 module.exports = issueService;

@@ -112,9 +112,13 @@ export const columns: ColumnDef<Issue>[] = [
     accessorKey: "Assignee.name",
     header: () => <div className="text-center">Assignee</div>,
     cell: ({ row }) => {
+      const assignee = row.original.Assignee;
+      if (!assignee) {
+        return <div className="mx-auto w-fit">Unassigned</div>;
+      }
       return (
         <div className="mx-auto w-fit">
-          <UserAvatar user={row.original.Assignee} />
+          <UserAvatar user={assignee} />
         </div>
       );
     },

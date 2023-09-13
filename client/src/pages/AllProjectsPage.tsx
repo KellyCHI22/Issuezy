@@ -1,6 +1,5 @@
 import { ProjectSheet } from "@/components/ProjectSheet";
 import ProjectCard from "@/components/ProjectCard";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProjects } from "@/apis/project-api";
@@ -19,7 +18,7 @@ export default function AllProjectsPage() {
   }
 
   return (
-    <div className="lg:h-screen lg:overflow-y-scroll">
+    <div className="lg:h-screen">
       <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
         <div className="items-end justify-between space-y-2 lg:flex">
           <div>

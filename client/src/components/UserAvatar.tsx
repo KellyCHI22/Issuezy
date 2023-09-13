@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function UserAvatar({ user }) {
-  // todo add user firstname and lastname
   return (
     <Avatar className="bg-violet-500">
       <AvatarImage src="" />
