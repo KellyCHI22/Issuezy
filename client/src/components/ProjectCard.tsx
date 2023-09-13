@@ -11,6 +11,9 @@ import { Badge } from "./ui/badge";
 import UserAvatar from "./UserAvatar";
 
 export default function ProjectCard({ project }) {
+  const filteredIssues = project.Issues.filter(
+    (issue) => issue.isDeleted !== true,
+  );
   return (
     <Card className="border-transparent hover:border-solid hover:border-violet-600 dark:bg-gray-900">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -45,7 +48,7 @@ export default function ProjectCard({ project }) {
         <div className="flex h-full flex-col items-center rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
           <span className="text-sm text-zinc-400">Issues</span>
           <p className="grid h-[40px] w-[40px] items-center text-center font-bold">
-            <span>{project.Issues.length}</span>
+            <span>{filteredIssues.length}</span>
           </p>
         </div>
       </CardFooter>

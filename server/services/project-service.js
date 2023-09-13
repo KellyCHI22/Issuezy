@@ -41,7 +41,7 @@ const projectService = {
           },
           {
             model: Issue,
-            attributes: ['id', 'title'],
+            attributes: ['id', 'title', 'isDeleted'],
           },
         ],
         order: [['createdAt', 'DESC']],
@@ -79,7 +79,14 @@ const projectService = {
             },
           ],
           order: [['createdAt', 'DESC']],
-          attributes: ['id', 'name', 'description', 'creatorId', 'createdAt'],
+          attributes: [
+            'id',
+            'name',
+            'description',
+            'isPublic',
+            'creatorId',
+            'createdAt',
+          ],
           nest: true,
         }),
         Category.findAll({
