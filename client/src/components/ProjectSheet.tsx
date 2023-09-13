@@ -27,6 +27,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postProject } from "@/apis/project-api";
 import { useEffect, useState } from "react";
+import { AlertMessage } from "./AlertMassage";
 
 const projectFormSchema = z.object({
   name: z
@@ -50,17 +51,18 @@ const projectFormSchema = z.object({
 
 export function ProjectSheet() {
   const [open, setOpen] = useState(false);
+  const [addProjectError, setAddProjectError] = useState<string>("");
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
   const projectMutation = useMutation({
     mutationFn: postProject,
     onSuccess: (data) => {
-      console.log(data);
       const { newProject } = data.data;
       queryClient.setQueryData(["projects", newProject.id], newProject);
       queryClient.invalidateQueries(["projects"], { exact: true });
+      setOpen(false);
     },
-    onError: (error) => console.log(error.response.data),
+    onError: (error) => setAddProjectError(error.response.data.message),
   });
 
   const form = useForm<z.infer<typeof projectFormSchema>>({
@@ -73,10 +75,7 @@ export function ProjectSheet() {
   });
 
   function onSubmit(values: z.infer<typeof projectFormSchema>) {
-    console.log(values);
-    console.log(form);
     projectMutation.mutate(values);
-    setOpen(false);
   }
 
   useEffect(() => {
@@ -102,7 +101,9 @@ export function ProjectSheet() {
                 Don't forget to save when you're done.
               </SheetDescription>
             </SheetHeader>
-
+            {addProjectError && (
+              <AlertMessage variant="destructive" message={addProjectError} />
+            )}
             <FormField
               control={form.control}
               name="name"
