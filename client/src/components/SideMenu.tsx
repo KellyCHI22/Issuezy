@@ -59,7 +59,7 @@ export default function SideMenu({ className }: SidebarProps) {
                   className="w-full justify-start"
                 >
                   <CheckSquare className="mr-2 h-4 w-4" />
-                  <span>My Tasks</span>
+                  <span>My tasks</span>
                 </Button>
               )}
             </NavLink>

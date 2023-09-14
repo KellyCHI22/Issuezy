@@ -8,9 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { getIssues } from "@/apis/issue-api";
+import { useMediaQuery } from "react-responsive";
 
 export default function ProjectPage() {
   const { id } = useParams();
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const projectQuery = useQuery({
     queryKey: ["projects", id],
     queryFn: () => getProject(id),
@@ -54,16 +56,20 @@ export default function ProjectPage() {
             {/* // todo only project owner can view dashboard */}
             <Link to={`/projects/${id}/dashboard`}>
               <Button variant="default" className="">
-                View Dashboard
+                View dashboard
               </Button>
             </Link>
             <IssueSheet project={project} />
           </div>
         </div>
-        <h3 className="text-xl font-bold tracking-tight">Issues</h3>
-        <div className="overflow-hidden rounded-lg bg-white p-3 dark:bg-gray-900 lg:overflow-y-scroll">
-          <IssuesTable data={issues} columns={columns} />
-        </div>
+
+        {isMobile ? (
+          "working in progress"
+        ) : (
+          <div className="overflow-hidden rounded-lg bg-white p-3 dark:bg-gray-900 lg:overflow-y-scroll">
+            <IssuesTable data={issues} columns={columns} project={project} />
+          </div>
+        )}
       </div>
     </div>
   );

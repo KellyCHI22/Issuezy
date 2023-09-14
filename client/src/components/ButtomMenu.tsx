@@ -6,7 +6,7 @@ import { LayoutGrid, CheckSquare, Settings, LogOut } from "lucide-react";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export default function SideMenu({ className }: SidebarProps) {
+export default function ButtomMenu({ className }: SidebarProps) {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");

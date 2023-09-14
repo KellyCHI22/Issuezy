@@ -54,9 +54,15 @@ const issueFormSchema = z.object({
     .max(300, {
       message: "Description cannot be more than 300 characters",
     }),
-  priority: z.number().min(1).max(3),
+  priority: z.enum(["high", "medium", "low"]),
   categoryId: z.string(),
 });
+
+const PRIORITY_VALUES = {
+  high: "1",
+  medium: "2",
+  low: "3",
+};
 
 export function IssueSheet({ project }) {
   const [open, setOpen] = useState(false);
@@ -87,13 +93,19 @@ export function IssueSheet({ project }) {
     defaultValues: {
       title: "",
       description: "",
-      priority: 1,
+      priority: "high",
       categoryId: project.categories[0].id.toString(),
     },
   });
 
   function onSubmit(values: z.infer<typeof issueFormSchema>) {
-    issueMutation.mutate({ projectId: project.id, formData: values });
+    issueMutation.mutate({
+      projectId: project.id,
+      formData: {
+        ...values,
+        priority: PRIORITY_VALUES[values.priority],
+      },
+    });
   }
 
   useEffect(() => {
@@ -101,7 +113,7 @@ export function IssueSheet({ project }) {
       form.reset({
         title: "",
         description: "",
-        priority: 1,
+        priority: "high",
         categoryId: project.categories[0].id.toString(),
       });
     }
@@ -121,7 +133,8 @@ export function IssueSheet({ project }) {
             <SheetHeader>
               <SheetTitle>Report an issue</SheetTitle>
               <SheetDescription>
-                Add a new issue here. Click save when you're done.
+                Something is not working with the project? Or any ideas to make
+                it better?
               </SheetDescription>
             </SheetHeader>
             {addIssueError && (
@@ -163,32 +176,30 @@ export function IssueSheet({ project }) {
               control={form.control}
               name="priority"
               render={({ field }) => (
-                <FormItem className=" flex flex-row items-center justify-between gap-3 rounded-lg border p-4">
+                <FormItem className="grid grid-cols-4 items-center gap-3 rounded-lg">
                   <div className="space-y-0.5">
                     <FormLabel className="text-sm font-bold">
                       Priority
                     </FormLabel>
-                    <FormDescription>
-                      Public projects and issues can be viewed by all users.
-                    </FormDescription>
                   </div>
                   <FormControl className="col-span-3">
                     <RadioGroup
                       id="priority"
                       name="priority"
-                      defaultValue={field.value.toString()}
+                      defaultValue={field.value}
+                      onValueChange={field.onChange}
                       className="col-span-3"
                     >
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="1" id="high" />
+                        <RadioGroupItem value="high" id="high" />
                         <Label htmlFor="high">High</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="2" id="medium" />
+                        <RadioGroupItem value="medium" id="medium" />
                         <Label htmlFor="medium">Medium</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="3" id="low" />
+                        <RadioGroupItem value="low" id="low" />
                         <Label htmlFor="low">Low</Label>
                       </div>
                     </RadioGroup>
@@ -227,7 +238,7 @@ export function IssueSheet({ project }) {
               )}
             />
             <SheetFooter>
-              <Button type="submit">Add Issue</Button>
+              <Button type="submit">Add issue</Button>
             </SheetFooter>
           </form>
         </Form>
