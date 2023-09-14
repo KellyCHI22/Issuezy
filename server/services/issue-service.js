@@ -55,6 +55,8 @@ const issueService = {
       const reporterId = req.user.id;
       if (title.trim().length === 0 || description.trim().length === 0)
         throw customError(400, 'All fields are required!');
+      if (!['1', '2', '3'].includes(priority))
+        throw customError(400, 'Priority can only be 1, 2 or 3!');
 
       const project = await Project.findByPk(projectId);
       const category = await Category.findByPk(categoryId);
@@ -124,6 +126,7 @@ const issueService = {
     }
   },
   // todo assignIssue
+  // todo update issue status
 };
 
 module.exports = issueService;
