@@ -12,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
 import { Button } from "./ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -21,7 +21,7 @@ export type Issue = {
   title: string;
   description: string;
   status: "open" | "in progress" | "wait for review" | "close";
-  priority: 1 | 2 | 3;
+  priority: "1" | "2" | "3";
   categoryId: number;
   reporterId: number;
   assigneeId: number | undefined | null;
@@ -63,7 +63,19 @@ export const columns: ColumnDef<Issue>[] = [
   },
   {
     accessorKey: "Category.name",
-    header: () => <div className="flex justify-center">Category</div>,
+    header: ({ column }) => {
+      return (
+        <div className="flex justify-center">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Category
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
     cell: ({ row }) => {
       const { name } = row.original.Category;
       return (
@@ -75,7 +87,19 @@ export const columns: ColumnDef<Issue>[] = [
   },
   {
     accessorKey: "status",
-    header: () => <div className="text-center">Status</div>,
+    header: ({ column }) => {
+      return (
+        <div className="flex justify-center">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Status
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
     cell: ({ row }) => {
       const status = row.getValue<string>("status");
       return (
@@ -87,9 +111,21 @@ export const columns: ColumnDef<Issue>[] = [
   },
   {
     accessorKey: "priority",
-    header: () => <div className="text-center">Priority</div>,
+    header: ({ column }) => {
+      return (
+        <div className="flex justify-center">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Priority
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
     cell: ({ row }) => {
-      const priority = row.getValue<number>("priority").toString();
+      const priority = row.getValue<string>("priority");
       return (
         <div className="text-center">
           <PriorityBadge priority={priority} />
@@ -125,7 +161,20 @@ export const columns: ColumnDef<Issue>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: () => <div className="text-center">Created</div>,
+    header: ({ column }) => {
+      return (
+        <div className="flex justify-center">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Created
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
+    sortingFn: "datetime",
     cell: ({ row }) => {
       const createdTime: string = row.getValue("createdAt");
       const formatted = formatTime(createdTime);
