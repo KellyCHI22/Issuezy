@@ -10,7 +10,7 @@ export function formatTime(isoString: string) {
   const americanDate = new Intl.DateTimeFormat("en-US", {
     day: "numeric",
     month: "short",
-    year: "2-digit",
+    year: "numeric",
   }).format(date);
   return americanDate;
 }

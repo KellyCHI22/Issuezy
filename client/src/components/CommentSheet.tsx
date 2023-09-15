@@ -17,14 +17,14 @@ export function CommentSheet() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="default">Add Comment</Button>
+        <Button variant="default">Add comment</Button>
       </SheetTrigger>
       <SheetContent
         side={isMobile ? "bottom" : "right"}
         className="dark:bg-gray-900"
       >
         <SheetHeader>
-          <SheetTitle>Add Comment</SheetTitle>
+          <SheetTitle>Add comment</SheetTitle>
         </SheetHeader>
         <div className="grid gap-4 py-4">
           <div className="items-center gap-4">

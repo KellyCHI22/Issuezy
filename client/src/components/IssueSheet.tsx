@@ -22,7 +22,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -51,8 +50,8 @@ const issueFormSchema = z.object({
     .min(1, {
       message: "Description cannot be blank",
     })
-    .max(300, {
-      message: "Description cannot be more than 300 characters",
+    .max(250, {
+      message: "Description cannot be more than 250 characters",
     }),
   priority: z.enum(["high", "medium", "low"]),
   categoryId: z.string(),

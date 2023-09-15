@@ -1,6 +1,6 @@
 import { formatTime } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "./ui/badge";
+import { Badge, PriorityBadge } from "./ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,25 +25,13 @@ export type Issue = {
   categoryId: number;
   reporterId: number;
   assigneeId: number | undefined | null;
+  projectId: number;
   createdAt: string;
   updatedAt: string;
   Reporter: { id: number; firstname: string; lastname: string };
   Assignee: { id: number; firstname: string; lastname: string };
   Category: { id: number; name: string };
 };
-
-export function PriorityBadge({ priority }: { priority: string }) {
-  switch (priority) {
-    case "1":
-      return <Badge className="bg-red-500 text-black">high</Badge>;
-    case "2":
-      return <Badge className="bg-yellow-300 text-black">medium</Badge>;
-    case "3":
-      return <Badge className="bg-green-500 text-black">low</Badge>;
-    default:
-      return <Badge className="bg-green-500 text-black">low</Badge>;
-  }
-}
 
 export const columns: ColumnDef<Issue>[] = [
   {
@@ -53,7 +41,7 @@ export const columns: ColumnDef<Issue>[] = [
       const title = row.getValue<string>("title");
       return (
         <Link
-          to={`/projects/1/issues/${row.original.id}`}
+          to={`/projects/${row.original.projectId}/issues/${row.original.id}`}
           className="font-bold hover:text-violet-500"
         >
           {title}
@@ -80,7 +68,9 @@ export const columns: ColumnDef<Issue>[] = [
       const { name } = row.original.Category;
       return (
         <div className="text-center">
-          <Badge variant="secondary">{name}</Badge>
+          <Badge className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600">
+            {name}
+          </Badge>
         </div>
       );
     },
@@ -104,7 +94,7 @@ export const columns: ColumnDef<Issue>[] = [
       const status = row.getValue<string>("status");
       return (
         <div className="text-center">
-          <Badge variant="outline">{status}</Badge>
+          <Badge variant="secondary">{status}</Badge>
         </div>
       );
     },

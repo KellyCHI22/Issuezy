@@ -47,7 +47,7 @@ export default function ProjectPage() {
             <Badge className={project.isPublic ? "" : "bg-pink-500"}>
               {project.isPublic ? "public" : "private"}
             </Badge>
-            <h2 className="text-3xl font-bold leading-10 tracking-tight">
+            <h2 className="text-3xl font-bold leading-relaxed tracking-tight">
               {project.name}
             </h2>
             <p className="text-muted-foreground">{project.description}</p>

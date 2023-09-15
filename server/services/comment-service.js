@@ -13,6 +13,13 @@ const commentService = {
         where: {
           issueId,
         },
+        include: [
+          {
+            model: User,
+            as: 'User',
+            attributes: ['id', 'firstname', 'lastname'],
+          },
+        ],
       });
       cb(null, { comments });
     } catch (err) {
@@ -28,8 +35,8 @@ const commentService = {
       const issueId = req.params.iid;
       const userId = req.user.id;
       if (text.trim().length === 0) throw customError(400, 'Text is required!');
-      if (text.trim().length > 200)
-        throw customError(400, 'Text cannot be more than 200 words!');
+      if (text.trim().length > 250)
+        throw customError(400, 'Text cannot be more than 250 words!');
 
       const project = await Project.findByPk(projectId);
       const issue = await Issue.findByPk(issueId);

@@ -99,7 +99,9 @@ export default function IssuesTable<TData, TValue>({
               <SelectItem value="">all</SelectItem>
               {project.categories.map((category) => {
                 return (
-                  <SelectItem value={category.name}>{category.name}</SelectItem>
+                  <SelectItem key={category.id} value={category.name}>
+                    {category.name}
+                  </SelectItem>
                 );
               })}
             </SelectContent>
