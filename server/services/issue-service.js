@@ -38,11 +38,58 @@ const issueService = {
           'categoryId',
           'reporterId',
           'assigneeId',
+          'projectId',
           'createdAt',
           'updatedAt',
         ],
       });
       cb(null, { issues });
+    } catch (err) {
+      cb(err);
+    }
+  },
+  getIssue: async (req, cb) => {
+    try {
+      const projectId = req.params.id;
+      const issueId = req.params.iid;
+      console.log(projectId, issueId);
+      const project = await Project.findByPk(projectId);
+      if (!project) throw customError(400, 'Project does not exist!');
+
+      const issue = await Issue.findByPk(issueId, {
+        include: [
+          {
+            model: User,
+            as: 'Reporter',
+            attributes: ['id', 'firstname', 'lastname'],
+          },
+          {
+            model: User,
+            as: 'Assignee',
+            attributes: ['id', 'firstname', 'lastname'],
+          },
+          {
+            model: Category,
+            as: 'Category',
+            attributes: ['id', 'name'],
+          },
+        ],
+        attributes: [
+          'id',
+          'title',
+          'description',
+          'status',
+          'priority',
+          'categoryId',
+          'reporterId',
+          'assigneeId',
+          'projectId',
+          'createdAt',
+          'updatedAt',
+        ],
+      });
+      if (!issue) throw customError(400, 'Issue does not exist!');
+      cb(null, { issue });
     } catch (err) {
       cb(err);
     }

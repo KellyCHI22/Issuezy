@@ -61,6 +61,11 @@ router.get(
   commentController.getComments
 );
 
+router.get(
+  '/projects/:id/issues/:iid',
+  authenticated,
+  issueController.getIssue
+);
 router.patch(
   '/projects/:id/issues/:iid',
   authenticated,

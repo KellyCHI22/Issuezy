@@ -7,6 +7,12 @@ const issueController = {
       res.json({ status: 'success', data });
     });
   },
+  getIssue: (req, res, next) => {
+    issueService.getIssue(req, (err, data) => {
+      if (err) return next(err);
+      res.json({ status: 'success', data });
+    });
+  },
   postIssue: (req, res, next) => {
     issueService.postIssue(req, (err, data) => {
       if (err) return next(err);
