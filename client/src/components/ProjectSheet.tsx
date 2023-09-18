@@ -28,6 +28,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postProject } from "@/apis/project-api";
 import { useEffect, useState } from "react";
 import { AlertMessage } from "./AlertMassage";
+import { Plus } from "lucide-react";
 
 const projectFormSchema = z.object({
   name: z
@@ -81,13 +82,17 @@ export function ProjectSheet() {
   useEffect(() => {
     if (form.formState.isSubmitSuccessful) {
       form.reset({ name: "", description: "", isPublic: true });
+      setAddProjectError("");
     }
   }, [form.formState]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="default">Add project</Button>
+        <Button variant="default">
+          <Plus className="mr-2 h-4 w-4" />
+          Add project
+        </Button>
       </SheetTrigger>
       <SheetContent
         side={isMobile ? "bottom" : "right"}

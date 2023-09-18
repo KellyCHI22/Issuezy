@@ -8,6 +8,7 @@ import { Badge, PriorityBadge } from "@/components/ui/badge";
 import { formatTime } from "@/lib/utils";
 import UserAvatar from "@/components/UserAvatar";
 import { Button } from "@/components/ui/button";
+import { Contact2, Pencil } from "lucide-react";
 
 export default function IssuePage() {
   const { id, iid } = useParams();
@@ -76,19 +77,22 @@ export default function IssuePage() {
               </div>
               {/* // todo only certain people can edit or assign user */}
               <div className="space-x-2 pt-6">
-                <Button>Edit issue</Button>
+                <Button>
+                  <Pencil className="mr-2 h-4 w-4" /> Edit issue
+                </Button>
                 {issue.Assignee ? (
                   <Button
                     variant="secondary"
-                    className="bg-white dark:bg-secondary"
+                    className="border bg-white dark:bg-secondary"
                   >
-                    Reassign user
+                    <Contact2 className="mr-2 h-4 w-4" /> Reassign user
                   </Button>
                 ) : (
                   <Button
                     variant="secondary"
-                    className="bg-white dark:bg-secondary"
+                    className="border bg-white dark:bg-secondary"
                   >
+                    <Contact2 className="mr-2 h-4 w-4" />
                     Assign user
                   </Button>
                 )}
@@ -101,7 +105,7 @@ export default function IssuePage() {
         <div className="mb-3 flex flex-grow-0 items-center justify-between">
           <h3 className="text-xl font-bold tracking-tight">Comments</h3>
           <div className="space-x-2">
-            <CommentSheet />
+            <CommentSheet projectId={id} issueId={iid} />
           </div>
         </div>
         <div className="flex-1 space-y-5 overflow-y-scroll">
@@ -109,7 +113,12 @@ export default function IssuePage() {
             <p className="text-muted-foreground">There are no comments yet</p>
           ) : (
             comments.map((comment) => (
-              <CommentCard key={comment.id} comment={comment} />
+              <CommentCard
+                key={comment.id}
+                comment={comment}
+                projectId={id}
+                issueId={iid}
+              />
             ))
           )}
         </div>

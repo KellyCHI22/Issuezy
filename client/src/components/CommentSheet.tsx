@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postComment } from "@/apis/comment-api";
 import { AlertMessage } from "./AlertMassage";
+import { Plus } from "lucide-react";
 
 const commentFormSchema = z.object({
   text: z
@@ -84,7 +85,9 @@ export function CommentSheet({ projectId, issueId }) {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="default">Add comment</Button>
+        <Button variant="default">
+          <Plus className="mr-2 h-4 w-4" /> Add comment
+        </Button>
       </SheetTrigger>
       <SheetContent
         side={isMobile ? "bottom" : "right"}

@@ -35,6 +35,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { postIssue } from "@/apis/issue-api";
 import { AlertMessage } from "./AlertMassage";
+import { Flag } from "lucide-react";
 
 const issueFormSchema = z.object({
   title: z
@@ -115,13 +116,17 @@ export function IssueSheet({ project }) {
         priority: "high",
         categoryId: project.categories[0].id.toString(),
       });
+      setAddIssueError("");
     }
   }, [form.formState]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="default">Report an issue</Button>
+        <Button variant="default">
+          <Flag className="mr-2 h-4 w-4" />
+          Report an issue
+        </Button>
       </SheetTrigger>
       <SheetContent
         side={isMobile ? "bottom" : "right"}
@@ -237,7 +242,7 @@ export function IssueSheet({ project }) {
               )}
             />
             <SheetFooter>
-              <Button type="submit">Add issue</Button>
+              <Button type="submit">Report issue</Button>
             </SheetFooter>
           </form>
         </Form>

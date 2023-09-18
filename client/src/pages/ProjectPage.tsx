@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { getIssues } from "@/apis/issue-api";
 import { useMediaQuery } from "react-responsive";
+import { GaugeCircle } from "lucide-react";
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -56,6 +57,7 @@ export default function ProjectPage() {
             {/* // todo only project owner can view dashboard */}
             <Link to={`/projects/${id}/dashboard`}>
               <Button variant="default" className="">
+                <GaugeCircle className="mr-2 h-4 w-4" />
                 View dashboard
               </Button>
             </Link>
