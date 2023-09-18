@@ -55,11 +55,14 @@ export default function CommentCard({ comment, projectId, issueId }) {
           <EditCommentSheet
             projectId={projectId}
             issueId={issueId}
-            text={comment.text}
+            comment={comment}
             showEditSheet={showEditSheet}
             setShowEditSheet={setShowEditSheet}
           />
           <DeleteCommentAlert
+            projectId={projectId}
+            issueId={issueId}
+            comment={comment}
             showDeleteDialog={showDeleteDialog}
             setShowDeleteDialog={setShowDeleteDialog}
           />
