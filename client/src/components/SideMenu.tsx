@@ -38,7 +38,7 @@ export default function SideMenu({ className }: SidebarProps) {
           <img src={logoLight} className="mb-5 h-24 w-24 dark:hidden" />
           <img src={logoDark} className="mb-5 hidden h-24 w-24 dark:block" />
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            Hi, {data.data.currentUser.firstname}
+            Hi, {data.currentUser.firstname}
           </h2>
           <div className="space-y-1">
             <NavLink to="/projects" className="flex items-center">

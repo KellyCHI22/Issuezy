@@ -72,7 +72,7 @@ export function IssueSheet({ project }) {
   const issueMutation = useMutation({
     mutationFn: postIssue,
     onSuccess: (data) => {
-      const { newIssue } = data.data;
+      const { newIssue } = data;
       queryClient.setQueryData(
         ["projects", project.id, "issues", newIssue.id],
         newIssue,

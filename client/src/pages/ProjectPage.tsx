@@ -37,8 +37,8 @@ export default function ProjectPage() {
     );
   }
 
-  const project = projectQuery.data.data.project;
-  const issues = issuesQuery.data.data.issues;
+  const project = projectQuery.data.project;
+  const issues = issuesQuery.data.issues;
 
   return (
     <div className="h-screen">

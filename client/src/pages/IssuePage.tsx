@@ -36,8 +36,8 @@ export default function IssuePage() {
     );
   }
 
-  const issue = issueQuery.data.data.issue;
-  const comments = commentsQuery.data.data.comments;
+  const issue = issueQuery.data.issue;
+  const comments = commentsQuery.data.comments;
 
   return (
     <div className="p-8 lg:grid lg:grid-cols-5 lg:gap-8 lg:p-0">

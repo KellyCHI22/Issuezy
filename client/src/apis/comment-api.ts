@@ -6,7 +6,7 @@ export async function getComments(payload) {
   const res = await axiosInstance.get(
     `${baseURL}/projects/${projectId}/issues/${issueId}/comments`,
   );
-  return res.data;
+  return res.data.data;
 }
 
 // * 新增一筆留言
@@ -18,5 +18,5 @@ export async function postComment(payload) {
       text,
     },
   );
-  return res.data;
+  return res.data.data;
 }

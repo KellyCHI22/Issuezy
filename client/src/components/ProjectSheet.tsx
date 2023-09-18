@@ -58,7 +58,7 @@ export function ProjectSheet() {
   const projectMutation = useMutation({
     mutationFn: postProject,
     onSuccess: (data) => {
-      const { newProject } = data.data;
+      const { newProject } = data;
       queryClient.setQueryData(["projects", newProject.id], newProject);
       queryClient.invalidateQueries(["projects"], { exact: true });
       setOpen(false);

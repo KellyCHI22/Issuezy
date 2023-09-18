@@ -30,7 +30,7 @@ export default function AllProjectsPage() {
           <ProjectSheet />
         </div>
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 lg:overflow-y-scroll">
-          {data.data.projects.map((project) => (
+          {data.projects.map((project) => (
             <Link key={project.id} to={`/projects/${project.id}`}>
               <ProjectCard project={project} />
             </Link>

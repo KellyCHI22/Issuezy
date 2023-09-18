@@ -5,7 +5,7 @@ export async function getIssues(projectId) {
   const res = await axiosInstance.get(
     `${baseURL}/projects/${projectId}/issues`,
   );
-  return res.data;
+  return res.data.data;
 }
 
 // * 取得特定 issue
@@ -14,7 +14,7 @@ export async function getIssue(payload) {
   const res = await axiosInstance.get(
     `${baseURL}/projects/${projectId}/issues/${issueId}`,
   );
-  return res.data;
+  return res.data.data;
 }
 
 // * 新增一筆 issue
@@ -24,5 +24,5 @@ export async function postIssue(payload) {
     `${baseURL}/projects/${projectId}/issues`,
     formData,
   );
-  return res.data;
+  return res.data.data;
 }

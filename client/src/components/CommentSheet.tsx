@@ -45,7 +45,7 @@ export function CommentSheet({ projectId, issueId }) {
   const commentMutation = useMutation({
     mutationFn: postComment,
     onSuccess: (data) => {
-      const { newComment } = data.data;
+      const { newComment } = data;
       queryClient.setQueryData(
         ["projects", projectId, "issues", issueId, "comments", newComment.id],
         newComment,
