@@ -50,6 +50,17 @@ router.post(
 
 // * issues
 // * comments
+
+router.patch(
+  '/projects/:id/issues/:iid/comments/:cid',
+  authenticated,
+  commentController.patchComment
+);
+router.delete(
+  '/projects/:id/issues/:iid/comments/:cid',
+  authenticated,
+  commentController.deleteComment
+);
 router.post(
   '/projects/:id/issues/:iid/comments',
   authenticated,
