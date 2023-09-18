@@ -26,7 +26,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postProject } from "@/apis/project-api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AlertMessage } from "./AlertMassage";
 import { Plus } from "lucide-react";
 
@@ -61,6 +61,8 @@ export function ProjectSheet() {
       const { newProject } = data;
       queryClient.setQueryData(["projects", newProject.id], newProject);
       queryClient.invalidateQueries(["projects"], { exact: true });
+      form.reset({ name: "", description: "", isPublic: true });
+      setAddProjectError("");
       setOpen(false);
     },
     onError: (error) => setAddProjectError(error.response.data.message),
@@ -78,13 +80,6 @@ export function ProjectSheet() {
   function onSubmit(values: z.infer<typeof projectFormSchema>) {
     projectMutation.mutate(values);
   }
-
-  useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      form.reset({ name: "", description: "", isPublic: true });
-      setAddProjectError("");
-    }
-  }, [form.formState]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>

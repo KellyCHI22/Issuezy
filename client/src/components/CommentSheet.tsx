@@ -20,7 +20,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "react-responsive";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postComment } from "@/apis/comment-api";
 import { AlertMessage } from "./AlertMassage";
@@ -54,6 +54,8 @@ export function CommentSheet({ projectId, issueId }) {
         ["projects", projectId, "issues", issueId, "comments"],
         { exact: true },
       );
+      form.reset({ text: "" });
+      setAddCommentError("");
       setOpen(false);
     },
     onError: (error) => setAddCommentError(error.response.data.message),
@@ -67,7 +69,6 @@ export function CommentSheet({ projectId, issueId }) {
   });
 
   function onSubmit(values: z.infer<typeof commentFormSchema>) {
-    console.log(values);
     commentMutation.mutate({
       projectId,
       issueId,
@@ -75,15 +76,14 @@ export function CommentSheet({ projectId, issueId }) {
     });
   }
 
-  useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      form.reset({ text: "" });
-      setAddCommentError("");
-    }
-  }, [form.formState]);
-
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet
+      open={open}
+      onOpenChange={(open) => {
+        setOpen(open);
+        setAddCommentError("");
+      }}
+    >
       <SheetTrigger asChild>
         <Button variant="default">
           <Plus className="mr-2 h-4 w-4" /> Add comment

@@ -32,7 +32,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { postIssue } from "@/apis/issue-api";
 import { AlertMessage } from "./AlertMassage";
 import { Flag } from "lucide-react";
@@ -83,6 +83,13 @@ export function IssueSheet({ project }) {
           exact: true,
         },
       );
+      form.reset({
+        title: "",
+        description: "",
+        priority: "high",
+        categoryId: project.categories[0].id.toString(),
+      });
+      setAddIssueError("");
       setOpen(false);
     },
     onError: (error) => setAddIssueError(error.response.data.message),
@@ -107,18 +114,6 @@ export function IssueSheet({ project }) {
       },
     });
   }
-
-  useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      form.reset({
-        title: "",
-        description: "",
-        priority: "high",
-        categoryId: project.categories[0].id.toString(),
-      });
-      setAddIssueError("");
-    }
-  }, [form.formState]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
