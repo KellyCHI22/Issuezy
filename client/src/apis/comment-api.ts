@@ -20,3 +20,24 @@ export async function postComment(payload) {
   );
   return res.data.data;
 }
+
+// * 修改一筆留言
+export async function patchComment(payload) {
+  const { projectId, issueId, commentId, text } = payload;
+  const res = await axiosInstance.patch(
+    `${baseURL}/projects/${projectId}/issues/${issueId}/comments/${commentId}`,
+    {
+      text,
+    },
+  );
+  return res.data.data;
+}
+
+// * 刪除一筆留言
+export async function deleteComment(payload) {
+  const { projectId, issueId, commentId } = payload;
+  const res = await axiosInstance.delete(
+    `${baseURL}/projects/${projectId}/issues/${issueId}/comments/${commentId}`,
+  );
+  return res.data.data;
+}
