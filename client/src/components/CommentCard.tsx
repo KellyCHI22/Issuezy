@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   DropdownMenu,
@@ -9,10 +10,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { formatTime } from "@/lib/utils";
 import UserAvatar from "./UserAvatar";
-import { MoreHorizontal } from "lucide-react";
 import { Button } from "./ui/button";
+import { EditCommentSheet } from "./EditCommentSheet";
+import { DeleteCommentAlert } from "./DeleteCommentALert";
+import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
-export default function CommentCard({ comment }) {
+export default function CommentCard({ comment, projectId, issueId }) {
+  const [showEditSheet, setShowEditSheet] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
   return (
     <Card className="dark:bg-gray-900">
       <CardContent>
@@ -35,10 +41,28 @@ export default function CommentCard({ comment }) {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Edit comment</DropdownMenuItem>
-              <DropdownMenuItem>Delete comment</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setShowEditSheet(true)}>
+                <Pencil className="mr-2 h-4 w-4" /> Edit comment
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="text-destructive"
+                onSelect={() => setShowDeleteDialog(true)}
+              >
+                <Trash2 className="mr-2 h-4 w-4" /> Delete comment
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <EditCommentSheet
+            projectId={projectId}
+            issueId={issueId}
+            text={comment.text}
+            showEditSheet={showEditSheet}
+            setShowEditSheet={setShowEditSheet}
+          />
+          <DeleteCommentAlert
+            showDeleteDialog={showDeleteDialog}
+            setShowDeleteDialog={setShowDeleteDialog}
+          />
         </div>
         <p className="pb-2 pt-4">{comment.text}</p>
       </CardContent>
