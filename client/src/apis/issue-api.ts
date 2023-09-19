@@ -62,3 +62,13 @@ export async function deleteIssue(payload) {
   );
   return res.data.data;
 }
+
+// * assign user to issue
+export async function assignIssue(payload) {
+  const { projectId, issueId, formData } = payload;
+  const res = await axiosInstance.patch(
+    `${baseURL}/projects/${projectId}/issues/${issueId}/assign`,
+    formData,
+  );
+  return res.data.data;
+}

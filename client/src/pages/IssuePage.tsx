@@ -12,6 +12,7 @@ import { Contact2 } from "lucide-react";
 import { EditIssueSheet } from "@/components/EditIssueSheet";
 import { Project, getProject } from "@/apis/project-api";
 import { DeleteIssueAlert } from "@/components/DeleteIssueAlert";
+import { AssignIssueSheet } from "@/components/AssignIssueSheet";
 
 export default function IssuePage() {
   const { id, iid } = useParams();
@@ -88,22 +89,7 @@ export default function IssuePage() {
               {/* // todo only certain people can edit or assign user */}
               <div className="flex space-x-2 pt-6">
                 <EditIssueSheet project={project} issue={issue} />
-                {issue.Assignee ? (
-                  <Button
-                    variant="secondary"
-                    className="border bg-white dark:bg-secondary"
-                  >
-                    <Contact2 className="mr-2 h-4 w-4" /> Reassign
-                  </Button>
-                ) : (
-                  <Button
-                    variant="secondary"
-                    className="border bg-white dark:bg-secondary"
-                  >
-                    <Contact2 className="mr-2 h-4 w-4" />
-                    Assign
-                  </Button>
-                )}
+                <AssignIssueSheet project={project} issue={issue} />
                 <DeleteIssueAlert
                   projectId={project.id.toString()}
                   issueId={issue.id.toString()}
