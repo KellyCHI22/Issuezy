@@ -137,7 +137,7 @@ export function EditIssueSheet({ project, issue }: IssueSheetProps) {
       <SheetTrigger asChild>
         <Button variant="default">
           <Pencil className="mr-2 h-4 w-4" />
-          Edit issue
+          Edit
         </Button>
       </SheetTrigger>
       <SheetContent

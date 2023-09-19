@@ -19,7 +19,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     (issue) => issue.isDeleted !== true,
   );
   return (
-    <Card className="border-transparent hover:border-solid hover:border-violet-600 dark:bg-gray-900">
+    <Card className="border-transparent hover:border-solid hover:border-violet-600 dark:bg-gray-900 lg:flex lg:h-full lg:flex-col">
       <CardHeader className="flex flex-row items-center justify-between">
         <span>
           <Badge className={project.isPublic ? "" : "bg-pink-500"}>
@@ -30,8 +30,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {formatTime(project.createdAt)}
         </span>
       </CardHeader>
-      <CardContent className="mb-3 space-y-4">
-        <CardTitle>{project.name}</CardTitle>
+      <CardContent className="mb-3 flex-1 space-y-4">
+        <CardTitle className="leading-tight">{project.name}</CardTitle>
         <CardDescription className="line-clamp-2 h-10 overflow-hidden">
           {project.description}
         </CardDescription>

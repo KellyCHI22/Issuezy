@@ -32,7 +32,7 @@ export default function AllProjectsPage() {
           </div>
           <ProjectSheet />
         </div>
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 lg:overflow-y-scroll 2xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-5 lg:auto-rows-[1fr] lg:grid-cols-3 lg:overflow-y-scroll 2xl:grid-cols-4">
           {projects.map((project) => (
             <Link key={project.id} to={`/projects/${project.id}`}>
               <ProjectCard project={project} />
