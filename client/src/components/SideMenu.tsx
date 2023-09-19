@@ -6,17 +6,16 @@ import { LayoutGrid, CheckSquare, Settings, LogOut } from "lucide-react";
 import logoLight from "../assets/logo-light.png";
 import logoDark from "../assets/logo-dark.png";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getCurrentUser } from "@/apis/user-api";
+import { type CurrentUser, getCurrentUser } from "@/apis/user-api";
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface SideMenuProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export default function SideMenu({ className }: SidebarProps) {
+export default function SideMenu({ className }: SideMenuProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { status, error, data } = useQuery({
     queryKey: ["currentUser"],
     queryFn: getCurrentUser,
-    onSuccess: (data) => console.log(data),
   });
 
   const handleLogout = () => {
@@ -31,6 +30,8 @@ export default function SideMenu({ className }: SidebarProps) {
     return <h1>{JSON.stringify(error)}</h1>;
   }
 
+  const currentUser = data.currentUser as CurrentUser;
+
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
@@ -38,7 +39,7 @@ export default function SideMenu({ className }: SidebarProps) {
           <img src={logoLight} className="mb-5 h-24 w-24 dark:hidden" />
           <img src={logoDark} className="mb-5 hidden h-24 w-24 dark:block" />
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            Hi, {data.currentUser.firstname}
+            Hi, {currentUser.firstname}
           </h2>
           <div className="space-y-1">
             <NavLink to="/projects" className="flex items-center">

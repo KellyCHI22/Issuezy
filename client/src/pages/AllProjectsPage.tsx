@@ -2,20 +2,23 @@ import { ProjectSheet } from "@/components/ProjectSheet";
 import ProjectCard from "@/components/ProjectCard";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getProjects } from "@/apis/project-api";
+import { type Project, getProjects } from "@/apis/project-api";
 
 export default function AllProjectsPage() {
-  const { status, error, data } = useQuery({
+  const { status, data } = useQuery({
     queryKey: ["projects"],
     queryFn: getProjects,
-    onSuccess: (data) => console.log(data),
+    // onSuccess: (data) => console.log(data),
+    onError: (error) => console.log(error),
   });
 
   // todo need to add loading skeleton component
   if (status === "loading") return <h1>Loading...</h1>;
   if (status === "error") {
-    return <h1>{JSON.stringify(error)}</h1>;
+    return <h1>Some errors occurred</h1>;
   }
+
+  const projects = data.projects as Project[];
 
   return (
     <div className="lg:h-screen">
@@ -29,8 +32,8 @@ export default function AllProjectsPage() {
           </div>
           <ProjectSheet />
         </div>
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 lg:overflow-y-scroll">
-          {data.projects.map((project) => (
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 lg:overflow-y-scroll 2xl:grid-cols-4">
+          {projects.map((project) => (
             <Link key={project.id} to={`/projects/${project.id}`}>
               <ProjectCard project={project} />
             </Link>
