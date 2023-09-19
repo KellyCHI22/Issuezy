@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import CommentCard from "@/components/CommentCard";
 import { CommentSheet } from "@/components/CommentSheet";
 import { type Issue, getIssue } from "@/apis/issue-api";
@@ -8,34 +8,45 @@ import { Badge, PriorityBadge } from "@/components/ui/badge";
 import { formatTime } from "@/lib/utils";
 import UserAvatar from "@/components/UserAvatar";
 import { Button } from "@/components/ui/button";
-import { Contact2, Pencil } from "lucide-react";
+import { Contact2 } from "lucide-react";
+import { EditIssueSheet } from "@/components/EditIssueSheet";
+import { Project, getProject } from "@/apis/project-api";
 
 export default function IssuePage() {
   const { id, iid } = useParams();
-  const issueQuery = useQuery({
-    queryKey: ["projects", id, "issues", iid],
-    queryFn: () => getIssue({ projectId: id, issueId: iid }),
+
+  const queryResults = useQueries({
+    queries: [
+      {
+        queryKey: ["projects", id],
+        queryFn: () => getProject(id),
+      },
+
+      {
+        queryKey: ["projects", id, "issues", iid],
+        queryFn: () => getIssue({ projectId: id, issueId: iid }),
+      },
+      {
+        queryKey: ["projects", id, "issues", iid, "comments"],
+        queryFn: () => getComments({ projectId: id, issueId: iid }),
+      },
+    ],
   });
-  const commentsQuery = useQuery({
-    queryKey: ["projects", id, "issues", iid, "comments"],
-    enabled: issueQuery?.data?.data?.issue !== null,
-    queryFn: () => getComments({ projectId: id, issueId: iid }),
-  });
+
+  const isLoading = queryResults.some(
+    (result) => result.isLoading || result.isFetching,
+  );
+  const isError = queryResults.some((result) => result.isError);
 
   // todo need to add loading skeleton component
-  if (issueQuery.status === "loading" || commentsQuery.status === "loading")
-    return <h1>Loading...</h1>;
-  if (issueQuery.status === "error" || commentsQuery.status === "error") {
-    return (
-      <h1>
-        {JSON.stringify(issueQuery.error)}
-        {JSON.stringify(commentsQuery.error)}
-      </h1>
-    );
+  if (isLoading) return <h1>Loading...</h1>;
+  if (isError) {
+    return <h1>Something went wrong</h1>;
   }
 
-  const issue = issueQuery.data.issue as Issue;
-  const comments = commentsQuery.data.comments as Comment[];
+  const project = queryResults[0].data.project as Project;
+  const issue = queryResults[1].data.issue as Issue;
+  const comments = queryResults[2].data.comments as Comment[];
 
   return (
     <div className="p-8 lg:grid lg:grid-cols-5 lg:gap-8 lg:p-0">
@@ -75,9 +86,7 @@ export default function IssuePage() {
               </div>
               {/* // todo only certain people can edit or assign user */}
               <div className="space-x-2 pt-6">
-                <Button>
-                  <Pencil className="mr-2 h-4 w-4" /> Edit issue
-                </Button>
+                <EditIssueSheet project={project} issue={issue} />
                 {issue.Assignee ? (
                   <Button
                     variant="secondary"
