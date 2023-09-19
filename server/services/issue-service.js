@@ -140,14 +140,14 @@ const issueService = {
       if (!category) throw customError(400, 'Category does not exist!');
       if (!issue) throw customError(400, 'Issue does not exist!');
 
-      const udpatedIssue = await issue.update({
+      const updatedIssue = await issue.update({
         title,
         description,
         status,
         priority,
         categoryId,
       });
-      cb(null, { udpatedIssue });
+      cb(null, { updatedIssue });
     } catch (err) {
       cb(err);
     }

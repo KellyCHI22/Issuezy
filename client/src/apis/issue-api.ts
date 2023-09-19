@@ -43,3 +43,13 @@ export async function postIssue(payload) {
   );
   return res.data.data;
 }
+
+// * 修改一筆 issue
+export async function patchIssue(payload) {
+  const { projectId, issueId, formData } = payload;
+  const res = await axiosInstance.patch(
+    `${baseURL}/projects/${projectId}/issues/${issueId}`,
+    formData,
+  );
+  return res.data.data;
+}
