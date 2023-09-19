@@ -1,5 +1,22 @@
 import { baseURL, axiosInstance } from "./apiUtils";
 
+export type Issue = {
+  id: number;
+  title: string;
+  description: string;
+  status: "open" | "in progress" | "wait for review" | "close";
+  priority: "1" | "2" | "3";
+  categoryId: number;
+  reporterId: number;
+  assigneeId: number | undefined | null;
+  projectId: number;
+  createdAt: string;
+  updatedAt: string;
+  Reporter: { id: number; firstname: string; lastname: string };
+  Assignee: { id: number; firstname: string; lastname: string };
+  Category: { id: number; name: string };
+};
+
 // * 取得專案所有 issue
 export async function getIssues(projectId) {
   const res = await axiosInstance.get(

@@ -1,5 +1,20 @@
 import { baseURL, axiosInstance } from "./apiUtils";
 
+export type Comment = {
+  id: number;
+  text: string;
+  issueId: number;
+  userId: number;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  User: {
+    id: number;
+    firstname: string;
+    lastname: string;
+  };
+};
+
 // * 取得 issue 所有留言
 export async function getComments(payload) {
   const { projectId, issueId } = payload;
