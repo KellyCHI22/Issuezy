@@ -31,6 +31,12 @@ const issueController = {
       res.json({ status: 'success', data });
     });
   },
+  assignIssue: (req, res, next) => {
+    issueService.assignIssue(req, (err, data) => {
+      if (err) return next(err);
+      res.json({ status: 'success', data });
+    });
+  },
 };
 
 module.exports = issueController;

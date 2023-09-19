@@ -1,4 +1,4 @@
-const { Issue, Category, User, Project } = require('../models');
+const { Issue, Category, User, Project, Membership } = require('../models');
 const { customError } = require('../helpers/error-helper');
 
 const issueService = {
@@ -189,6 +189,43 @@ const issueService = {
     }
   },
   // todo assignIssue
+  assignIssue: async (req, cb) => {
+    try {
+      const { assigneeId } = req.body;
+      const projectId = req.params.id;
+      const issueId = req.params.iid;
+      const userId = req.user.id;
+      if (!assigneeId) throw customError(400, 'Assignee is required!');
+
+      const project = await Project.findByPk(projectId);
+      const issue = await Issue.findByPk(issueId);
+      const assignee = await User.findByPk(assigneeId);
+      if (!project) throw customError(400, 'Project does not exist!');
+      if (!issue) throw customError(400, 'Issue does not exist!');
+      if (!assignee) throw customError(400, 'Assigned user does not exist!');
+
+      const isUserMember = await Membership.findOne({
+        where: { userId, projectId },
+      });
+      const isAssigneeMember = await Membership.findOne({
+        where: { userId: assigneeId, projectId },
+      });
+
+      // * 只有 project members 可以 assign 和被 assign
+      if (!isUserMember || !isAssigneeMember)
+        throw customError(
+          400,
+          'Only project members can assign issues or be assigned'
+        );
+
+      const updatedIssue = await issue.update({
+        assigneeId,
+      });
+      cb(null, { updatedIssue });
+    } catch (err) {
+      cb(err);
+    }
+  },
   // todo update issue status
 };
 

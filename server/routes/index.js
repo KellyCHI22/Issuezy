@@ -48,9 +48,7 @@ router.post(
   categoryController.postCategory
 );
 
-// * issues
 // * comments
-
 router.patch(
   '/projects/:id/issues/:iid/comments/:cid',
   authenticated,
@@ -72,6 +70,12 @@ router.get(
   commentController.getComments
 );
 
+// * issues
+router.patch(
+  '/projects/:id/issues/:iid/assign',
+  authenticated,
+  issueController.assignIssue
+);
 router.get(
   '/projects/:id/issues/:iid',
   authenticated,
