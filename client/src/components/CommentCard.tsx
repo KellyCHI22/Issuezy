@@ -12,10 +12,21 @@ import { formatTime } from "@/lib/utils";
 import UserAvatar from "./UserAvatar";
 import { Button } from "./ui/button";
 import { EditCommentSheet } from "./EditCommentSheet";
-import { DeleteCommentAlert } from "./DeleteCommentALert";
+import { DeleteCommentAlert } from "./DeleteCommentAlert";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { Comment } from "@/apis/comment-api";
 
-export default function CommentCard({ comment, projectId, issueId }) {
+interface CommentCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  comment: Comment;
+  projectId?: string;
+  issueId?: string;
+}
+
+export default function CommentCard({
+  comment,
+  projectId,
+  issueId,
+}: CommentCardProps) {
   const [showEditSheet, setShowEditSheet] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 

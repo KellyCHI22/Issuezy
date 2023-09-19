@@ -13,25 +13,7 @@ import { Link } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
 import { Button } from "./ui/button";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Issue = {
-  id: number;
-  title: string;
-  description: string;
-  status: "open" | "in progress" | "wait for review" | "close";
-  priority: "1" | "2" | "3";
-  categoryId: number;
-  reporterId: number;
-  assigneeId: number | undefined | null;
-  projectId: number;
-  createdAt: string;
-  updatedAt: string;
-  Reporter: { id: number; firstname: string; lastname: string };
-  Assignee: { id: number; firstname: string; lastname: string };
-  Category: { id: number; name: string };
-};
+import { Issue } from "@/apis/issue-api";
 
 export const columns: ColumnDef<Issue>[] = [
   {
@@ -173,7 +155,7 @@ export const columns: ColumnDef<Issue>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+    cell: () => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

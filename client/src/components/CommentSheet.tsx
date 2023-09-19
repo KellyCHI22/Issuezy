@@ -26,6 +26,11 @@ import { postComment } from "@/apis/comment-api";
 import { AlertMessage } from "./AlertMassage";
 import { Plus } from "lucide-react";
 
+interface CommentSheetProps extends React.HTMLAttributes<HTMLDivElement> {
+  projectId?: string;
+  issueId?: string;
+}
+
 const commentFormSchema = z.object({
   text: z
     .string()
@@ -37,7 +42,7 @@ const commentFormSchema = z.object({
     }),
 });
 
-export function CommentSheet({ projectId, issueId }) {
+export function CommentSheet({ projectId, issueId }: CommentSheetProps) {
   const [open, setOpen] = useState(false);
   const [addCommentError, setAddCommentError] = useState<string>("");
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });

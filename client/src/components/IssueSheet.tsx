@@ -36,6 +36,11 @@ import { useState } from "react";
 import { postIssue } from "@/apis/issue-api";
 import { AlertMessage } from "./AlertMassage";
 import { Flag } from "lucide-react";
+import { type Project } from "@/apis/project-api";
+
+interface IssueSheetProps extends React.HTMLAttributes<HTMLDivElement> {
+  project: Project;
+}
 
 const issueFormSchema = z.object({
   title: z
@@ -64,7 +69,7 @@ const PRIORITY_VALUES = {
   low: "3",
 };
 
-export function IssueSheet({ project }) {
+export function IssueSheet({ project }: IssueSheetProps) {
   const [open, setOpen] = useState(false);
   const [addIssueError, setAddIssueError] = useState<string>("");
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });

@@ -31,10 +31,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "./ui/button";
 import { X } from "lucide-react";
+import { Project } from "@/apis/project-api";
 
 interface IssueTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  project: Project;
 }
 
 export default function IssuesTable<TData, TValue>({

@@ -10,8 +10,16 @@ import {
 } from "@/components/ui/alert-dialog";
 import { AlertMessage } from "./AlertMassage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteComment } from "@/apis/comment-api";
+import { Comment, deleteComment } from "@/apis/comment-api";
 import { useState } from "react";
+
+interface DeleteCommentAlertProps extends React.HTMLAttributes<HTMLDivElement> {
+  projectId?: string;
+  issueId?: string;
+  comment: Comment;
+  showDeleteDialog: boolean;
+  setShowDeleteDialog: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 export function DeleteCommentAlert({
   projectId,
@@ -19,7 +27,7 @@ export function DeleteCommentAlert({
   comment,
   showDeleteDialog,
   setShowDeleteDialog,
-}) {
+}: DeleteCommentAlertProps) {
   const [deleteCommentError, setDeleteCommentError] = useState<string>("");
   const queryClient = useQueryClient();
   const commentMutation = useMutation({
@@ -46,7 +54,7 @@ export function DeleteCommentAlert({
     onError: (error) => setDeleteCommentError(error.response.data.message),
   });
 
-  const handleConfirm = (e) => {
+  const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     commentMutation.mutate({ projectId, issueId, commentId: comment.id });
   };

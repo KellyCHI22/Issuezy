@@ -4,9 +4,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { ModeToggle } from "./ModeToggle";
 import { LayoutGrid, CheckSquare, Settings, LogOut } from "lucide-react";
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface ButtomMenuProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export default function ButtomMenu({ className }: SidebarProps) {
+export default function ButtomMenu({ className }: ButtomMenuProps) {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");

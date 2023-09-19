@@ -9,8 +9,12 @@ import {
 import { formatTime } from "@/lib/utils";
 import { Badge } from "./ui/badge";
 import UserAvatar from "./UserAvatar";
+import { type Project } from "@/apis/project-api";
+interface ProjectCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  project: Project;
+}
 
-export default function ProjectCard({ project }) {
+export default function ProjectCard({ project }: ProjectCardProps) {
   const filteredIssues = project.Issues.filter(
     (issue) => issue.isDeleted !== true,
   );

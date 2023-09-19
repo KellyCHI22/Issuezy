@@ -1,11 +1,11 @@
 import { Info, Ban } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-type AlertMessageProps = {
+interface AlertMessageProps extends React.HTMLAttributes<HTMLDivElement> {
   variant: "default" | "destructive";
   title?: string;
   message: string;
-};
+}
 
 export function AlertMessage({ variant, message }: AlertMessageProps) {
   return (

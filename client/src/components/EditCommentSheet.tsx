@@ -21,8 +21,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "react-responsive";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { patchComment } from "@/apis/comment-api";
+import { patchComment, type Comment } from "@/apis/comment-api";
 import { AlertMessage } from "./AlertMassage";
+
+interface EditCommentSheetProps extends React.HTMLAttributes<HTMLDivElement> {
+  projectId?: string;
+  issueId?: string;
+  comment: Comment;
+  showEditSheet: boolean;
+  setShowEditSheet: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 const commentFormSchema = z.object({
   text: z
@@ -41,7 +49,7 @@ export function EditCommentSheet({
   comment,
   showEditSheet,
   setShowEditSheet,
-}) {
+}: EditCommentSheetProps) {
   const [editCommentError, setEditCommentError] = useState<string>("");
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
