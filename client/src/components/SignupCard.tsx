@@ -81,7 +81,6 @@ export function SignupCard() {
   });
 
   function onSubmit(values: z.infer<typeof signupFormSchema>) {
-    console.log(values);
     signupMutation.mutate(values);
   }
 

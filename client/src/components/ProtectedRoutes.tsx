@@ -7,7 +7,6 @@ export default function ProtectedRoutes() {
   const navigate = useNavigate();
   const permissionMutation = useMutation({
     mutationFn: checkPermission,
-    onSuccess: (data) => console.log(data),
     onError: (error) => {
       console.log(error.response.data), navigate("/login");
     },

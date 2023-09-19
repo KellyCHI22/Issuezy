@@ -52,7 +52,6 @@ const issueService = {
     try {
       const projectId = req.params.id;
       const issueId = req.params.iid;
-      console.log(projectId, issueId);
       const project = await Project.findByPk(projectId);
       if (!project) throw customError(400, 'Project does not exist!');
 

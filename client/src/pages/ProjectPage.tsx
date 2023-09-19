@@ -3,11 +3,11 @@ import IssuesTable from "@/components/IssuesTable";
 import { columns } from "@/components/issueColumns";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getProject } from "@/apis/project-api";
+import { type Project, getProject } from "@/apis/project-api";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import { getIssues } from "@/apis/issue-api";
+import { type Issue, getIssues } from "@/apis/issue-api";
 import { useMediaQuery } from "react-responsive";
 import { GaugeCircle } from "lucide-react";
 
@@ -17,12 +17,10 @@ export default function ProjectPage() {
   const projectQuery = useQuery({
     queryKey: ["projects", id],
     queryFn: () => getProject(id),
-    onSuccess: (data) => console.log(data),
   });
   const issuesQuery = useQuery({
     queryKey: ["projects", id, "issues"],
     queryFn: () => getIssues(id),
-    onSuccess: (data) => console.log(data),
   });
 
   // todo need to add loading skeleton component
@@ -37,8 +35,8 @@ export default function ProjectPage() {
     );
   }
 
-  const project = projectQuery.data.project;
-  const issues = issuesQuery.data.issues;
+  const project = projectQuery.data.project as Project;
+  const issues = issuesQuery.data.issues as Issue[];
 
   return (
     <div className="h-screen">

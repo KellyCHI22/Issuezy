@@ -57,7 +57,6 @@ export function LoginCard() {
   });
 
   function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    console.log(values);
     loginMutation.mutate(values);
   }
 

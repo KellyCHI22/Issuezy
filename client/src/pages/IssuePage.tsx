@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import CommentCard from "@/components/CommentCard";
 import { CommentSheet } from "@/components/CommentSheet";
-import { getIssue } from "@/apis/issue-api";
-import { getComments } from "@/apis/comment-api";
+import { type Issue, getIssue } from "@/apis/issue-api";
+import { type Comment, getComments } from "@/apis/comment-api";
 import { Badge, PriorityBadge } from "@/components/ui/badge";
 import { formatTime } from "@/lib/utils";
 import UserAvatar from "@/components/UserAvatar";
@@ -15,13 +15,11 @@ export default function IssuePage() {
   const issueQuery = useQuery({
     queryKey: ["projects", id, "issues", iid],
     queryFn: () => getIssue({ projectId: id, issueId: iid }),
-    onSuccess: (data) => console.log(data),
   });
   const commentsQuery = useQuery({
     queryKey: ["projects", id, "issues", iid, "comments"],
     enabled: issueQuery?.data?.data?.issue !== null,
     queryFn: () => getComments({ projectId: id, issueId: iid }),
-    onSuccess: (data) => console.log(data),
   });
 
   // todo need to add loading skeleton component
@@ -36,8 +34,8 @@ export default function IssuePage() {
     );
   }
 
-  const issue = issueQuery.data.issue;
-  const comments = commentsQuery.data.comments;
+  const issue = issueQuery.data.issue as Issue;
+  const comments = commentsQuery.data.comments as Comment[];
 
   return (
     <div className="p-8 lg:grid lg:grid-cols-5 lg:gap-8 lg:p-0">
