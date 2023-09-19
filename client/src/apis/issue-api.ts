@@ -53,3 +53,12 @@ export async function patchIssue(payload) {
   );
   return res.data.data;
 }
+
+// * 刪除一筆 issue
+export async function deleteIssue(payload) {
+  const { projectId, issueId } = payload;
+  const res = await axiosInstance.delete(
+    `${baseURL}/projects/${projectId}/issues/${issueId}`,
+  );
+  return res.data.data;
+}

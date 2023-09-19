@@ -126,10 +126,10 @@ const issueService = {
   patchIssue: async (req, cb) => {
     try {
       // todo add input validations
-      // todo auth only certain people (?) can edit issues
       const { title, description, status, priority, categoryId } = req.body;
       const projectId = req.params.id;
       const issueId = req.params.iid;
+      const userId = req.user.id;
       if (title.trim().length === 0 || description.trim().length === 0)
         throw customError(400, 'All fields are required!');
 
@@ -139,6 +139,14 @@ const issueService = {
       if (!project) throw customError(400, 'Project does not exist!');
       if (!category) throw customError(400, 'Category does not exist!');
       if (!issue) throw customError(400, 'Issue does not exist!');
+
+      // * 只有 project owner, issue 作者和 issue assignee 可以編輯 issue
+      if (
+        ![issue.reporterId, issue.assigneeId, project.creatorId].includes(
+          userId
+        )
+      )
+        throw customError(400, 'You are not allowed to edit the issue!');
 
       const updatedIssue = await issue.update({
         title,
@@ -157,11 +165,20 @@ const issueService = {
       // todo auth only certain people (?) can delete issues
       const projectId = req.params.id;
       const issueId = req.params.iid;
+      const userId = req.user.id;
 
       const project = await Project.findByPk(projectId);
       const issue = await Issue.findByPk(issueId);
       if (!project) throw customError(400, 'Project does not exist!');
       if (!issue) throw customError(400, 'Issue does not exist!');
+
+      // * 只有 project owner, issue 作者和 issue assignee 可以刪除 issue
+      if (
+        ![issue.reporterId, issue.assigneeId, project.creatorId].includes(
+          userId
+        )
+      )
+        throw customError(400, 'You are not allowed to delete the issue!');
 
       const deletedIssue = await issue.update({
         isDeleted: true,

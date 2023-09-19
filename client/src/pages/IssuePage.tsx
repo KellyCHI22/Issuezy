@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Contact2 } from "lucide-react";
 import { EditIssueSheet } from "@/components/EditIssueSheet";
 import { Project, getProject } from "@/apis/project-api";
+import { DeleteIssueAlert } from "@/components/DeleteIssueAlert";
 
 export default function IssuePage() {
   const { id, iid } = useParams();
@@ -49,7 +50,7 @@ export default function IssuePage() {
   const comments = queryResults[2].data.comments as Comment[];
 
   return (
-    <div className="p-8 lg:grid lg:grid-cols-5 lg:gap-8 lg:p-0">
+    <div className="min-h-screen p-8 lg:grid lg:grid-cols-5 lg:gap-8 lg:p-0">
       <div className=" rounded-lg lg:col-span-2 lg:my-8 lg:ml-8 lg:h-fit lg:border lg:bg-white lg:p-6 lg:dark:bg-gray-900">
         <div className="relative">
           <div className="space-y-2">
@@ -85,14 +86,14 @@ export default function IssuePage() {
                 </p>
               </div>
               {/* // todo only certain people can edit or assign user */}
-              <div className="space-x-2 pt-6">
+              <div className="flex space-x-2 pt-6">
                 <EditIssueSheet project={project} issue={issue} />
                 {issue.Assignee ? (
                   <Button
                     variant="secondary"
                     className="border bg-white dark:bg-secondary"
                   >
-                    <Contact2 className="mr-2 h-4 w-4" /> Reassign user
+                    <Contact2 className="mr-2 h-4 w-4" /> Reassign
                   </Button>
                 ) : (
                   <Button
@@ -100,9 +101,13 @@ export default function IssuePage() {
                     className="border bg-white dark:bg-secondary"
                   >
                     <Contact2 className="mr-2 h-4 w-4" />
-                    Assign user
+                    Assign
                   </Button>
                 )}
+                <DeleteIssueAlert
+                  projectId={project.id.toString()}
+                  issueId={issue.id.toString()}
+                />
               </div>
             </div>
           </div>
