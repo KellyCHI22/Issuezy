@@ -106,7 +106,7 @@ export function AssignIssueSheet({
       <SheetTrigger asChild></SheetTrigger>
       <SheetContent
         side={isMobile ? "bottom" : "right"}
-        className="overflow-y-scroll dark:bg-gray-900"
+        className="dark:bg-gray-900"
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">

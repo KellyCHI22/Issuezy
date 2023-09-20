@@ -3,17 +3,18 @@ import ProjectCard from "@/components/ProjectCard";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { type Project, getProjects } from "@/apis/project-api";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import Spinner from "@/components/ui/spinner";
 
 export default function AllProjectsPage() {
   const { status, data } = useQuery({
     queryKey: ["projects"],
     queryFn: getProjects,
-    // onSuccess: (data) => console.log(data),
     onError: (error) => console.log(error),
   });
 
-  // todo need to add loading skeleton component
-  if (status === "loading") return <h1>Loading...</h1>;
+  if (status === "loading") return <Spinner />;
+
   if (status === "error") {
     return <h1>Some errors occurred</h1>;
   }
@@ -32,13 +33,15 @@ export default function AllProjectsPage() {
           </div>
           <ProjectSheet />
         </div>
-        <div className="grid grid-cols-1 gap-5 lg:auto-rows-[1fr] lg:grid-cols-3 lg:overflow-y-scroll 2xl:grid-cols-4">
-          {projects.map((project) => (
-            <Link key={project.id} to={`/projects/${project.id}`}>
-              <ProjectCard project={project} />
-            </Link>
-          ))}
-        </div>
+        <ScrollArea>
+          <div className="grid grid-cols-1 gap-5 lg:auto-rows-[1fr] lg:grid-cols-3 2xl:grid-cols-4">
+            {projects.map((project) => (
+              <Link key={project.id} to={`/projects/${project.id}`}>
+                <ProjectCard project={project} />
+              </Link>
+            ))}
+          </div>
+        </ScrollArea>
       </div>
     </div>
   );

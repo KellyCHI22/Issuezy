@@ -14,6 +14,8 @@ import { Project, getProject } from "@/apis/project-api";
 import { DeleteIssueAlert } from "@/components/DeleteIssueAlert";
 import { AssignIssueSheet } from "@/components/AssignIssueSheet";
 import { useState } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import Spinner from "@/components/ui/spinner";
 
 export default function IssuePage() {
   const { id, iid } = useParams();
@@ -44,8 +46,7 @@ export default function IssuePage() {
   );
   const isError = queryResults.some((result) => result.isError);
 
-  // todo need to add loading skeleton component
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
   if (isError) {
     return <h1>Something went wrong</h1>;
   }
@@ -144,20 +145,22 @@ export default function IssuePage() {
             <CommentSheet projectId={id} issueId={iid} />
           </div>
         </div>
-        <div className="flex-1 space-y-5 overflow-y-scroll">
-          {comments.length === 0 ? (
-            <p className="text-muted-foreground">There are no comments yet</p>
-          ) : (
-            comments.map((comment) => (
-              <CommentCard
-                key={comment.id}
-                comment={comment}
-                projectId={id}
-                issueId={iid}
-              />
-            ))
-          )}
-        </div>
+        <ScrollArea>
+          <div className="flex-1 space-y-5">
+            {comments.length === 0 ? (
+              <p className="text-muted-foreground">There are no comments yet</p>
+            ) : (
+              comments.map((comment) => (
+                <CommentCard
+                  key={comment.id}
+                  comment={comment}
+                  projectId={id}
+                  issueId={iid}
+                />
+              ))
+            )}
+          </div>
+        </ScrollArea>
       </div>
     </div>
   );

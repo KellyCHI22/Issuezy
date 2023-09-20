@@ -10,6 +10,8 @@ import { formatTime } from "@/lib/utils";
 import { ProjectChart } from "@/components/ProjectChart";
 import { MembersList } from "@/components/MembersList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import Spinner from "@/components/ui/spinner";
 
 export default function DashboardPage() {
   const { id } = useParams();
@@ -19,7 +21,7 @@ export default function DashboardPage() {
     queryFn: () => getProject(id),
   });
 
-  if (projectQuery.status === "loading") return <h1>Loading...</h1>;
+  if (projectQuery.status === "loading") return <Spinner />;
   if (projectQuery.status === "error") {
     return <h1>Something went wrong</h1>;
   }
@@ -64,39 +66,41 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
-        <div className="grid gap-3 overflow-hidden rounded-lg lg:grid-cols-5 lg:overflow-y-scroll">
-          {/* charts */}
-          <div className="rounded-lg bg-white p-6 text-center dark:bg-gray-900 lg:col-span-3">
-            <Tabs defaultValue="status">
-              <div className="lg:flex lg:justify-between">
-                <div className="pb-3 text-start lg:pb-0">
-                  <h2 className="text-xl font-bold">Issues overview</h2>
-                  <p className="pt-1 text-sm text-muted-foreground">
-                    Total issues: 18
-                  </p>
+        <ScrollArea>
+          <div className="grid gap-3 rounded-lg lg:grid-cols-5">
+            {/* charts */}
+            <div className="rounded-lg bg-white p-6 text-center dark:bg-gray-900 lg:col-span-3">
+              <Tabs defaultValue="status">
+                <div className="lg:flex lg:justify-between">
+                  <div className="pb-3 text-start lg:pb-0">
+                    <h2 className="text-xl font-bold">Issues overview</h2>
+                    <p className="pt-1 text-sm text-muted-foreground">
+                      Total issues: 18
+                    </p>
+                  </div>
+                  <TabsList className="text-end">
+                    <TabsTrigger value="status">Status</TabsTrigger>
+                    <TabsTrigger value="category">Category</TabsTrigger>
+                    <TabsTrigger value="priority">Priority</TabsTrigger>
+                  </TabsList>
                 </div>
-                <TabsList className="text-end">
-                  <TabsTrigger value="status">Status</TabsTrigger>
-                  <TabsTrigger value="category">Category</TabsTrigger>
-                  <TabsTrigger value="priority">Priority</TabsTrigger>
-                </TabsList>
-              </div>
-              <TabsContent value="status">
-                Change your password here.
-              </TabsContent>
-              <TabsContent value="category">
-                <ProjectChart />
-              </TabsContent>
-              <TabsContent value="priority">
-                Change your password here.
-              </TabsContent>
-            </Tabs>
+                <TabsContent value="status">
+                  Change your password here.
+                </TabsContent>
+                <TabsContent value="category">
+                  <ProjectChart />
+                </TabsContent>
+                <TabsContent value="priority">
+                  Change your password here.
+                </TabsContent>
+              </Tabs>
+            </div>
+            {/* members */}
+            <div className="h-fit rounded-lg bg-white p-6 dark:bg-gray-900 lg:col-span-2">
+              <MembersList projectId={id} />
+            </div>
           </div>
-          {/* members */}
-          <div className="h-fit rounded-lg bg-white p-6 dark:bg-gray-900 lg:col-span-2">
-            <MembersList projectId={id} />
-          </div>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );

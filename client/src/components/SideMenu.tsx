@@ -7,6 +7,7 @@ import logoLight from "../assets/logo-light.png";
 import logoDark from "../assets/logo-dark.png";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { type CurrentUser, getCurrentUser } from "@/apis/user-api";
+import Spinner from "./ui/spinner";
 
 interface SideMenuProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -24,8 +25,7 @@ export default function SideMenu({ className }: SideMenuProps) {
     navigate("/login");
   };
 
-  // todo need to add loading skeleton component
-  if (status === "loading") return <h1>Loading...</h1>;
+  if (status === "loading") return <Spinner />;
   if (status === "error") {
     return <h1>{JSON.stringify(error)}</h1>;
   }

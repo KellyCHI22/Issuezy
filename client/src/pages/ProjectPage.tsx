@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { type Issue, getIssues } from "@/apis/issue-api";
 import { useMediaQuery } from "react-responsive";
 import { GaugeCircle } from "lucide-react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import Spinner from "@/components/ui/spinner";
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -23,9 +25,8 @@ export default function ProjectPage() {
     queryFn: () => getIssues(id),
   });
 
-  // todo need to add loading skeleton component
   if (projectQuery.status === "loading" || issuesQuery.status === "loading")
-    return <h1>Loading...</h1>;
+    return <Spinner />;
   if (projectQuery.status === "error" || issuesQuery.status === "error") {
     return (
       <h1>
@@ -66,9 +67,12 @@ export default function ProjectPage() {
         {isMobile ? (
           "working in progress"
         ) : (
-          <div className="overflow-hidden rounded-lg bg-white p-3 dark:bg-gray-900 lg:overflow-y-scroll">
-            <IssuesTable data={issues} columns={columns} project={project} />
-          </div>
+          <ScrollArea>
+            <ScrollBar orientation="horizontal" />
+            <div className="rounded-lg bg-white p-3 dark:bg-gray-900">
+              <IssuesTable data={issues} columns={columns} project={project} />
+            </div>
+          </ScrollArea>
         )}
       </div>
     </div>

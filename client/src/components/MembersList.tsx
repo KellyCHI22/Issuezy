@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { getMembers } from "@/apis/project-api";
 import { Badge } from "./ui/badge";
+import Spinner from "./ui/spinner";
 
 type Member = {
   id: number;
@@ -18,7 +19,17 @@ export function MembersList({ projectId }: { projectId?: string }) {
     queryFn: () => getMembers(projectId),
   });
 
-  if (projectQuery.status === "loading") return <h1>Loading...</h1>;
+  if (projectQuery.status === "loading")
+    return (
+      <div>
+        <div className="mb-5 flex justify-between">
+          <h2 className="text-xl font-bold">Members</h2>
+          <Button variant="secondary">
+            <UserPlus2 className="mr-2 h-4 w-4" /> Add member
+          </Button>
+        </div>
+      </div>
+    );
   if (projectQuery.status === "error") {
     return <h1>Something went wrong</h1>;
   }
