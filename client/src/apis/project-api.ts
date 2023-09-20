@@ -34,8 +34,17 @@ export async function getProjects() {
   return res.data.data;
 }
 
+// * 取得特定專案資訊
 export async function getProject(projectId) {
   const res = await axiosInstance.get(`${baseURL}/projects/${projectId}`);
+  return res.data.data;
+}
+
+// * 取得特定專案成員
+export async function getMembers(projectId) {
+  const res = await axiosInstance.get(
+    `${baseURL}/projects/${projectId}/members`,
+  );
   return res.data.data;
 }
 
