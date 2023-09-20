@@ -31,6 +31,12 @@ const projectController = {
       res.json({ status: 'success', data });
     });
   },
+  getMembers: (req, res, next) => {
+    projectService.getMembers(req, (err, data) => {
+      if (err) return next(err);
+      res.json({ status: 'success', data });
+    });
+  },
   addMember: (req, res, next) => {
     projectService.addMember(req, (err, data) => {
       if (err) return next(err);

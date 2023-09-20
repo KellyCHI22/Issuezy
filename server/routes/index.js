@@ -15,6 +15,11 @@ router.post('/users/permission', userController.checkPermission);
 router.get('/users/current', authenticated, userController.getCurrentUser);
 
 // * projects
+router.get(
+  '/projects/:id/members',
+  authenticated,
+  projectController.getMembers
+);
 router.delete(
   '/projects/:id/members',
   authenticated,

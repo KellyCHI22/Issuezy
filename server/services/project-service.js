@@ -163,6 +163,36 @@ const projectService = {
       cb(err);
     }
   },
+  getMembers: async (req, cb) => {
+    try {
+      const project = await Project.findByPk(req.params.id, {
+        include: [
+          {
+            model: User,
+            as: 'Creator',
+            attributes: ['id', 'firstname', 'lastname', 'email'],
+          },
+          {
+            model: User,
+            as: 'Members',
+            attributes: ['id', 'firstname', 'lastname', 'email'],
+            through: { attributes: [] },
+          },
+        ],
+        order: [['createdAt', 'DESC']],
+        attributes: ['id', 'name'],
+        nest: true,
+      });
+      if (!project) throw customError(400, 'Project does not exist!');
+      const filteredMembers = project.Members.filter(
+        (member) => member.id !== project.Creator.id
+      );
+
+      cb(null, { project: { ...project.toJSON(), Members: filteredMembers } });
+    } catch (err) {
+      cb(err);
+    }
+  },
   addMember: async (req, cb) => {
     try {
       // todo only project owner can add new members
