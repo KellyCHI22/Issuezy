@@ -16,7 +16,6 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import {
   Form,
@@ -34,12 +33,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { type Issue, patchIssue } from "@/apis/issue-api";
 import { AlertMessage } from "./AlertMassage";
-import { Pencil } from "lucide-react";
 import { type Project } from "@/apis/project-api";
 
 interface IssueSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   project: Project;
   issue: Issue;
+  showEditSheet: boolean;
+  setShowEditSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const issueFormSchema = z.object({
@@ -78,8 +78,12 @@ const PRIORITY_KEYS = {
 
 const STATUS_VALUES = ["open", "in progress", "wait for review", "close"];
 
-export function EditIssueSheet({ project, issue }: IssueSheetProps) {
-  const [open, setOpen] = useState(false);
+export function EditIssueSheet({
+  project,
+  issue,
+  showEditSheet,
+  setShowEditSheet,
+}: IssueSheetProps) {
   const [editIssueError, setEditIssueError] = useState<string>("");
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
@@ -105,7 +109,7 @@ export function EditIssueSheet({ project, issue }: IssueSheetProps) {
         },
       );
       setEditIssueError("");
-      setOpen(false);
+      setShowEditSheet(false);
     },
     onError: (error) => setEditIssueError(error.response.data.message),
   });
@@ -133,13 +137,7 @@ export function EditIssueSheet({ project, issue }: IssueSheetProps) {
   }
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <Button variant="default">
-          <Pencil className="mr-2 h-4 w-4" />
-          Edit
-        </Button>
-      </SheetTrigger>
+    <Sheet open={showEditSheet} onOpenChange={setShowEditSheet}>
       <SheetContent
         side={isMobile ? "bottom" : "right"}
         className="overflow-y-scroll dark:bg-gray-900"

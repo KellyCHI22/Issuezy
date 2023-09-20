@@ -7,26 +7,27 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { AlertMessage } from "./AlertMassage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteIssue } from "@/apis/issue-api";
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { XOctagon } from "lucide-react";
 
 interface DeleteIssueAlertProps extends React.HTMLAttributes<HTMLDivElement> {
   projectId?: string;
   issueId?: string;
+  showDeleteDialog: boolean;
+  setShowDeleteDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function DeleteIssueAlert({
   projectId,
   issueId,
+  showDeleteDialog,
+  setShowDeleteDialog,
 }: DeleteIssueAlertProps) {
-  const [isOpen, setIsOpen] = useState(false);
   const [deleteIssueError, setDeleteIssueError] = useState<string>("");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export function DeleteIssueAlert({
       queryClient.invalidateQueries(["projects", projectId, "issues"], {
         exact: true,
       });
-      setIsOpen(false);
+      setShowDeleteDialog(false);
       navigate(`/projects/${projectId}`);
     },
     onError: (error) => setDeleteIssueError(error.response.data.message),
@@ -53,21 +54,16 @@ export function DeleteIssueAlert({
   };
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline-desctructive">
-          <Trash2 className="mr-2 h-4 w-4" />
-          Delete
-        </Button>
-      </AlertDialogTrigger>
+    <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
       <AlertDialogContent>
         <AlertDialogHeader>
+          <XOctagon className="text-destructive" />
           <AlertDialogTitle>
-            Are you sure about deleting the comment?
+            Are you sure about deleting the issue?
           </AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete the
-            comment.
+            issue.
           </AlertDialogDescription>
           {deleteIssueError && (
             <AlertMessage variant="destructive" message={deleteIssueError} />

@@ -12,6 +12,7 @@ import { AlertMessage } from "./AlertMassage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Comment, deleteComment } from "@/apis/comment-api";
 import { useState } from "react";
+import { XOctagon } from "lucide-react";
 
 interface DeleteCommentAlertProps extends React.HTMLAttributes<HTMLDivElement> {
   projectId?: string;
@@ -69,6 +70,7 @@ export function DeleteCommentAlert({
     >
       <AlertDialogContent>
         <AlertDialogHeader>
+          <XOctagon className="text-destructive" />
           <AlertDialogTitle>
             Are you sure about deleting the comment?
           </AlertDialogTitle>

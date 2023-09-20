@@ -31,20 +31,25 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { type Issue, assignIssue } from "@/apis/issue-api";
 import { AlertMessage } from "./AlertMassage";
-import { Contact2 } from "lucide-react";
 import { type Project } from "@/apis/project-api";
 
 interface IssueSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   project: Project;
   issue: Issue;
+  showAssignSheet: boolean;
+  setShowAssignSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const assignIssueFormSchema = z.object({
   assigneeId: z.string().optional().nullable(),
 });
 
-export function AssignIssueSheet({ project, issue }: IssueSheetProps) {
-  const [open, setOpen] = useState(false);
+export function AssignIssueSheet({
+  project,
+  issue,
+  showAssignSheet,
+  setShowAssignSheet,
+}: IssueSheetProps) {
   const [assignIssueError, setAssignIssueError] = useState<string>("");
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
@@ -70,7 +75,7 @@ export function AssignIssueSheet({ project, issue }: IssueSheetProps) {
         },
       );
       setAssignIssueError("");
-      setOpen(false);
+      setShowAssignSheet(false);
     },
     onError: (error) => setAssignIssueError(error.response.data.message),
   });
@@ -97,16 +102,8 @@ export function AssignIssueSheet({ project, issue }: IssueSheetProps) {
   }
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <Button
-          variant="secondary"
-          className="border bg-white dark:bg-secondary"
-        >
-          <Contact2 className="mr-2 h-4 w-4" />
-          {issue.Assignee ? "Reassign" : "Assign"}
-        </Button>
-      </SheetTrigger>
+    <Sheet open={showAssignSheet} onOpenChange={setShowAssignSheet}>
+      <SheetTrigger asChild></SheetTrigger>
       <SheetContent
         side={isMobile ? "bottom" : "right"}
         className="overflow-y-scroll dark:bg-gray-900"

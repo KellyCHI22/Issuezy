@@ -8,14 +8,18 @@ import { Badge, PriorityBadge } from "@/components/ui/badge";
 import { formatTime } from "@/lib/utils";
 import UserAvatar from "@/components/UserAvatar";
 import { Button } from "@/components/ui/button";
-import { Contact2 } from "lucide-react";
+import { Contact2, Pencil, Trash2 } from "lucide-react";
 import { EditIssueSheet } from "@/components/EditIssueSheet";
 import { Project, getProject } from "@/apis/project-api";
 import { DeleteIssueAlert } from "@/components/DeleteIssueAlert";
 import { AssignIssueSheet } from "@/components/AssignIssueSheet";
+import { useState } from "react";
 
 export default function IssuePage() {
   const { id, iid } = useParams();
+  const [showEditSheet, setShowEditSheet] = useState(false);
+  const [showAssignSheet, setShowAssignSheet] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const queryResults = useQueries({
     queries: [
@@ -88,11 +92,45 @@ export default function IssuePage() {
               </div>
               {/* // todo only certain people can edit or assign user */}
               <div className="flex space-x-2 pt-6">
-                <EditIssueSheet project={project} issue={issue} />
-                <AssignIssueSheet project={project} issue={issue} />
+                <Button
+                  variant="default"
+                  onClick={() => setShowEditSheet(true)}
+                >
+                  <Pencil className="mr-2 h-4 w-4" />
+                  Edit
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="border bg-white dark:bg-secondary"
+                  onClick={() => setShowAssignSheet(true)}
+                >
+                  <Contact2 className="mr-2 h-4 w-4" />
+                  {issue.Assignee ? "Reassign" : "Assign"}
+                </Button>
+                <Button
+                  variant="outline-desctructive"
+                  onClick={() => setShowDeleteDialog(true)}
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete
+                </Button>
+                <EditIssueSheet
+                  project={project}
+                  issue={issue}
+                  showEditSheet={showEditSheet}
+                  setShowEditSheet={setShowEditSheet}
+                />
+                <AssignIssueSheet
+                  project={project}
+                  issue={issue}
+                  showAssignSheet={showAssignSheet}
+                  setShowAssignSheet={setShowAssignSheet}
+                />
                 <DeleteIssueAlert
                   projectId={project.id.toString()}
                   issueId={issue.id.toString()}
+                  showDeleteDialog={showDeleteDialog}
+                  setShowDeleteDialog={setShowDeleteDialog}
                 />
               </div>
             </div>

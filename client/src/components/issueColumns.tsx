@@ -1,19 +1,13 @@
 import { formatTime } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge, PriorityBadge } from "./ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { Link } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
 import { Button } from "./ui/button";
-import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { Issue } from "@/apis/issue-api";
+import IssueActionsDropdown from "./IssueActionsDropdown";
 
 export const columns: ColumnDef<Issue>[] = [
   {
@@ -155,23 +149,9 @@ export const columns: ColumnDef<Issue>[] = [
   },
   {
     id: "actions",
-    cell: () => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+    cell: ({ row }) => {
+      const issue = row.original;
+      return <IssueActionsDropdown issue={issue} />;
     },
   },
 ];
