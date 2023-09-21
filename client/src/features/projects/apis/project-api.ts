@@ -63,3 +63,10 @@ export async function patchProject(payload) {
   );
   return res.data.data;
 }
+
+// * 刪除一個專案
+export async function deleteProject(payload) {
+  const { projectId } = payload;
+  const res = await axiosInstance.delete(`${baseURL}/projects/${projectId}`);
+  return res.data.data;
+}

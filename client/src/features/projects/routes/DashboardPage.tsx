@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
 import { Link, useParams } from "react-router-dom";
-import { TableProperties, Trash2 } from "lucide-react";
+import { TableProperties } from "lucide-react";
 import UserAvatar from "@/components/UserAvatar";
 import { formatTime } from "@/utils";
 import { ProjectChart } from "@/features/projects/components/ProjectChart";
@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Spinner from "@/components/ui/spinner";
 import { EditProjectSheet } from "../components/EditProjectSheet";
+import { DeleteProjectAlert } from "../components/DeleteProjectAlert";
 
 export function DashboardPage() {
   const { id } = useParams();
@@ -22,7 +23,7 @@ export function DashboardPage() {
     queryFn: () => getProject(id),
   });
 
-  if (projectQuery.status === "loading") return <Spinner />;
+  if (projectQuery.isLoading || projectQuery.isFetching) return <Spinner />;
   if (projectQuery.status === "error") {
     return <h1>Something went wrong</h1>;
   }
@@ -57,10 +58,7 @@ export function DashboardPage() {
                 </Button>
               </Link>
               <EditProjectSheet project={project} />
-              <Button variant="outline-desctructive">
-                <Trash2 className="mr-2 h-4 w-4" /> Delete{" "}
-                {!isMobile && "project"}
-              </Button>
+              <DeleteProjectAlert projectId={project.id.toString()} />
             </div>
           </div>
         </div>

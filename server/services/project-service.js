@@ -133,7 +133,6 @@ const projectService = {
     }
   },
   patchProject: async (req, cb) => {
-    // todo will need to check if the current user is the project owner
     try {
       const { name, description, isPublic } = req.body;
       const userId = req.user.id;
@@ -142,6 +141,7 @@ const projectService = {
       const project = await Project.findByPk(req.params.id);
       if (!project) throw customError(400, 'Project does not exist!');
 
+      // * only project owner can update the project he created
       if (userId !== project.creatorId)
         throw customError(400, 'You are not allowed to edit the project!');
 
@@ -156,12 +156,18 @@ const projectService = {
     }
   },
   deleteProject: async (req, cb) => {
-    // todo will need to check if the current user is the project owner
     try {
+      const userId = req.user.id;
       const project = await Project.findByPk(req.params.id);
       if (!project) throw customError(400, 'Project does not exist!');
+
+      // * only project owner can delete the project he created
+      if (userId !== project.creatorId)
+        throw customError(400, 'You are not allowed to delete the project!');
+
       if (project.isDeleted)
         throw customError(400, 'Project has already been deleted!');
+
       const deletedProject = await project.update({ isDeleted: true });
       cb(null, { deletedProject });
     } catch (err) {
