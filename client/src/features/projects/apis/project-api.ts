@@ -53,3 +53,13 @@ export async function postProject(payload) {
   const res = await axiosInstance.post(`${baseURL}/projects`, payload);
   return res.data.data;
 }
+
+// * 更新專案資訊
+export async function patchProject(payload) {
+  const { projectId, formData } = payload;
+  const res = await axiosInstance.patch(
+    `${baseURL}/projects/${projectId}`,
+    formData,
+  );
+  return res.data.data;
+}

@@ -136,16 +136,21 @@ const projectService = {
     // todo will need to check if the current user is the project owner
     try {
       const { name, description, isPublic } = req.body;
+      const userId = req.user.id;
       if (name.trim().length === 0 || description.trim().length === 0)
         throw customError(400, 'All fields are required!');
       const project = await Project.findByPk(req.params.id);
       if (!project) throw customError(400, 'Project does not exist!');
-      const updatedProjected = await project.update({
+
+      if (userId !== project.creatorId)
+        throw customError(400, 'You are not allowed to edit the project!');
+
+      const updatedProject = await project.update({
         name,
         description,
         isPublic,
       });
-      cb(null, { updatedProjected });
+      cb(null, { updatedProject });
     } catch (err) {
       cb(err);
     }
