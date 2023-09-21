@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { getMembers } from "@/features/projects/apis/project-api";
 import { Badge } from "@/components/ui/badge";
+import { AddMemberSheet } from "./AddMemberSheet";
 
 type Member = {
   id: number;
@@ -12,20 +13,18 @@ type Member = {
   email: string;
 };
 
-export function MembersList({ projectId }: { projectId?: string }) {
+export function MembersList({ projectId }: { projectId: string }) {
   const projectQuery = useQuery({
     queryKey: ["projects", projectId, "members"],
     queryFn: () => getMembers(projectId),
   });
 
-  if (projectQuery.status === "loading")
+  if (projectQuery.isLoading || projectQuery.isFetching)
     return (
       <div>
         <div className="mb-5 flex justify-between">
           <h2 className="text-xl font-bold">Members</h2>
-          <Button variant="secondary">
-            <UserPlus2 className="mr-2 h-4 w-4" /> Add member
-          </Button>
+          <AddMemberSheet projectId={projectId} />
         </div>
       </div>
     );
@@ -40,9 +39,7 @@ export function MembersList({ projectId }: { projectId?: string }) {
     <div>
       <div className="mb-5 flex justify-between">
         <h2 className="text-xl font-bold">Members</h2>
-        <Button variant="secondary">
-          <UserPlus2 className="mr-2 h-4 w-4" /> Add member
-        </Button>
+        <AddMemberSheet projectId={projectId} />
       </div>
       <div className="mb-2 space-y-8">
         <div key={creator.id} className="flex items-center justify-between">

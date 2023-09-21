@@ -70,3 +70,13 @@ export async function deleteProject(payload) {
   const res = await axiosInstance.delete(`${baseURL}/projects/${projectId}`);
   return res.data.data;
 }
+
+// * 新增專案成員
+export async function addMember(payload) {
+  const { projectId, formData } = payload;
+  const res = await axiosInstance.post(
+    `${baseURL}/projects/${projectId}/members`,
+    formData,
+  );
+  return res.data.data;
+}

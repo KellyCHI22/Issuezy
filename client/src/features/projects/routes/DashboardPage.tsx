@@ -93,7 +93,7 @@ export function DashboardPage() {
             </div>
             {/* members */}
             <div className="h-fit rounded-lg bg-white p-6 dark:bg-gray-900 lg:col-span-2">
-              <MembersList projectId={id} />
+              <MembersList projectId={project.id.toString()} />
             </div>
           </div>
         </ScrollArea>

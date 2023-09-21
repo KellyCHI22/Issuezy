@@ -206,32 +206,36 @@ const projectService = {
   },
   addMember: async (req, cb) => {
     try {
-      // todo only project owner can add new members
-      const userEmail = req.body.userEmail.trim();
+      const email = req.body.email.trim();
       const projectId = parseInt(req.params.id);
-      if (!userEmail) throw customError(400, 'Please enter user email!');
+      const userId = req.user.id;
+      if (!email) throw customError(400, 'Please enter user email!');
 
       // * check if project and user both exist
-      const [project, user] = await Promise.all([
+      const [project, member] = await Promise.all([
         Project.findByPk(projectId),
-        User.findOne({ where: { email: userEmail } }),
+        User.findOne({ where: { email } }),
       ]);
       if (!project) throw customError(400, 'Project does not exist!');
-      if (!user) throw customError(400, 'User does not exist!');
+      if (!member) throw customError(400, 'This user does not exist!');
+
+      // * only project owner can add new members
+      if (userId !== project.creatorId)
+        throw customError(400, 'You are not allowed to add new members!');
 
       // * check if membership already exist
       const membership = await Membership.findOne({
         where: {
           projectId,
-          userId: user.id,
+          userId: member.id,
         },
       });
       if (membership)
-        throw customError(400, 'You already added this user to your project');
+        throw customError(400, 'This user is already a member of the project');
 
       // * create a new membership
       const newMembership = await Membership.create({
-        userId: user.id,
+        userId: member.id,
         projectId,
       });
       cb(null, { membership: newMembership });
