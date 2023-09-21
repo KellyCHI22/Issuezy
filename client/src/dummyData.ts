@@ -1,5 +1,3 @@
-import type { Issue } from "./components/issueColumns";
-
 export const projects = [
   {
     id: 7,
@@ -178,7 +176,7 @@ export const projects = [
   },
 ];
 
-export const issues: Issue[] = [
+export const issues = [
   {
     id: 5,
     title: "this is the second issue",

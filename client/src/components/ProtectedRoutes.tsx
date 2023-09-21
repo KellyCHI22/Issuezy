@@ -1,4 +1,4 @@
-import { checkPermission } from "@/apis/auth-api";
+import { checkPermission } from "@/features/auth/apis/auth-api";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";

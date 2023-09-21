@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import SideMenu from "../SideMenu";
 import { Outlet } from "react-router-dom";
-import ButtomMenu from "../ButtomMenu";
+import SideMenu from "./SideMenu";
+import ButtomMenu from "./ButtomMenu";
 
 export default function RootLayout() {
   return (

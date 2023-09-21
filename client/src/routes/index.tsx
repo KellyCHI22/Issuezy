@@ -3,16 +3,17 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
+import { SignupPage, LoginPage } from "@/features/auth";
+import {
+  AllProjectsPage,
+  DashboardPage,
+  ProjectPage,
+  IssuePage,
+} from "@/features/projects";
+import { AccountPage, TasksPage } from "@/features/users";
+
 import ProtectedRoutes from "@/components/ProtectedRoutes";
 import RootLayout from "@/components/layout/RootLayout";
-import AccountPage from "@/pages/AccountPage";
-import AllProjectsPage from "@/pages/AllProjectsPage";
-import DashboardPage from "@/pages/DashboardPage";
-import IssuePage from "@/pages/IssuePage";
-import LoginPage from "@/pages/LoginPage";
-import ProjectPage from "@/pages/ProjectPage";
-import SignupPage from "@/pages/SignupPage";
-import TasksPage from "@/pages/TasksPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
