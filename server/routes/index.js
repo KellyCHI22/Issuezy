@@ -15,15 +15,15 @@ router.post('/users/permission', userController.checkPermission);
 router.get('/users/current', authenticated, userController.getCurrentUser);
 
 // * projects
+router.delete(
+  '/projects/:id/members/:uid',
+  authenticated,
+  projectController.removeMember
+);
 router.get(
   '/projects/:id/members',
   authenticated,
   projectController.getMembers
-);
-router.delete(
-  '/projects/:id/members',
-  authenticated,
-  projectController.removeMember
 );
 router.post(
   '/projects/:id/members',

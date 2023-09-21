@@ -80,3 +80,12 @@ export async function addMember(payload) {
   );
   return res.data.data;
 }
+
+// * 移除專案成員
+export async function removeMember(payload) {
+  const { projectId, memberId } = payload;
+  const res = await axiosInstance.delete(
+    `${baseURL}/projects/${projectId}/members/${memberId}`,
+  );
+  return res.data.data;
+}

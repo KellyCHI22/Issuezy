@@ -245,17 +245,26 @@ const projectService = {
   },
   removeMember: async (req, cb) => {
     try {
-      // todo only project owner can remove members
-      // todo cannot remove project owner
-      const userId = parseInt(req.body.userId);
+      const memberId = parseInt(req.params.uid);
       const projectId = parseInt(req.params.id);
-      if (!userId) throw customError(400, 'Bad request!');
+      const userId = req.user.id;
+      if (!memberId) throw customError(400, 'Please select a user!');
+
+      const project = await Project.findByPk(req.params.id);
+
+      // * only project owner can remove members
+      if (userId !== project.creatorId)
+        throw customError(400, 'You are not allowed to remove members!');
+
+      // * project creator cannot be removed
+      if (memberId === project.creatorId)
+        throw customError(400, 'You are not allowed to remove the creator!');
 
       // * check if membership actually exist
       const membership = await Membership.findOne({
         where: {
           projectId,
-          userId,
+          userId: memberId,
         },
       });
       if (!membership)

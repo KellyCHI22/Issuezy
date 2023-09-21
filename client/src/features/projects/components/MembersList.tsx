@@ -1,12 +1,11 @@
 import UserAvatar from "@/components/UserAvatar";
-import { UserMinus2, UserPlus2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { getMembers } from "@/features/projects/apis/project-api";
 import { Badge } from "@/components/ui/badge";
 import { AddMemberSheet } from "./AddMemberSheet";
+import { RemoveMemberAlert } from "./RemoveMemberAlert";
 
-type Member = {
+export type Member = {
   id: number;
   firstname: string;
   lastname: string;
@@ -63,9 +62,7 @@ export function MembersList({ projectId }: { projectId: string }) {
               </p>
               <p className="text-sm text-muted-foreground">{member.email}</p>
             </div>
-            <Button variant="outline" className="ml-auto px-2 py-2">
-              <UserMinus2 className="h-4 w-4" />
-            </Button>
+            <RemoveMemberAlert member={member} projectId={projectId} />
           </div>
         ))}
       </div>
