@@ -3,3 +3,4 @@ export * from "./components/DeleteIssueAlert.tsx";
 export * from "./components/EditIssueSheet.tsx";
 export * from "./components/IssueSheet.tsx";
 export * from "./components/IssuesTable.tsx";
+export * from "./components/issueColumns.tsx";

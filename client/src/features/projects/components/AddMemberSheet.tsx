@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
 import {
   Sheet,
   SheetContent,
@@ -14,7 +12,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,10 +22,10 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addMember, postProject } from "@/features/projects/apis/project-api";
+import { addMember } from "@/features/projects/apis/project-api";
 import { useState } from "react";
 import { AlertMessage } from "../../../components/AlertMassage";
-import { Plus, UserPlus2 } from "lucide-react";
+import { UserPlus2 } from "lucide-react";
 
 interface AddMemberSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   projectId: string;
@@ -68,7 +65,6 @@ export function AddMemberSheet({ projectId }: AddMemberSheetProps) {
   });
 
   function onSubmit(values: z.infer<typeof addMemberFormSchema>) {
-    console.log(values);
     projectMutation.mutate({
       projectId,
       formData: {

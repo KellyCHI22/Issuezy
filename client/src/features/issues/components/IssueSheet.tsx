@@ -230,7 +230,10 @@ export function IssueSheet({ project }: IssueSheetProps) {
                       </FormControl>
                       <SelectContent>
                         {project.categories.map((category) => (
-                          <SelectItem value={category.id.toString()}>
+                          <SelectItem
+                            key={category.id}
+                            value={category.id.toString()}
+                          >
                             {category.name}
                           </SelectItem>
                         ))}

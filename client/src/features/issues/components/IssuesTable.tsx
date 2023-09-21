@@ -25,7 +25,7 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import { TablePagination } from "../../../components/TablePagination";
+import { TablePagination } from "./TablePagination";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,7 +39,7 @@ interface IssueTableProps<TData, TValue> {
   project: Project;
 }
 
-export default function IssuesTable<TData, TValue>({
+export function IssuesTable<TData, TValue>({
   data,
   columns,
   project,
@@ -165,8 +165,10 @@ export default function IssuesTable<TData, TValue>({
           <X className="ml-2 h-4 w-4" />
         </Button>
       </div>
-      <Table>
-        <TableCaption>A list of issues of the project.</TableCaption>
+      <Table className="border">
+        <TableCaption className="sr-only">
+          A list of issues of the project.
+        </TableCaption>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -207,8 +209,8 @@ export default function IssuesTable<TData, TValue>({
             </TableRow>
           )}
         </TableBody>
-        <TablePagination table={table} />
       </Table>
+      <TablePagination table={table} />
     </>
   );
 }

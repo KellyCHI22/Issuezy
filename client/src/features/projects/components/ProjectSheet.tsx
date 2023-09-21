@@ -36,8 +36,8 @@ const projectFormSchema = z.object({
     .min(1, {
       message: "Name cannot be blank",
     })
-    .max(20, {
-      message: "Name cannot be more than 20 characters",
+    .max(30, {
+      message: "Name cannot be more than 30 characters",
     }),
   description: z
     .string()

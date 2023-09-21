@@ -1,11 +1,9 @@
-import { IssueSheet } from "@/features/issues/components/IssueSheet";
-import IssuesTable from "@/features/issues/components/IssuesTable";
-import { columns } from "@/features/issues/components/issueColumns";
+import { Link } from "react-router-dom";
+import { IssueSheet, IssuesTable, columns } from "@/features/issues";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { type Project, getProject } from "@/features/projects/apis/project-api";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { type Issue, getIssues } from "@/features/issues/apis/issue-api";
 import { useMediaQuery } from "react-responsive";

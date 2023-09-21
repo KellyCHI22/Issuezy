@@ -12,10 +12,9 @@ import {
 import { AlertMessage } from "../../../components/AlertMassage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { UserMinus2, XOctagon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { deleteProject, removeMember } from "../apis/project-api";
+import { removeMember } from "../apis/project-api";
 import { Member } from "./MembersList";
 
 interface RemoveMemberAlertProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -79,7 +78,7 @@ export function RemoveMemberAlert({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleConfirm}>Delete</AlertDialogAction>
+          <AlertDialogAction onClick={handleConfirm}>Remove</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
