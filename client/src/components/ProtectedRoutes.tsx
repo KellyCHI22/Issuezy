@@ -7,13 +7,16 @@ export default function ProtectedRoutes() {
   const navigate = useNavigate();
   const permissionMutation = useMutation({
     mutationFn: checkPermission,
+    onSuccess: () => navigate("/projects"),
     onError: (error) => {
-      console.log(error.response.data), navigate("/login");
+      console.log(error.response.data);
+      return navigate("/login");
     },
   });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (!token) return navigate("/login");
     permissionMutation.mutate({ token });
     console.log("use effect runs");
   }, []);

@@ -5,7 +5,7 @@ import { CommentSheet } from "@/components/CommentSheet";
 import { type Issue, getIssue } from "@/apis/issue-api";
 import { type Comment, getComments } from "@/apis/comment-api";
 import { Badge, PriorityBadge } from "@/components/ui/badge";
-import { formatTime } from "@/lib/utils";
+import { formatTime } from "@/utils";
 import UserAvatar from "@/components/UserAvatar";
 import { Button } from "@/components/ui/button";
 import { Contact2, Pencil, Trash2 } from "lucide-react";

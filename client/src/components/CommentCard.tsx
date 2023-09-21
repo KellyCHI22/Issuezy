@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { formatTime } from "@/lib/utils";
+import { formatTime } from "@/utils";
 import UserAvatar from "./UserAvatar";
 import { Button } from "./ui/button";
 import { EditCommentSheet } from "./EditCommentSheet";

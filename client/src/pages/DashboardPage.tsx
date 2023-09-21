@@ -6,7 +6,7 @@ import { useMediaQuery } from "react-responsive";
 import { Link, useParams } from "react-router-dom";
 import { Pencil, TableProperties, Trash2 } from "lucide-react";
 import UserAvatar from "@/components/UserAvatar";
-import { formatTime } from "@/lib/utils";
+import { formatTime } from "@/utils";
 import { ProjectChart } from "@/components/ProjectChart";
 import { MembersList } from "@/components/MembersList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

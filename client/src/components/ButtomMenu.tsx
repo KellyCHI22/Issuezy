@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils";
 import { Button } from "./ui/button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ModeToggle } from "./ModeToggle";

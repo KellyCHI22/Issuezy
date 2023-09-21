@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatTime } from "@/lib/utils";
+import { formatTime } from "@/utils";
 import { Badge } from "./ui/badge";
 import UserAvatar from "./UserAvatar";
 import { type Project } from "@/apis/project-api";

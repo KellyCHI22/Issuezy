@@ -1,4 +1,4 @@
-import { formatTime } from "@/lib/utils";
+import { formatTime } from "@/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge, PriorityBadge } from "./ui/badge";
 
