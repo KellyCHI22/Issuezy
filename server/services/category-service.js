@@ -30,13 +30,19 @@ const categoryService = {
     }
   },
   postCategory: async (req, cb) => {
-    // todo only project owner can add category
     try {
       const { name } = req.body;
-      if (name.trim().length === 0) throw customError(400, 'Name is required!');
+      const userId = req.user.id;
       const projectId = req.params.id;
+      if (name.trim().length === 0) throw customError(400, 'Name is required!');
+
       const project = await Project.findByPk(projectId);
       if (!project) throw customError(400, 'Project does not exist!');
+
+      // * only project owner can add category
+      if (userId !== project.creatorId)
+        throw customError(400, 'You are not allowed to add new categories!');
+
       const newCategory = await Category.create({ name, projectId });
       cb(null, { newCategory });
     } catch (err) {
@@ -44,9 +50,9 @@ const categoryService = {
     }
   },
   patchCategory: async (req, cb) => {
-    // todo only project owner can edit category
     try {
       const { name } = req.body;
+      const userId = req.user.id;
       if (name.trim().length === 0) throw customError(400, 'Name is required!');
       const projectId = req.params.id;
       const categoryId = req.params.cid;
@@ -55,6 +61,11 @@ const categoryService = {
 
       if (!project) throw customError(400, 'Project does not exist!');
       if (!category) throw customError(400, 'Category does not exist!');
+
+      // * only project owner can edit category
+      if (userId !== project.creatorId)
+        throw customError(400, 'You are not allowed to edit categories!');
+
       if (category.isDefault)
         throw customError(400, 'Cannot change default categories!');
       if (category.projectId !== parseInt(projectId))
@@ -67,8 +78,8 @@ const categoryService = {
     }
   },
   deleteCategory: async (req, cb) => {
-    // todo only project owner can delete category
     try {
+      const userId = req.user.id;
       const projectId = req.params.id;
       const categoryId = req.params.cid;
       const project = await Project.findByPk(projectId);
@@ -76,6 +87,11 @@ const categoryService = {
 
       if (!project) throw customError(400, 'Project does not exist!');
       if (!category) throw customError(400, 'Category does not exist!');
+
+      // * only project owner can delete category
+      if (userId !== project.creatorId)
+        throw customError(400, 'You are not allowed to delete categories!');
+
       if (category.isDefault)
         throw customError(400, 'Cannot delete default categories!');
       if (category.isDeleted)
