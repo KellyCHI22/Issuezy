@@ -1,4 +1,4 @@
-import { baseURL, axiosInstance } from "../../../lib/axios";
+import { baseURL, axiosInstance } from "@/lib/axios";
 
 export type Comment = {
   id: number;

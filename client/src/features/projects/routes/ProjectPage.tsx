@@ -26,12 +26,7 @@ export function ProjectPage() {
   if (projectQuery.status === "loading" || issuesQuery.status === "loading")
     return <Spinner />;
   if (projectQuery.status === "error" || issuesQuery.status === "error") {
-    return (
-      <h1>
-        {JSON.stringify(projectQuery.error)}
-        {JSON.stringify(issuesQuery.error)}
-      </h1>
-    );
+    return <h1>Something went wrong</h1>;
   }
 
   const project = projectQuery.data.project as Project;

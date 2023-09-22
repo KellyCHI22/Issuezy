@@ -27,6 +27,7 @@ export function MembersList({ projectId }: { projectId: string }) {
     queryFn: () => getMembers(projectId),
   });
 
+  // todo change loading ui
   if (projectQuery.isLoading || projectQuery.isFetching)
     return (
       <div>

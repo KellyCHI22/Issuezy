@@ -1,4 +1,4 @@
-import { baseURL, axiosInstance } from "../../../lib/axios";
+import { baseURL, axiosInstance } from "@/lib/axios";
 
 export type Project = {
   id: number;
@@ -25,6 +25,7 @@ export type Project = {
   categories: {
     id: number;
     name: string;
+    isDefault: boolean;
   }[];
 };
 
