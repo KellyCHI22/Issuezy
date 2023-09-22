@@ -22,7 +22,7 @@ const categoryService = {
             },
           ],
         },
-        attributes: ['id', 'name'],
+        attributes: ['id', 'name', 'isDefault', 'isDeleted'],
       });
       cb(null, { categories });
     } catch (err) {
