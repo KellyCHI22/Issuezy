@@ -11,6 +11,9 @@ import { Badge } from "@/components/ui/badge";
 import { Project } from "../../projects/apis/project-api";
 import { useQuery } from "@tanstack/react-query";
 import { Category, getCategories } from "../apis/category-api";
+import { AddCategorySheet } from "./AddCategorySheet";
+import { EditCategorySheet } from "./EditCategorySheet";
+import { DeleteCategoryAlert } from "./DeleteCategoryAlert";
 
 export function CategoriesList({ project }: { project: Project }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -69,15 +72,12 @@ export function CategoriesList({ project }: { project: Project }) {
             </Button>
           </CollapsibleTrigger>
         </div>
-        <Button variant="secondary">
-          <Plus className="mr-2 h-4 w-4" />
-          Add category
-        </Button>
+        <AddCategorySheet projectId={project.id.toString()} />
       </div>
       <CollapsibleContent className="space-y-2">
         <div className="">
           {defaultCategories.map((category) => (
-            <div className="flex justify-between py-2">
+            <div key={category.id} className="flex justify-between py-2">
               <Badge>{category.name}</Badge>
               <Badge variant="outline">Default</Badge>
             </div>
@@ -92,12 +92,14 @@ export function CategoriesList({ project }: { project: Project }) {
               {category.name}
             </Badge>
             <div className="space-x-2">
-              <Button variant="outline" className="ml-auto px-2 py-2">
-                <Pencil className="h-4 w-4" />
-              </Button>
-              <Button variant="outline" className="ml-auto px-2 py-2">
-                <Trash2 className="h-4 w-4" />
-              </Button>
+              <EditCategorySheet
+                projectId={project.id.toString()}
+                category={category}
+              />
+              <DeleteCategoryAlert
+                projectId={project.id.toString()}
+                category={category}
+              />
             </div>
           </div>
         ))}
