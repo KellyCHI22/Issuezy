@@ -7,13 +7,14 @@ import { Link, useParams } from "react-router-dom";
 import { TableProperties } from "lucide-react";
 import UserAvatar from "@/components/UserAvatar";
 import { formatTime } from "@/utils";
-import { ProjectChart } from "@/features/projects/components/ProjectChart";
 import { MembersList } from "@/features/projects/components/MembersList";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Spinner from "@/components/ui/spinner";
 import { EditProjectSheet } from "../components/EditProjectSheet";
 import { DeleteProjectAlert } from "../components/DeleteProjectAlert";
+import { Issue, getIssues } from "@/features/issues/apis/issue-api";
+import { ChartBoard } from "../components/ChartBoard";
+import { CategoriesList } from "@/features/categories";
 
 export function DashboardPage() {
   const { id } = useParams();
@@ -22,16 +23,29 @@ export function DashboardPage() {
     queryKey: ["projects", id],
     queryFn: () => getProject(id),
   });
+  const issuesQuery = useQuery({
+    queryKey: ["projects", id, "issues"],
+    queryFn: () => getIssues(id),
+  });
 
-  if (projectQuery.isLoading || projectQuery.isFetching) return <Spinner />;
-  if (projectQuery.status === "error") {
+  const isLoading =
+    projectQuery.isLoading ||
+    projectQuery.isFetching ||
+    issuesQuery.isLoading ||
+    issuesQuery.isFetching;
+
+  const isError = projectQuery.isError || issuesQuery.isError;
+
+  if (isLoading) return <Spinner />;
+  if (isError) {
     return <h1>Something went wrong</h1>;
   }
 
   const project = projectQuery.data.project as Project;
+  const issues = issuesQuery.data.issues as Issue[];
 
   return (
-    <div className="h-screen">
+    <div className="lg:h-screen">
       <div className="h-full flex-1 flex-col space-y-4 p-8 md:flex">
         <div className="items-end lg:flex lg:justify-between lg:gap-5">
           <div className="space-y-2">
@@ -65,35 +79,13 @@ export function DashboardPage() {
         <ScrollArea>
           <div className="grid gap-3 rounded-lg lg:grid-cols-5">
             {/* charts */}
-            <div className="rounded-lg bg-white p-6 text-center dark:bg-gray-900 lg:col-span-3">
-              <Tabs defaultValue="status">
-                <div className="lg:flex lg:justify-between">
-                  <div className="pb-3 text-start lg:pb-0">
-                    <h2 className="text-xl font-bold">Issues overview</h2>
-                    <p className="pt-1 text-sm text-muted-foreground">
-                      Total issues: 18
-                    </p>
-                  </div>
-                  <TabsList className="text-end">
-                    <TabsTrigger value="status">Status</TabsTrigger>
-                    <TabsTrigger value="category">Category</TabsTrigger>
-                    <TabsTrigger value="priority">Priority</TabsTrigger>
-                  </TabsList>
-                </div>
-                <TabsContent value="status">
-                  Change your password here.
-                </TabsContent>
-                <TabsContent value="category">
-                  <ProjectChart />
-                </TabsContent>
-                <TabsContent value="priority">
-                  Change your password here.
-                </TabsContent>
-              </Tabs>
+            <div className="h-fit rounded-lg bg-white p-6 text-center dark:bg-gray-900 lg:col-span-3">
+              <ChartBoard issues={issues} project={project} />
             </div>
             {/* members */}
-            <div className="h-fit rounded-lg bg-white p-6 dark:bg-gray-900 lg:col-span-2">
+            <div className="h-fit space-y-3 lg:col-span-2">
               <MembersList projectId={project.id.toString()} />
+              <CategoriesList project={project} />
             </div>
           </div>
         </ScrollArea>
