@@ -11,7 +11,7 @@ interface UserAvatarProps extends React.HTMLAttributes<HTMLDivElement> {
 export default function UserAvatar({ user }: UserAvatarProps) {
   return (
     <Avatar className="bg-violet-500">
-      <AvatarFallback className="bg-primary tracking-widest text-white">
+      <AvatarFallback className="bg-primary text-base tracking-widest text-white">
         {user?.firstname[0]}
         {user?.lastname[0]}
       </AvatarFallback>

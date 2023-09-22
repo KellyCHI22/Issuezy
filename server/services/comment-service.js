@@ -4,7 +4,6 @@ const { customError } = require('../helpers/error-helper');
 const commentService = {
   getComments: async (req, cb) => {
     try {
-      // ? 檢查: 該 issue 是否屬於該 project
       const issueId = req.params.iid;
       const issue = await Issue.findByPk(issueId);
       if (!issue) throw customError(400, 'Issue does not exist!');
@@ -31,7 +30,6 @@ const commentService = {
   postComment: async (req, cb) => {
     try {
       // todo add input validations
-      // ? 檢查: 該 issue 是否屬於該 project
       const { text } = req.body;
       const projectId = req.params.id;
       const issueId = req.params.iid;

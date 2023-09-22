@@ -44,7 +44,9 @@ export function ChartBoard({
           </TabsContent>
         </>
       ) : (
-        <p className="py-5 text-muted-foreground">There are no issues yet.</p>
+        <p className="py-5 text-sm text-muted-foreground">
+          There are no issues yet.
+        </p>
       )}
     </Tabs>
   );
