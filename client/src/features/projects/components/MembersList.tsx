@@ -4,6 +4,14 @@ import { getMembers } from "@/features/projects/apis/project-api";
 import { Badge } from "@/components/ui/badge";
 import { AddMemberSheet } from "./AddMemberSheet";
 import { RemoveMemberAlert } from "./RemoveMemberAlert";
+import { useState } from "react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { ChevronsUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export type Member = {
   id: number;
@@ -13,6 +21,7 @@ export type Member = {
 };
 
 export function MembersList({ projectId }: { projectId: string }) {
+  const [isOpen, setIsOpen] = useState(true);
   const projectQuery = useQuery({
     queryKey: ["projects", projectId, "members"],
     queryFn: () => getMembers(projectId),
@@ -35,12 +44,24 @@ export function MembersList({ projectId }: { projectId: string }) {
   const members = projectQuery.data.project.Members as Member[];
 
   return (
-    <div>
-      <div className="mb-5 flex justify-between">
-        <h2 className="text-xl font-bold">Members</h2>
+    <Collapsible
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      className="rounded-lg bg-white p-6 dark:bg-gray-900"
+    >
+      <div className="mb-5 flex items-center justify-between">
+        <div className="flex gap-3">
+          <h3 className="text-lg font-bold">Members</h3>
+          <CollapsibleTrigger asChild>
+            <Button variant="ghost" size="sm" className="w-9 p-0">
+              <ChevronsUpDown className="h-4 w-4" />
+              <span className="sr-only">Toggle</span>
+            </Button>
+          </CollapsibleTrigger>
+        </div>
         <AddMemberSheet projectId={projectId} />
       </div>
-      <div className="mb-2 space-y-8">
+      <div className="mb-2">
         <div key={creator.id} className="flex items-center justify-between">
           <div className="flex items-center">
             <UserAvatar user={creator} />
@@ -53,19 +74,25 @@ export function MembersList({ projectId }: { projectId: string }) {
           </div>
           <Badge>Creator</Badge>
         </div>
-        {members.map((member) => (
-          <div key={member.id} className="flex items-center">
-            <UserAvatar user={member} />
-            <div className="ml-4 space-y-1">
-              <p className="text-sm font-medium leading-none">
-                {member.firstname} {member.lastname}
-              </p>
-              <p className="text-sm text-muted-foreground">{member.email}</p>
-            </div>
-            <RemoveMemberAlert member={member} projectId={projectId} />
-          </div>
-        ))}
+        {members.length > 0 && (
+          <CollapsibleContent className="space-y-8 pt-8">
+            {members.map((member) => (
+              <div key={member.id} className="flex items-center">
+                <UserAvatar user={member} />
+                <div className="ml-4 space-y-1">
+                  <p className="text-sm font-medium leading-none">
+                    {member.firstname} {member.lastname}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {member.email}
+                  </p>
+                </div>
+                <RemoveMemberAlert member={member} projectId={projectId} />
+              </div>
+            ))}
+          </CollapsibleContent>
+        )}
       </div>
-    </div>
+    </Collapsible>
   );
 }
