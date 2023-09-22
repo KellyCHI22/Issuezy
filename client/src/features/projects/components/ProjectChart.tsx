@@ -1,5 +1,9 @@
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
 
+const capitalize = (word: string) => {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+};
+
 const COLORS = [
   "#dbc9fa",
   "#b18af4",
@@ -10,19 +14,12 @@ const COLORS = [
   "#320b75",
   "#1e0646",
 ];
-
-const data = [
-  { name: "Group A", value: 400, fill: COLORS[0] },
-  { name: "Group B", value: 300, fill: COLORS[1] },
-  { name: "Group C", value: 300, fill: COLORS[2] },
-  { name: "Group D", value: 200, fill: COLORS[3] },
-];
+const RADIAN = Math.PI / 180;
 
 const renderColorfulLegendText = (value: string, entry: any) => {
-  return <span>{value}</span>;
+  return <span className="leading-6">{value}</span>;
 };
 
-const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
   cx,
   cy,
@@ -32,7 +29,7 @@ const renderCustomizedLabel = ({
   percent,
   index,
 }: any) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.3;
+  const radius = innerRadius + (outerRadius - innerRadius) * 1.4;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -40,7 +37,7 @@ const renderCustomizedLabel = ({
     <text
       x={x}
       y={y}
-      fill="white"
+      fill={COLORS[index]}
       textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
       className="opacity-80"
@@ -49,9 +46,16 @@ const renderCustomizedLabel = ({
     </text>
   );
 };
-export function ProjectChart() {
+
+export function ProjectChart({ data }: { data: any }) {
+  const result = Array.from(Object.keys(data), (key, index) => ({
+    name: capitalize(key),
+    value: data[key],
+    fill: COLORS[index],
+  }));
+
   return (
-    <ResponsiveContainer width="100%" height={300} className="">
+    <ResponsiveContainer width="100%" height={320}>
       <PieChart>
         <Legend
           height={36}
@@ -64,7 +68,7 @@ export function ProjectChart() {
           formatter={renderColorfulLegendText}
         />
         <Pie
-          data={data}
+          data={result}
           cx={180}
           cy={150}
           innerRadius={60}
@@ -72,7 +76,7 @@ export function ProjectChart() {
           fill="#8884d8"
           paddingAngle={0}
           dataKey="value"
-          labelLine={false}
+          labelLine={true}
           label={renderCustomizedLabel}
         ></Pie>
         <Tooltip />
