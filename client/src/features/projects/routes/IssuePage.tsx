@@ -66,7 +66,9 @@ export function IssuePage() {
           <div className="space-y-2">
             <div className="relative space-x-2">
               <Badge className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600">
-                {issue.Category.name}
+                {issue.Category.isDeleted
+                  ? "uncategorized"
+                  : issue.Category.name}
               </Badge>
               <Badge variant="secondary">{issue.status}</Badge>
               <PriorityBadge priority={issue.priority} />
@@ -78,7 +80,7 @@ export function IssuePage() {
               {issue.description}
             </p>
 
-            <div className="pt-5">
+            <div className="pt-5 text-sm">
               <p className="text-muted-foreground">
                 Created at: {formatTime(issue.createdAt)}
               </p>
@@ -152,7 +154,9 @@ export function IssuePage() {
         <ScrollArea>
           <div className="flex-1 space-y-5">
             {comments.length === 0 ? (
-              <p className="text-muted-foreground">There are no comments yet</p>
+              <p className="text-sm text-muted-foreground">
+                There are no comments yet.
+              </p>
             ) : (
               comments.map((comment) => (
                 <CommentCard

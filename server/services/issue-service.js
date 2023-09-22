@@ -3,7 +3,6 @@ const { customError } = require('../helpers/error-helper');
 
 const issueService = {
   getIssues: async (req, cb) => {
-    // todo allow different sorting options
     try {
       const projectId = req.params.id;
       const project = await Project.findByPk(projectId);
@@ -25,7 +24,7 @@ const issueService = {
           {
             model: Category,
             as: 'Category',
-            attributes: ['id', 'name'],
+            attributes: ['id', 'name', 'isDeleted'],
           },
         ],
         order: [['createdAt', 'DESC']],
@@ -70,7 +69,7 @@ const issueService = {
           {
             model: Category,
             as: 'Category',
-            attributes: ['id', 'name'],
+            attributes: ['id', 'name', 'isDeleted'],
           },
         ],
         attributes: [
@@ -162,7 +161,6 @@ const issueService = {
   },
   deleteIssue: async (req, cb) => {
     try {
-      // todo auth only certain people (?) can delete issues
       const projectId = req.params.id;
       const issueId = req.params.iid;
       const userId = req.user.id;
@@ -188,7 +186,6 @@ const issueService = {
       cb(err);
     }
   },
-  // todo assignIssue
   assignIssue: async (req, cb) => {
     try {
       const { assigneeId } = req.body;

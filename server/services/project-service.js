@@ -4,8 +4,6 @@ const { customError } = require('../helpers/error-helper');
 
 const projectService = {
   getProjects: async (req, cb) => {
-    // ! will add more constraints after?
-    // ? problem retrieve private projects but not retrieving the list of members!
     try {
       const userId = req.user.id;
       // * users can see all public projects AND private projects they are a member of
@@ -61,7 +59,6 @@ const projectService = {
     }
   },
   getProject: async (req, cb) => {
-    // todo will need to add issues
     try {
       const [project, categories] = await Promise.all([
         Project.findByPk(req.params.id, {
@@ -103,12 +100,20 @@ const projectService = {
               },
             ],
           },
-          attributes: ['id', 'name'],
+          attributes: ['id', 'name', 'isDefault'],
           raw: true,
         }),
       ]);
+      const formattedCategories = categories.map((category) => {
+        return {
+          ...category,
+          isDefault: category.isDefault ? true : false,
+        };
+      });
       if (!project) throw customError(400, 'Project does not exist!');
-      cb(null, { project: { ...project.toJSON(), categories } });
+      cb(null, {
+        project: { ...project.toJSON(), categories: formattedCategories },
+      });
     } catch (err) {
       cb(err);
     }
