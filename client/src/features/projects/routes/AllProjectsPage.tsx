@@ -25,7 +25,7 @@ export function AllProjectsPage() {
   const projects = data.projects as Project[];
 
   return (
-    <div className="lg:h-screen">
+    <div className="min-h-[calc(100vh-60px)] lg:h-screen">
       <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
         <div className="items-end justify-between space-y-2 lg:flex">
           <div>
@@ -34,7 +34,9 @@ export function AllProjectsPage() {
               Here is s a list of your projects!
             </p>
           </div>
-          <ProjectSheet />
+          <div className="pt-5">
+            <ProjectSheet />
+          </div>
         </div>
         <ScrollArea>
           <div className="grid grid-cols-1 gap-5 lg:auto-rows-[1fr] lg:grid-cols-3 2xl:grid-cols-4">

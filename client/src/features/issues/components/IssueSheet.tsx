@@ -125,7 +125,7 @@ export function IssueSheet({ project }: IssueSheetProps) {
       <SheetTrigger asChild>
         <Button variant="default">
           <Flag className="mr-2 h-4 w-4" />
-          Report an issue
+          Report issue
         </Button>
       </SheetTrigger>
       <SheetContent

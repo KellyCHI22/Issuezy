@@ -33,9 +33,9 @@ export function ProjectPage() {
   const issues = issuesQuery.data.issues as Issue[];
 
   return (
-    <div className="h-screen">
+    <div className="min-h-[calc(100vh-60px)] lg:h-screen">
       <div className="h-full flex-1 flex-col space-y-4 p-8 md:flex">
-        <div className="items-end justify-between  lg:flex">
+        <div className="items-end justify-between lg:flex">
           <div className="space-y-2">
             <Badge className={project.isPublic ? "" : "bg-pink-500"}>
               {project.isPublic ? "public" : "private"}
@@ -45,28 +45,24 @@ export function ProjectPage() {
             </h2>
             <p className="text-muted-foreground">{project.description}</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 pt-5">
             {/* // todo only project owner can view dashboard */}
             <Link to={`/projects/${id}/dashboard`}>
               <Button variant="default" className="">
                 <GaugeCircle className="mr-2 h-4 w-4" />
-                View dashboard
+                {isMobile ? "Dashboard" : "View dashboard"}
               </Button>
             </Link>
             <IssueSheet project={project} />
           </div>
         </div>
 
-        {isMobile ? (
-          "working in progress"
-        ) : (
-          <ScrollArea>
-            <ScrollBar orientation="horizontal" />
-            <div className="rounded-lg bg-white p-3 dark:bg-gray-900">
-              <IssuesTable data={issues} columns={columns} project={project} />
-            </div>
-          </ScrollArea>
-        )}
+        <ScrollArea>
+          <ScrollBar orientation="horizontal" />
+          <div className="rounded-lg bg-white p-3 dark:bg-gray-900">
+            <IssuesTable data={issues} columns={columns} project={project} />
+          </div>
+        </ScrollArea>
       </div>
     </div>
   );

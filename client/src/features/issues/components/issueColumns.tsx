@@ -44,9 +44,13 @@ export const columns: ColumnDef<Issue>[] = [
       const { name, isDeleted } = row.original.Category;
       return (
         <div className="text-center">
-          <Badge className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600">
-            {isDeleted ? "uncategorized" : name}
-          </Badge>
+          {isDeleted ? (
+            <Badge variant="outline">uncategorized</Badge>
+          ) : (
+            <Badge className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600">
+              {name}
+            </Badge>
+          )}
         </div>
       );
     },

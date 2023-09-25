@@ -77,7 +77,8 @@ export function AddMemberSheet({ projectId }: AddMemberSheetProps) {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="secondary">
-          <UserPlus2 className="mr-2 h-4 w-4" /> Add member
+          <UserPlus2 className="mr-2 h-4 w-4" />
+          {isMobile ? "Add" : "Add member"}
         </Button>
       </SheetTrigger>
       <SheetContent

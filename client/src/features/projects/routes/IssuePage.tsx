@@ -60,8 +60,8 @@ export function IssuePage() {
   const comments = queryResults[2].data.comments as Comment[];
 
   return (
-    <div className="min-h-screen p-8 lg:grid lg:grid-cols-5 lg:gap-8 lg:p-0">
-      <div className=" rounded-lg lg:col-span-2 lg:my-8 lg:ml-8 lg:h-fit lg:border lg:bg-white lg:p-6 lg:dark:bg-gray-900">
+    <div className="min-h-[calc(100vh-60px)] p-8 lg:grid lg:grid-cols-5 lg:gap-8 lg:p-0">
+      <div className="rounded-lg lg:col-span-2 lg:my-8 lg:ml-8 lg:h-fit lg:border lg:bg-white lg:p-6 lg:dark:bg-gray-900">
         <div className="relative">
           <div className="space-y-2">
             <div className="relative space-x-2">
