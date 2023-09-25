@@ -277,6 +277,17 @@ const projectService = {
 
       // * delete the membership
       const deletedMembership = await membership.destroy();
+
+      // todo all issues that are assigned to this member will be back to null
+      await Issue.update(
+        { assigneeId: null },
+        {
+          where: {
+            assigneeId: memberId,
+          },
+        }
+      );
+
       cb(null, { deletedMembership });
     } catch (err) {
       cb(err);

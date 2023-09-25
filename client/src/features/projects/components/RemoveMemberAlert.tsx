@@ -37,6 +37,7 @@ export function RemoveMemberAlert({
       queryClient.invalidateQueries(["projects", projectId, "members"], {
         exact: true,
       });
+      queryClient.invalidateQueries(["projects", projectId, "issues"]);
       setRemoveMemberError("");
       setOpen(false);
     },
