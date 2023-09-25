@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { Category, Project } = require('../models');
+const { Category, Project, Issue } = require('../models');
 const { customError } = require('../helpers/error-helper');
 
 const categoryService = {
@@ -22,7 +22,7 @@ const categoryService = {
             },
           ],
         },
-        attributes: ['id', 'name', 'isDefault', 'isDeleted'],
+        attributes: ['id', 'name', 'isDefault'],
       });
       cb(null, { categories });
     } catch (err) {
@@ -100,6 +100,20 @@ const categoryService = {
         throw customError(400, 'Cannot delete categories of other projects!');
 
       const deletedCategory = await category.update({ isDeleted: true });
+
+      // * when category is deleted, issues of this category will be set to category 'other's
+      const otherCategory = await Category.findOne({
+        where: { name: 'other' },
+      });
+      await Issue.update(
+        { categoryId: otherCategory.id },
+        {
+          where: {
+            categoryId: deletedCategory.id,
+          },
+        }
+      );
+
       cb(null, { deletedCategory });
     } catch (err) {
       cb(err);
