@@ -32,6 +32,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "../../../components/ui/button";
 import { X } from "lucide-react";
 import { Project } from "@/features/projects/apis/project-api";
+import { useMediaQuery } from "react-responsive";
 
 interface IssueTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -44,6 +45,7 @@ export function IssuesTable<TData, TValue>({
   columns,
   project,
 }: IssueTableProps<TData, TValue>) {
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -52,16 +54,21 @@ export function IssuesTable<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
+    initialState: {
+      pagination: {
+        pageSize: isMobile ? 5 : 10,
+      },
+    },
+    state: {
+      sorting,
+      columnFilters,
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      sorting,
-      columnFilters,
-    },
   });
 
   return (
