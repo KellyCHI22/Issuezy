@@ -1,3 +1,4 @@
+import { useMediaQuery } from "react-responsive";
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
 
 const capitalize = (word: string) => {
@@ -5,15 +6,23 @@ const capitalize = (word: string) => {
 };
 
 const COLORS = [
-  "#dbc9fa",
+  "#d0b9f9",
   "#b18af4",
   "#925bf0",
   "#732dec",
   "#5a13d2",
-  "#460fa4",
-  "#320b75",
-  "#1e0646",
+  "#f9a8d4",
+  "#f472b6",
+  "#ec4899",
+  "#db2777",
+  "#be185d",
+  "#93c5fd",
+  "#60a5fa",
+  "#3b82f6",
+  "#2563eb",
+  "#1d4ed8",
 ];
+
 const RADIAN = Math.PI / 180;
 
 const renderColorfulLegendText = (value: string, entry: any) => {
@@ -47,7 +56,8 @@ const renderCustomizedLabel = ({
   );
 };
 
-export function ProjectChart({ data }: { data: any }) {
+export function ProjectChart({ title, data }: { title: string; data: any }) {
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const result = Array.from(Object.keys(data), (key, index) => ({
     name: capitalize(key),
     value: data[key],
@@ -55,24 +65,24 @@ export function ProjectChart({ data }: { data: any }) {
   }));
 
   return (
-    <ResponsiveContainer width="100%" height={320}>
+    <ResponsiveContainer width="100%" height={title === "category" ? 400 : 330}>
       <PieChart>
         <Legend
-          height={36}
-          width={150}
+          height={title === "category" ? 100 : 45}
+          width={isMobile ? 280 : 150}
           iconType="circle"
-          layout="vertical"
-          verticalAlign="middle"
-          align="right"
+          layout={isMobile ? "horizontal" : "vertical"}
+          verticalAlign={isMobile ? "bottom" : "middle"}
+          align={isMobile ? "center" : "right"}
           iconSize={10}
           formatter={renderColorfulLegendText}
         />
         <Pie
           data={result}
-          cx={180}
-          cy={150}
-          innerRadius={60}
-          outerRadius={120}
+          cx={isMobile ? 135 : 180}
+          cy={isMobile ? 140 : 160}
+          innerRadius={isMobile ? 45 : 60}
+          outerRadius={isMobile ? 90 : 120}
           fill="#8884d8"
           paddingAngle={0}
           dataKey="value"
