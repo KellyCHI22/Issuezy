@@ -24,7 +24,7 @@ const issueService = {
           {
             model: Category,
             as: 'Category',
-            attributes: ['id', 'name', 'isDeleted'],
+            attributes: ['id', 'name'],
           },
         ],
         order: [['createdAt', 'DESC']],

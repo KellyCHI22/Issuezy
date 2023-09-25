@@ -69,7 +69,7 @@ export function DeleteCategoryAlert({
             <span className="text-blue-500">"{category.name}"</span> ?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            All issues of this category will be marked as uncategorized.
+            All issues of this category will be marked as "other" category.
           </AlertDialogDescription>
           {deleteCategoryError && (
             <AlertMessage variant="destructive" message={deleteCategoryError} />

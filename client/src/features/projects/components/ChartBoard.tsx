@@ -53,9 +53,7 @@ export function ChartBoard({
 }
 
 function calculateIssue(issues: Issue[], project: Project) {
-  const allCategories = project.categories
-    .map((category) => category.name)
-    .concat(["uncategorized"]);
+  const allCategories = project.categories.map((category) => category.name);
   const allStatuses = ["open", "in progress", "wait for review", "close"];
   const priorityNames = {
     "1": "high",
@@ -74,13 +72,8 @@ function calculateIssue(issues: Issue[], project: Project) {
 
   // Iterate through the list of issues
   issues.forEach((issue) => {
-    // if category is deleted, add to 'uncategorized' count
-    if (issue.Category.isDeleted) {
-      categoryCounts["uncategorized"] += 1;
-    } else {
-      const category = issue.Category.name;
-      categoryCounts[category] += 1;
-    }
+    const category = issue.Category.name;
+    categoryCounts[category] += 1;
 
     const status = issue.status;
     statusCounts[status] += 1;

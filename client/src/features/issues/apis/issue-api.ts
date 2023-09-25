@@ -14,7 +14,7 @@ export type Issue = {
   updatedAt: string;
   Reporter: { id: number; firstname: string; lastname: string };
   Assignee: { id: number; firstname: string; lastname: string };
-  Category: { id: number; name: string; isDeleted: boolean };
+  Category: { id: number; name: string };
 };
 
 // * 取得專案所有 issue

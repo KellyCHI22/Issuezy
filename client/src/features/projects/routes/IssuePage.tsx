@@ -66,9 +66,7 @@ export function IssuePage() {
           <div className="space-y-2">
             <div className="relative space-x-2">
               <Badge className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600">
-                {issue.Category.isDeleted
-                  ? "uncategorized"
-                  : issue.Category.name}
+                {issue.Category.name}
               </Badge>
               <Badge variant="secondary">{issue.status}</Badge>
               <PriorityBadge priority={issue.priority} />

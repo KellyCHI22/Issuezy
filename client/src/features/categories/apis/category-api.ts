@@ -4,7 +4,6 @@ export type Category = {
   id: number;
   name: string;
   isDefault: boolean;
-  isDeleted: boolean;
 };
 
 // * 取得專案所有 category
