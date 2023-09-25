@@ -5,9 +5,7 @@ export type Comment = {
   text: string;
   issueId: number;
   userId: number;
-  isDeleted: boolean;
   createdAt: string;
-  updatedAt: string;
   User: {
     id: number;
     firstname: string;

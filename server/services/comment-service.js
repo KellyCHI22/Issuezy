@@ -21,6 +21,7 @@ const commentService = {
             attributes: ['id', 'firstname', 'lastname'],
           },
         ],
+        attributes: ['id', 'text', 'issueId', 'userId', 'createdAt'],
       });
       cb(null, { comments });
     } catch (err) {
