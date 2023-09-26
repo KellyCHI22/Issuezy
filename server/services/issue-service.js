@@ -170,12 +170,8 @@ const issueService = {
       if (!project) throw customError(400, 'Project does not exist!');
       if (!issue) throw customError(400, 'Issue does not exist!');
 
-      // * 只有 project owner, issue 作者和 issue assignee 可以刪除 issue
-      if (
-        ![issue.reporterId, issue.assigneeId, project.creatorId].includes(
-          userId
-        )
-      )
+      // * 只有 project owner 可以刪除 issue
+      if (userId !== project.creatorId)
         throw customError(400, 'You are not allowed to delete the issue!');
 
       const deletedIssue = await issue.update({
