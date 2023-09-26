@@ -22,11 +22,11 @@ export default function IssueActionsDropdown({ issue }: { issue: Issue }) {
   const [showAssignSheet, setShowAssignSheet] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const projectQuery = useQuery({
-    queryKey: ["projects", issue.projectId],
+    queryKey: ["projects", issue.projectId.toString()],
     queryFn: () => getProject(issue.projectId),
   });
 
-  if (projectQuery.status === "loading") {
+  if (projectQuery.isLoading || projectQuery.isFetching) {
     return (
       <DropdownMenu>
         <Button variant="ghost" className="h-8 w-8 p-0">

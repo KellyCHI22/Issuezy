@@ -30,7 +30,6 @@ const commentService = {
   },
   postComment: async (req, cb) => {
     try {
-      // todo add input validations
       const { text } = req.body;
       const projectId = req.params.id;
       const issueId = req.params.iid;

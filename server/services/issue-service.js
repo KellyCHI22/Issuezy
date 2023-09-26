@@ -94,11 +94,12 @@ const issueService = {
   },
   postIssue: async (req, cb) => {
     try {
-      // todo add input validations
       const { title, description, priority, categoryId } = req.body;
       const projectId = req.params.id;
       const reporterId = req.user.id;
       if (title.trim().length === 0 || description.trim().length === 0)
+        throw customError(400, 'All fields are required!');
+      if (!priority || !categoryId)
         throw customError(400, 'All fields are required!');
       if (!['1', '2', '3'].includes(priority))
         throw customError(400, 'Priority can only be 1, 2 or 3!');
@@ -124,12 +125,13 @@ const issueService = {
   },
   patchIssue: async (req, cb) => {
     try {
-      // todo add input validations
       const { title, description, status, priority, categoryId } = req.body;
       const projectId = req.params.id;
       const issueId = req.params.iid;
       const userId = req.user.id;
       if (title.trim().length === 0 || description.trim().length === 0)
+        throw customError(400, 'All fields are required!');
+      if (!status || !priority || !categoryId)
         throw customError(400, 'All fields are required!');
 
       const project = await Project.findByPk(projectId);

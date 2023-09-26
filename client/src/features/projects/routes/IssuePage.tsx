@@ -96,7 +96,6 @@ export function IssuePage() {
                   )}
                 </p>
               </div>
-              {/* // todo only certain people can edit or assign user */}
               <div className="flex space-x-2 pt-6">
                 <Authorization
                   projectId={project.id.toString()}

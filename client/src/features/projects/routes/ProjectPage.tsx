@@ -46,7 +46,6 @@ export function ProjectPage() {
             <p className="text-muted-foreground">{project.description}</p>
           </div>
           <div className="flex gap-3 pt-5">
-            {/* // todo only project owner can view dashboard */}
             <Link to={`/projects/${id}/dashboard`}>
               <Button variant="default" className="">
                 <GaugeCircle className="mr-2 h-4 w-4" />

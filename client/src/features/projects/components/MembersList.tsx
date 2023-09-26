@@ -28,15 +28,17 @@ export function MembersList({ projectId }: { projectId: string }) {
     queryFn: () => getMembers(projectId),
   });
 
-  // todo change loading ui
   if (projectQuery.isLoading || projectQuery.isFetching)
     return (
-      <div>
-        <div className="mb-5 flex justify-between">
-          <h2 className="text-xl font-bold">Members</h2>
-          <Authorization projectId={projectId} action="member:add">
-            <AddMemberSheet projectId={projectId} />
-          </Authorization>
+      <div className="rounded-lg bg-white p-6 dark:bg-gray-900">
+        <div className="flex items-center justify-between">
+          <div className="flex gap-3">
+            <h3 className="text-lg font-bold">Members</h3>
+            <Button variant="ghost" size="sm" className="w-9 p-0">
+              <ChevronsUpDown className="h-4 w-4" />
+              <span className="sr-only">Toggle</span>
+            </Button>
+          </div>
         </div>
       </div>
     );

@@ -23,14 +23,9 @@ export function CategoriesList({ project }: { project: Project }) {
     queryFn: () => getCategories(project.id),
   });
 
-  // todo loading ui
   if (categoriesQuery.isLoading || categoriesQuery.isFetching)
     return (
-      <Collapsible
-        open={isOpen}
-        onOpenChange={setIsOpen}
-        className="w-full space-y-2 rounded-lg bg-white p-6 dark:bg-gray-900"
-      >
+      <div className="w-full space-y-2 rounded-lg bg-white p-6 dark:bg-gray-900">
         <div className="flex items-center justify-between">
           <div className="flex gap-3">
             <h3 className="text-lg font-semibold">Categories</h3>
@@ -39,12 +34,8 @@ export function CategoriesList({ project }: { project: Project }) {
               <span className="sr-only">Toggle</span>
             </Button>
           </div>
-          <Button variant="secondary">
-            <Plus className="mr-2 h-4 w-4" />
-            Add category
-          </Button>
         </div>
-      </Collapsible>
+      </div>
     );
   if (categoriesQuery.status === "error") {
     return <h1>Something went wrong</h1>;

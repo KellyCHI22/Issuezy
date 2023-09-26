@@ -68,7 +68,11 @@ function calculateIssue(issues: Issue[], project: Project) {
   const statusCounts = Object.fromEntries(
     allStatuses.map((status) => [status, 0]),
   );
-  const priorityCounts = { high: 0, medium: 0, low: 0 };
+  const priorityCounts: { [key: string]: number } = {
+    high: 0,
+    medium: 0,
+    low: 0,
+  };
 
   // Iterate through the list of issues
   issues.forEach((issue) => {
