@@ -14,6 +14,7 @@ import { Category, getCategories } from "../apis/category-api";
 import { AddCategorySheet } from "./AddCategorySheet";
 import { EditCategorySheet } from "./EditCategorySheet";
 import { DeleteCategoryAlert } from "./DeleteCategoryAlert";
+import { Authorization } from "@/components/Authorization";
 
 export function CategoriesList({ project }: { project: Project }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,7 +73,9 @@ export function CategoriesList({ project }: { project: Project }) {
             </Button>
           </CollapsibleTrigger>
         </div>
-        <AddCategorySheet projectId={project.id.toString()} />
+        <Authorization projectId={project.id.toString()} action="category:add">
+          <AddCategorySheet projectId={project.id.toString()} />
+        </Authorization>
       </div>
       <CollapsibleContent className="space-y-2">
         <div className="">
@@ -92,14 +95,24 @@ export function CategoriesList({ project }: { project: Project }) {
               {category.name}
             </Badge>
             <div className="space-x-2">
-              <EditCategorySheet
+              <Authorization
                 projectId={project.id.toString()}
-                category={category}
-              />
-              <DeleteCategoryAlert
+                action="category:edit"
+              >
+                <EditCategorySheet
+                  projectId={project.id.toString()}
+                  category={category}
+                />
+              </Authorization>
+              <Authorization
                 projectId={project.id.toString()}
-                category={category}
-              />
+                action="category:delete"
+              >
+                <DeleteCategoryAlert
+                  projectId={project.id.toString()}
+                  category={category}
+                />
+              </Authorization>
             </div>
           </div>
         ))}

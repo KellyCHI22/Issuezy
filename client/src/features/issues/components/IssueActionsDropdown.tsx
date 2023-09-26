@@ -15,6 +15,7 @@ import { Project, getProject } from "@/features/projects/apis/project-api";
 import { EditIssueSheet } from "./EditIssueSheet";
 import { DeleteIssueAlert } from "./DeleteIssueAlert";
 import { useState } from "react";
+import { Authorization } from "@/components/Authorization";
 
 export default function IssueActionsDropdown({ issue }: { issue: Issue }) {
   const [showEditSheet, setShowEditSheet] = useState(false);
@@ -49,21 +50,39 @@ export default function IssueActionsDropdown({ issue }: { issue: Issue }) {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setShowEditSheet(true)}>
-          <Pencil className="mr-2 h-4 w-4" />
-          Edit issue
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setShowAssignSheet(true)}>
-          <Contact2 className="mr-2 h-4 w-4" />
-          {issue.Assignee ? "Reassign user" : "Assign user"}
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => setShowDeleteDialog(true)}
-          className="text-destructive"
+        <Authorization
+          projectId={project.id.toString()}
+          issue={issue}
+          action="issue:edit"
         >
-          <Trash2 className="mr-2 h-4 w-4" />
-          Delete issue
-        </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setShowEditSheet(true)}>
+            <Pencil className="mr-2 h-4 w-4" />
+            Edit issue
+          </DropdownMenuItem>
+        </Authorization>
+        <Authorization
+          projectId={project.id.toString()}
+          issue={issue}
+          action="issue:assign"
+        >
+          <DropdownMenuItem onClick={() => setShowAssignSheet(true)}>
+            <Contact2 className="mr-2 h-4 w-4" />
+            {issue.Assignee ? "Reassign user" : "Assign user"}
+          </DropdownMenuItem>
+        </Authorization>
+        <Authorization
+          projectId={project.id.toString()}
+          issue={issue}
+          action="issue:delete"
+        >
+          <DropdownMenuItem
+            onClick={() => setShowDeleteDialog(true)}
+            className="text-destructive"
+          >
+            <Trash2 className="mr-2 h-4 w-4" />
+            Delete issue
+          </DropdownMenuItem>
+        </Authorization>
       </DropdownMenuContent>
       <AssignIssueSheet
         project={project}

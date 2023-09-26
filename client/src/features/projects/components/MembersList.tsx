@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Authorization } from "@/components/Authorization";
 
 export type Member = {
   id: number;
@@ -33,7 +34,9 @@ export function MembersList({ projectId }: { projectId: string }) {
       <div>
         <div className="mb-5 flex justify-between">
           <h2 className="text-xl font-bold">Members</h2>
-          <AddMemberSheet projectId={projectId} />
+          <Authorization projectId={projectId} action="member:add">
+            <AddMemberSheet projectId={projectId} />
+          </Authorization>
         </div>
       </div>
     );
@@ -60,7 +63,9 @@ export function MembersList({ projectId }: { projectId: string }) {
             </Button>
           </CollapsibleTrigger>
         </div>
-        <AddMemberSheet projectId={projectId} />
+        <Authorization projectId={projectId} action="member:add">
+          <AddMemberSheet projectId={projectId} />
+        </Authorization>
       </div>
       <div className="mb-2">
         <div key={creator.id} className="flex items-center justify-between">
@@ -88,7 +93,9 @@ export function MembersList({ projectId }: { projectId: string }) {
                     {member.email}
                   </p>
                 </div>
-                <RemoveMemberAlert member={member} projectId={projectId} />
+                <Authorization projectId={projectId} action="member:remove">
+                  <RemoveMemberAlert member={member} projectId={projectId} />
+                </Authorization>
               </div>
             ))}
           </CollapsibleContent>

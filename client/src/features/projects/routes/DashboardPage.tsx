@@ -15,6 +15,7 @@ import { DeleteProjectAlert } from "../components/DeleteProjectAlert";
 import { Issue, getIssues } from "@/features/issues/apis/issue-api";
 import { ChartBoard } from "../components/ChartBoard";
 import { CategoriesList } from "@/features/categories";
+import { Authorization } from "@/components/Authorization";
 
 export function DashboardPage() {
   const { id } = useParams();
@@ -71,8 +72,18 @@ export function DashboardPage() {
                   {isMobile ? "Issues" : "View issues"}
                 </Button>
               </Link>
-              <EditProjectSheet project={project} />
-              <DeleteProjectAlert projectId={project.id.toString()} />
+              <Authorization
+                projectId={project.id.toString()}
+                action="project:edit"
+              >
+                <EditProjectSheet project={project} />
+              </Authorization>
+              <Authorization
+                projectId={project.id.toString()}
+                action="project:delete"
+              >
+                <DeleteProjectAlert projectId={project.id.toString()} />
+              </Authorization>
             </div>
           </div>
         </div>

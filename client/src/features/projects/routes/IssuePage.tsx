@@ -20,6 +20,7 @@ import {
 import { Project, getProject } from "@/features/projects/apis/project-api";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Spinner from "@/components/ui/spinner";
+import { Authorization } from "@/components/Authorization";
 
 export function IssuePage() {
   const { id, iid } = useParams();
@@ -97,28 +98,46 @@ export function IssuePage() {
               </div>
               {/* // todo only certain people can edit or assign user */}
               <div className="flex space-x-2 pt-6">
-                <Button
-                  variant="default"
-                  onClick={() => setShowEditSheet(true)}
+                <Authorization
+                  projectId={project.id.toString()}
+                  issue={issue}
+                  action="issue:edit"
                 >
-                  <Pencil className="mr-2 h-4 w-4" />
-                  Edit
-                </Button>
-                <Button
-                  variant="secondary"
-                  className="border bg-white dark:bg-secondary"
-                  onClick={() => setShowAssignSheet(true)}
+                  <Button
+                    variant="default"
+                    onClick={() => setShowEditSheet(true)}
+                  >
+                    <Pencil className="mr-2 h-4 w-4" />
+                    Edit
+                  </Button>
+                </Authorization>
+                <Authorization
+                  projectId={project.id.toString()}
+                  issue={issue}
+                  action="issue:assign"
                 >
-                  <Contact2 className="mr-2 h-4 w-4" />
-                  {issue.Assignee ? "Reassign" : "Assign"}
-                </Button>
-                <Button
-                  variant="outline-desctructive"
-                  onClick={() => setShowDeleteDialog(true)}
+                  <Button
+                    variant="secondary"
+                    className="border bg-white dark:bg-secondary"
+                    onClick={() => setShowAssignSheet(true)}
+                  >
+                    <Contact2 className="mr-2 h-4 w-4" />
+                    {issue.Assignee ? "Reassign" : "Assign"}
+                  </Button>
+                </Authorization>
+                <Authorization
+                  projectId={project.id.toString()}
+                  issue={issue}
+                  action="issue:delete"
                 >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
-                </Button>
+                  <Button
+                    variant="outline-desctructive"
+                    onClick={() => setShowDeleteDialog(true)}
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Delete
+                  </Button>
+                </Authorization>
                 <EditIssueSheet
                   project={project}
                   issue={issue}
