@@ -37,6 +37,8 @@ import { postIssue } from "@/features/issues/apis/issue-api";
 import { AlertMessage } from "../../../components/AlertMassage";
 import { Flag } from "lucide-react";
 import { type Project } from "@/features/projects/apis/project-api";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface IssueSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   project: Project;
@@ -71,7 +73,7 @@ const PRIORITY_VALUES = {
 
 export function IssueSheet({ project }: IssueSheetProps) {
   const [open, setOpen] = useState(false);
-  const [addIssueError, setAddIssueError] = useState<string>("");
+  const [addIssueError, setAddIssueError] = useState<string | undefined>("");
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
   const issueMutation = useMutation({
@@ -97,7 +99,8 @@ export function IssueSheet({ project }: IssueSheetProps) {
       setAddIssueError("");
       setOpen(false);
     },
-    onError: (error) => setAddIssueError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setAddIssueError(error.response?.data.message),
   });
 
   const form = useForm<z.infer<typeof issueFormSchema>>({

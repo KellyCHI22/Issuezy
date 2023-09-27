@@ -29,6 +29,8 @@ import { postProject } from "@/features/projects/apis/project-api";
 import { useState } from "react";
 import { AlertMessage } from "../../../components/AlertMassage";
 import { Plus } from "lucide-react";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 const projectFormSchema = z.object({
   name: z
@@ -52,7 +54,9 @@ const projectFormSchema = z.object({
 
 export function ProjectSheet() {
   const [open, setOpen] = useState(false);
-  const [addProjectError, setAddProjectError] = useState<string>("");
+  const [addProjectError, setAddProjectError] = useState<string | undefined>(
+    "",
+  );
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
   const projectMutation = useMutation({
@@ -65,7 +69,8 @@ export function ProjectSheet() {
       setAddProjectError("");
       setOpen(false);
     },
-    onError: (error) => setAddProjectError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setAddProjectError(error.response?.data.message),
   });
 
   const form = useForm<z.infer<typeof projectFormSchema>>({

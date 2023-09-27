@@ -8,8 +8,7 @@ export default function ProtectedRoutes() {
   const permissionMutation = useMutation({
     mutationFn: checkPermission,
     onSuccess: () => navigate("/projects"),
-    onError: (error) => {
-      console.log(error.response.data);
+    onError: () => {
       return navigate("/login");
     },
   });
@@ -18,7 +17,6 @@ export default function ProtectedRoutes() {
     const token = localStorage.getItem("token");
     if (!token) return navigate("/login");
     permissionMutation.mutate({ token });
-    console.log("use effect runs");
   }, []);
 
   return <Outlet />;

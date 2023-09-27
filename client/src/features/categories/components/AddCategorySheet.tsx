@@ -25,6 +25,8 @@ import { AlertMessage } from "@/components/AlertMassage";
 import { Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { postCategory } from "../apis/category-api";
+import { ErrorResponseData } from "@/lib/axios";
+import { AxiosError } from "axios";
 
 interface AddCategorySheetProps extends React.HTMLAttributes<HTMLDivElement> {
   projectId: string;
@@ -43,7 +45,9 @@ const categoryFormSchema = z.object({
 
 export function AddCategorySheet({ projectId }: AddCategorySheetProps) {
   const [open, setOpen] = useState(false);
-  const [addCategoryError, setAddCategoryError] = useState<string>("");
+  const [addCategoryError, setAddCategoryError] = useState<string | undefined>(
+    "",
+  );
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
   const categoryMutation = useMutation({
@@ -58,7 +62,8 @@ export function AddCategorySheet({ projectId }: AddCategorySheetProps) {
       setAddCategoryError("");
       setOpen(false);
     },
-    onError: (error) => setAddCategoryError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setAddCategoryError(error.response?.data.message),
   });
 
   const form = useForm<z.infer<typeof categoryFormSchema>>({

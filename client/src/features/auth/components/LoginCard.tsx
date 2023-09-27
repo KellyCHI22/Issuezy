@@ -26,6 +26,8 @@ import { ModeToggle } from "@/components/ModeToggle";
 import logoLight from "@/assets/logo-light.png";
 import logoDark from "@/assets/logo-dark.png";
 import { AlertMessage } from "@/components/AlertMassage";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 const loginFormSchema = z.object({
   email: z.string().email().nonempty({
@@ -37,7 +39,7 @@ const loginFormSchema = z.object({
 });
 
 export function LoginCard() {
-  const [loginError, setLoginError] = useState<string>("");
+  const [loginError, setLoginError] = useState<string | undefined>("");
   const navigate = useNavigate();
   const loginMutation = useMutation({
     mutationFn: userLogin,
@@ -45,7 +47,8 @@ export function LoginCard() {
       localStorage.setItem("token", data.data.token);
       navigate("/projects");
     },
-    onError: (error) => setLoginError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setLoginError(error.response?.data.message),
   });
 
   const form = useForm<z.infer<typeof loginFormSchema>>({

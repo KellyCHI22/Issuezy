@@ -25,6 +25,8 @@ import { AlertMessage } from "@/components/AlertMassage";
 import { Pencil } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Category, patchCategory } from "../apis/category-api";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface EditCategorySheetProps extends React.HTMLAttributes<HTMLDivElement> {
   projectId: string;
@@ -47,7 +49,9 @@ export function EditCategorySheet({
   category,
 }: EditCategorySheetProps) {
   const [open, setOpen] = useState(false);
-  const [editCategoryError, setEditCategoryError] = useState<string>("");
+  const [editCategoryError, setEditCategoryError] = useState<
+    string | undefined
+  >("");
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
   const categoryMutation = useMutation({
@@ -65,7 +69,8 @@ export function EditCategorySheet({
       setEditCategoryError("");
       setOpen(false);
     },
-    onError: (error) => setEditCategoryError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setEditCategoryError(error.response?.data.message),
   });
 
   const form = useForm<z.infer<typeof categoryFormSchema>>({

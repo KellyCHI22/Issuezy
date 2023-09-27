@@ -13,6 +13,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Comment, deleteComment } from "@/features/comments/apis/comment-api";
 import { useState } from "react";
 import { XOctagon } from "lucide-react";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface DeleteCommentAlertProps extends React.HTMLAttributes<HTMLDivElement> {
   projectId: string;
@@ -29,7 +31,9 @@ export function DeleteCommentAlert({
   showDeleteDialog,
   setShowDeleteDialog,
 }: DeleteCommentAlertProps) {
-  const [deleteCommentError, setDeleteCommentError] = useState<string>("");
+  const [deleteCommentError, setDeleteCommentError] = useState<
+    string | undefined
+  >("");
   const queryClient = useQueryClient();
   const commentMutation = useMutation({
     mutationFn: deleteComment,
@@ -52,7 +56,8 @@ export function DeleteCommentAlert({
       );
       setShowDeleteDialog(false);
     },
-    onError: (error) => setDeleteCommentError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setDeleteCommentError(error.response?.data.message),
   });
 
   const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {

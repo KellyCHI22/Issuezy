@@ -34,6 +34,8 @@ import { useState } from "react";
 import { type Issue, patchIssue } from "@/features/issues/apis/issue-api";
 import { AlertMessage } from "../../../components/AlertMassage";
 import { type Project } from "@/features/projects/apis/project-api";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface IssueSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   project: Project;
@@ -84,7 +86,7 @@ export function EditIssueSheet({
   showEditSheet,
   setShowEditSheet,
 }: IssueSheetProps) {
-  const [editIssueError, setEditIssueError] = useState<string>("");
+  const [editIssueError, setEditIssueError] = useState<string | undefined>("");
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
   const issueMutation = useMutation({
@@ -111,7 +113,8 @@ export function EditIssueSheet({
       setEditIssueError("");
       setShowEditSheet(false);
     },
-    onError: (error) => setEditIssueError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setEditIssueError(error.response?.data.message),
   });
 
   const form = useForm<z.infer<typeof issueFormSchema>>({

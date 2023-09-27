@@ -6,6 +6,11 @@ const axiosInstance = axios.create({
   baseURL,
 });
 
+export interface ErrorResponseData {
+  status: "error";
+  message: string;
+}
+
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");

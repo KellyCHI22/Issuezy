@@ -16,6 +16,8 @@ import { UserMinus2, XOctagon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { removeMember } from "../apis/project-api";
 import { Member } from "./MembersList";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface RemoveMemberAlertProps extends React.HTMLAttributes<HTMLDivElement> {
   member: Member;
@@ -27,7 +29,9 @@ export function RemoveMemberAlert({
   projectId,
 }: RemoveMemberAlertProps) {
   const [open, setOpen] = useState(false);
-  const [removeMemberError, setRemoveMemberError] = useState<string>("");
+  const [removeMemberError, setRemoveMemberError] = useState<
+    string | undefined
+  >("");
   const queryClient = useQueryClient();
   const projectMutation = useMutation({
     mutationFn: removeMember,
@@ -41,7 +45,8 @@ export function RemoveMemberAlert({
       setRemoveMemberError("");
       setOpen(false);
     },
-    onError: (error) => setRemoveMemberError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setRemoveMemberError(error.response?.data.message),
   });
 
   const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {

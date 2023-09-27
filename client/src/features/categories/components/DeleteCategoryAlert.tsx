@@ -15,6 +15,8 @@ import { useState } from "react";
 import { Trash2, XOctagon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Category, deleteCategory } from "../apis/category-api";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface DeleteCategoryAlertProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -27,7 +29,9 @@ export function DeleteCategoryAlert({
   category,
 }: DeleteCategoryAlertProps) {
   const [open, setOpen] = useState(false);
-  const [deleteCategoryError, setDeleteCategoryError] = useState<string>("");
+  const [deleteCategoryError, setDeleteCategoryError] = useState<
+    string | undefined
+  >("");
   const queryClient = useQueryClient();
   const projectMutation = useMutation({
     mutationFn: deleteCategory,
@@ -43,7 +47,8 @@ export function DeleteCategoryAlert({
       setDeleteCategoryError("");
       setOpen(false);
     },
-    onError: (error) => setDeleteCategoryError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setDeleteCategoryError(error.response?.data.message),
   });
 
   const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {

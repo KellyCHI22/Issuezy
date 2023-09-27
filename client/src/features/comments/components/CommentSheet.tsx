@@ -25,6 +25,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postComment } from "@/features/comments/apis/comment-api";
 import { AlertMessage } from "../../../components/AlertMassage";
 import { Plus } from "lucide-react";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface CommentSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   projectId: string;
@@ -44,7 +46,9 @@ const commentFormSchema = z.object({
 
 export function CommentSheet({ projectId, issueId }: CommentSheetProps) {
   const [open, setOpen] = useState(false);
-  const [addCommentError, setAddCommentError] = useState<string>("");
+  const [addCommentError, setAddCommentError] = useState<string | undefined>(
+    "",
+  );
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
   const commentMutation = useMutation({
@@ -63,7 +67,8 @@ export function CommentSheet({ projectId, issueId }: CommentSheetProps) {
       setAddCommentError("");
       setOpen(false);
     },
-    onError: (error) => setAddCommentError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setAddCommentError(error.response?.data.message),
   });
 
   const form = useForm<z.infer<typeof commentFormSchema>>({

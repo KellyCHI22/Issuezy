@@ -26,6 +26,8 @@ import {
   type Comment,
 } from "@/features/comments/apis/comment-api";
 import { AlertMessage } from "../../../components/AlertMassage";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface EditCommentSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   projectId: string;
@@ -53,7 +55,9 @@ export function EditCommentSheet({
   showEditSheet,
   setShowEditSheet,
 }: EditCommentSheetProps) {
-  const [editCommentError, setEditCommentError] = useState<string>("");
+  const [editCommentError, setEditCommentError] = useState<string | undefined>(
+    "",
+  );
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
   const commentMutation = useMutation({
@@ -78,7 +82,8 @@ export function EditCommentSheet({
       setShowEditSheet(false);
       setEditCommentError("");
     },
-    onError: (error) => setEditCommentError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setEditCommentError(error.response?.data.message),
   });
 
   const form = useForm<z.infer<typeof commentFormSchema>>({

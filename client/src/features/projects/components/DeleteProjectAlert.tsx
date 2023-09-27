@@ -17,6 +17,8 @@ import { Trash2, XOctagon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMediaQuery } from "react-responsive";
 import { deleteProject } from "../apis/project-api";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface DeleteIssueAlertProps extends React.HTMLAttributes<HTMLDivElement> {
   projectId: string;
@@ -24,7 +26,9 @@ interface DeleteIssueAlertProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function DeleteProjectAlert({ projectId }: DeleteIssueAlertProps) {
   const [open, setOpen] = useState(false);
-  const [deleteProjectError, setDeleteProjectError] = useState<string>("");
+  const [deleteProjectError, setDeleteProjectError] = useState<
+    string | undefined
+  >("");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
@@ -42,7 +46,8 @@ export function DeleteProjectAlert({ projectId }: DeleteIssueAlertProps) {
       setOpen(false);
       navigate(`/projects`);
     },
-    onError: (error) => setDeleteProjectError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setDeleteProjectError(error.response?.data.message),
   });
 
   const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {

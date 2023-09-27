@@ -32,6 +32,8 @@ import { useState } from "react";
 import { type Issue, assignIssue } from "@/features/issues/apis/issue-api";
 import { AlertMessage } from "../../../components/AlertMassage";
 import { type Project } from "@/features/projects/apis/project-api";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface IssueSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   project: Project;
@@ -50,7 +52,9 @@ export function AssignIssueSheet({
   showAssignSheet,
   setShowAssignSheet,
 }: IssueSheetProps) {
-  const [assignIssueError, setAssignIssueError] = useState<string>("");
+  const [assignIssueError, setAssignIssueError] = useState<string | undefined>(
+    "",
+  );
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
   const issueMutation = useMutation({
@@ -77,7 +81,8 @@ export function AssignIssueSheet({
       setAssignIssueError("");
       setShowAssignSheet(false);
     },
-    onError: (error) => setAssignIssueError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setAssignIssueError(error.response?.data.message),
   });
 
   const form = useForm<z.infer<typeof assignIssueFormSchema>>({

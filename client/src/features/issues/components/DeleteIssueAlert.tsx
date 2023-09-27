@@ -14,6 +14,8 @@ import { deleteIssue } from "@/features/issues/apis/issue-api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { XOctagon } from "lucide-react";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface DeleteIssueAlertProps extends React.HTMLAttributes<HTMLDivElement> {
   projectId: string;
@@ -28,7 +30,9 @@ export function DeleteIssueAlert({
   showDeleteDialog,
   setShowDeleteDialog,
 }: DeleteIssueAlertProps) {
-  const [deleteIssueError, setDeleteIssueError] = useState<string>("");
+  const [deleteIssueError, setDeleteIssueError] = useState<string | undefined>(
+    "",
+  );
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const issueMutation = useMutation({
@@ -45,7 +49,8 @@ export function DeleteIssueAlert({
       setShowDeleteDialog(false);
       navigate(`/projects/${projectId}`);
     },
-    onError: (error) => setDeleteIssueError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setDeleteIssueError(error.response?.data.message),
   });
 
   const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {

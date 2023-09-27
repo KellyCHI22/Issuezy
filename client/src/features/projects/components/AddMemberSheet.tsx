@@ -26,6 +26,8 @@ import { addMember } from "@/features/projects/apis/project-api";
 import { useState } from "react";
 import { AlertMessage } from "../../../components/AlertMassage";
 import { UserPlus2 } from "lucide-react";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 interface AddMemberSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   projectId: string;
@@ -39,7 +41,7 @@ const addMemberFormSchema = z.object({
 
 export function AddMemberSheet({ projectId }: AddMemberSheetProps) {
   const [open, setOpen] = useState(false);
-  const [addMemberError, setAddMemberError] = useState<string>("");
+  const [addMemberError, setAddMemberError] = useState<string | undefined>("");
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const queryClient = useQueryClient();
   const projectMutation = useMutation({
@@ -54,7 +56,8 @@ export function AddMemberSheet({ projectId }: AddMemberSheetProps) {
       setAddMemberError("");
       setOpen(false);
     },
-    onError: (error) => setAddMemberError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setAddMemberError(error.response?.data.message),
   });
 
   const form = useForm<z.infer<typeof addMemberFormSchema>>({

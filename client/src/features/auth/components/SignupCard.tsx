@@ -24,6 +24,8 @@ import { userSignup } from "@/features/auth/apis/auth-api";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { AlertMessage } from "@/components/AlertMassage";
+import { AxiosError } from "axios";
+import { ErrorResponseData } from "@/lib/axios";
 
 const signupFormSchema = z
   .object({
@@ -59,14 +61,15 @@ const signupFormSchema = z
   });
 
 export function SignupCard() {
-  const [signupError, setSignupError] = useState<string>("");
+  const [signupError, setSignupError] = useState<string | undefined>("");
   const navigate = useNavigate();
   const signupMutation = useMutation({
     mutationFn: userSignup,
     onSuccess: () => {
       navigate("/login");
     },
-    onError: (error) => setSignupError(error.response.data.message),
+    onError: (error: AxiosError<ErrorResponseData>) =>
+      setSignupError(error.response?.data.message),
   });
 
   const form = useForm<z.infer<typeof signupFormSchema>>({
