@@ -16,8 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { XOctagon } from "lucide-react";
 
 interface DeleteIssueAlertProps extends React.HTMLAttributes<HTMLDivElement> {
-  projectId?: string;
-  issueId?: string;
+  projectId: string;
+  issueId: string;
   showDeleteDialog: boolean;
   setShowDeleteDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }

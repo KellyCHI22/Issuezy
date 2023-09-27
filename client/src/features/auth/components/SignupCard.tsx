@@ -63,7 +63,7 @@ export function SignupCard() {
   const navigate = useNavigate();
   const signupMutation = useMutation({
     mutationFn: userSignup,
-    onSuccess: (data) => {
+    onSuccess: () => {
       navigate("/login");
     },
     onError: (error) => setSignupError(error.response.data.message),

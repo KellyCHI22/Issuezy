@@ -22,11 +22,11 @@ export function DashboardPage() {
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const projectQuery = useQuery({
     queryKey: ["projects", id],
-    queryFn: () => getProject(id),
+    queryFn: () => id && getProject({ projectId: id }),
   });
   const issuesQuery = useQuery({
     queryKey: ["projects", id, "issues"],
-    queryFn: () => getIssues(id),
+    queryFn: () => id && getIssues({ projectId: id }),
   });
 
   const isLoading =

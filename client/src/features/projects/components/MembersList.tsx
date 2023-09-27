@@ -25,7 +25,7 @@ export function MembersList({ projectId }: { projectId: string }) {
   const [isOpen, setIsOpen] = useState(true);
   const projectQuery = useQuery({
     queryKey: ["projects", projectId, "members"],
-    queryFn: () => getMembers(projectId),
+    queryFn: () => getMembers({ projectId }),
   });
 
   if (projectQuery.isLoading || projectQuery.isFetching)

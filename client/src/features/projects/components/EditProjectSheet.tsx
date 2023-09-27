@@ -86,7 +86,7 @@ export function EditProjectSheet({ project }: EditProjectSheetProps) {
 
   function onSubmit(values: z.infer<typeof projectFormSchema>) {
     projectMutation.mutate({
-      projectId: project.id,
+      projectId: project.id.toString(),
       formData: {
         ...values,
       },

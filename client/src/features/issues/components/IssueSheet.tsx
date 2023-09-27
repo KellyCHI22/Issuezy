@@ -112,9 +112,11 @@ export function IssueSheet({ project }: IssueSheetProps) {
 
   function onSubmit(values: z.infer<typeof issueFormSchema>) {
     issueMutation.mutate({
-      projectId: project.id,
+      projectId: project.id.toString(),
       formData: {
-        ...values,
+        title: values.title,
+        description: values.description,
+        categoryId: parseInt(values.categoryId),
         priority: PRIORITY_VALUES[values.priority],
       },
     });

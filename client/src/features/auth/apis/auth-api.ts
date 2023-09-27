@@ -5,7 +5,8 @@ const axiosInstance = axios.create({
   baseURL,
 });
 
-export async function userLogin({ email, password }) {
+export async function userLogin(payload: { email: string; password: string }) {
+  const { email, password } = payload;
   const { data } = await axiosInstance.post(`${baseURL}/users/signin`, {
     email,
     password,
@@ -13,13 +14,14 @@ export async function userLogin({ email, password }) {
   return data;
 }
 
-export async function userSignup({
-  firstname,
-  lastname,
-  email,
-  password,
-  passwordCheck,
+export async function userSignup(payload: {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  passwordCheck: string;
 }) {
+  const { firstname, lastname, email, password, passwordCheck } = payload;
   const { data } = await axiosInstance.post(`${baseURL}/users/signup`, {
     firstname,
     lastname,
@@ -30,7 +32,7 @@ export async function userSignup({
   return data;
 }
 
-export async function checkPermission({ token }) {
+export async function checkPermission({ token }: { token: string }) {
   const { data } = await axiosInstance.post(`${baseURL}/users/permission`, {
     token,
   });

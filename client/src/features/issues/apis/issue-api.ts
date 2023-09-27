@@ -18,7 +18,8 @@ export type Issue = {
 };
 
 // * 取得專案所有 issue
-export async function getIssues(projectId) {
+export async function getIssues(payload: { projectId: string }) {
+  const { projectId } = payload;
   const res = await axiosInstance.get(
     `${baseURL}/projects/${projectId}/issues`,
   );
@@ -26,7 +27,10 @@ export async function getIssues(projectId) {
 }
 
 // * 取得特定 issue
-export async function getIssue(payload) {
+export async function getIssue(payload: {
+  projectId: string;
+  issueId: string;
+}) {
   const { projectId, issueId } = payload;
   const res = await axiosInstance.get(
     `${baseURL}/projects/${projectId}/issues/${issueId}`,
@@ -35,7 +39,15 @@ export async function getIssue(payload) {
 }
 
 // * 新增一筆 issue
-export async function postIssue(payload) {
+export async function postIssue(payload: {
+  projectId: string;
+  formData: {
+    title: string;
+    description: string;
+    priority: string;
+    categoryId: number;
+  };
+}) {
   const { projectId, formData } = payload;
   const res = await axiosInstance.post(
     `${baseURL}/projects/${projectId}/issues`,
@@ -45,7 +57,17 @@ export async function postIssue(payload) {
 }
 
 // * 修改一筆 issue
-export async function patchIssue(payload) {
+export async function patchIssue(payload: {
+  projectId: string;
+  issueId: string;
+  formData: {
+    title: string;
+    description: string;
+    priority: string;
+    categoryId: number;
+    status: string;
+  };
+}) {
   const { projectId, issueId, formData } = payload;
   const res = await axiosInstance.patch(
     `${baseURL}/projects/${projectId}/issues/${issueId}`,
@@ -55,7 +77,10 @@ export async function patchIssue(payload) {
 }
 
 // * 刪除一筆 issue
-export async function deleteIssue(payload) {
+export async function deleteIssue(payload: {
+  projectId: string;
+  issueId: string;
+}) {
   const { projectId, issueId } = payload;
   const res = await axiosInstance.delete(
     `${baseURL}/projects/${projectId}/issues/${issueId}`,
@@ -64,7 +89,13 @@ export async function deleteIssue(payload) {
 }
 
 // * assign user to issue
-export async function assignIssue(payload) {
+export async function assignIssue(payload: {
+  projectId: string;
+  issueId: string;
+  formData: {
+    assigneeId: number;
+  };
+}) {
   const { projectId, issueId, formData } = payload;
   const res = await axiosInstance.patch(
     `${baseURL}/projects/${projectId}/issues/${issueId}/assign`,

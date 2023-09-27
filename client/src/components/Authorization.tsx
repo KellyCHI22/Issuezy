@@ -35,7 +35,7 @@ export function useAuthorization({
   });
   const membersQuery = useQuery({
     queryKey: ["projects", projectId, "members"],
-    queryFn: () => getMembers(projectId),
+    queryFn: () => getMembers({ projectId } as { projectId: string }),
   });
 
   const isLoading =

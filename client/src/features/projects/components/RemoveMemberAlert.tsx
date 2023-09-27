@@ -48,7 +48,7 @@ export function RemoveMemberAlert({
     e.preventDefault();
     projectMutation.mutate({
       projectId,
-      memberId: member.id,
+      memberId: member.id.toString(),
     });
   };
 

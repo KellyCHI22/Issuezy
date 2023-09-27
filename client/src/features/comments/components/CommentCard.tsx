@@ -19,8 +19,8 @@ import { Authorization } from "@/components/Authorization";
 
 interface CommentCardProps extends React.HTMLAttributes<HTMLDivElement> {
   comment: Comment;
-  projectId?: string;
-  issueId?: string;
+  projectId: string;
+  issueId: string;
 }
 
 export function CommentCard({ comment, projectId, issueId }: CommentCardProps) {

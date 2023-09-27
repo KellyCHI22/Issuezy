@@ -90,8 +90,8 @@ export function AssignIssueSheet({
   function onSubmit(values: z.infer<typeof assignIssueFormSchema>) {
     if (values.assigneeId) {
       issueMutation.mutate({
-        projectId: project.id,
-        issueId: issue.id,
+        projectId: project.id.toString(),
+        issueId: issue.id.toString(),
         formData: {
           assigneeId: parseInt(values.assigneeId),
         },

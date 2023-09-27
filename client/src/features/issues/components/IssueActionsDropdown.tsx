@@ -23,7 +23,7 @@ export default function IssueActionsDropdown({ issue }: { issue: Issue }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const projectQuery = useQuery({
     queryKey: ["projects", issue.projectId.toString()],
-    queryFn: () => getProject(issue.projectId),
+    queryFn: () => getProject({ projectId: issue.projectId.toString() }),
   });
 
   if (projectQuery.isLoading || projectQuery.isFetching) {

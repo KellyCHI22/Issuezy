@@ -27,8 +27,8 @@ import { AlertMessage } from "../../../components/AlertMassage";
 import { Plus } from "lucide-react";
 
 interface CommentSheetProps extends React.HTMLAttributes<HTMLDivElement> {
-  projectId?: string;
-  issueId?: string;
+  projectId: string;
+  issueId: string;
 }
 
 const commentFormSchema = z.object({
@@ -75,8 +75,8 @@ export function CommentSheet({ projectId, issueId }: CommentSheetProps) {
 
   function onSubmit(values: z.infer<typeof commentFormSchema>) {
     commentMutation.mutate({
-      projectId,
-      issueId,
+      projectId: projectId.toString(),
+      issueId: issueId.toString(),
       text: values.text,
     });
   }

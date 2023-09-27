@@ -28,8 +28,8 @@ import {
 import { AlertMessage } from "../../../components/AlertMassage";
 
 interface EditCommentSheetProps extends React.HTMLAttributes<HTMLDivElement> {
-  projectId?: string;
-  issueId?: string;
+  projectId: string;
+  issueId: string;
   comment: Comment;
   showEditSheet: boolean;
   setShowEditSheet: React.Dispatch<React.SetStateAction<boolean>>;
@@ -92,7 +92,7 @@ export function EditCommentSheet({
     commentMutation.mutate({
       projectId,
       issueId,
-      commentId: comment.id,
+      commentId: comment.id.toString(),
       text: values.text,
     });
   }

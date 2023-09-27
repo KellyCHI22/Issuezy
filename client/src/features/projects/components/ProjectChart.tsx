@@ -25,7 +25,7 @@ const COLORS = [
 
 const RADIAN = Math.PI / 180;
 
-const renderColorfulLegendText = (value: string, entry: any) => {
+const renderColorfulLegendText = (value: string) => {
   return <span className="leading-6">{value}</span>;
 };
 

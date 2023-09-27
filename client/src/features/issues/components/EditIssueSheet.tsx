@@ -127,11 +127,14 @@ export function EditIssueSheet({
 
   function onSubmit(values: z.infer<typeof issueFormSchema>) {
     issueMutation.mutate({
-      projectId: project.id,
-      issueId: issue.id,
+      projectId: project.id.toString(),
+      issueId: issue.id.toString(),
       formData: {
-        ...values,
+        title: values.title,
+        description: values.description,
+        categoryId: parseInt(values.categoryId),
         priority: PRIORITY_VALUES[values.priority],
+        status: values.status,
       },
     });
   }

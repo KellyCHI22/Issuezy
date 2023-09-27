@@ -36,13 +36,15 @@ export async function getProjects() {
 }
 
 // * 取得特定專案資訊
-export async function getProject(projectId) {
+export async function getProject(payload: { projectId: string }) {
+  const { projectId } = payload;
   const res = await axiosInstance.get(`${baseURL}/projects/${projectId}`);
   return res.data.data;
 }
 
 // * 取得特定專案成員
-export async function getMembers(projectId) {
+export async function getMembers(payload: { projectId: string }) {
+  const { projectId } = payload;
   const res = await axiosInstance.get(
     `${baseURL}/projects/${projectId}/members`,
   );
@@ -50,13 +52,27 @@ export async function getMembers(projectId) {
 }
 
 // * 新增一個專案
-export async function postProject(payload) {
-  const res = await axiosInstance.post(`${baseURL}/projects`, payload);
+export async function postProject(payload: {
+  formData: {
+    name: string;
+    description: string;
+    isPublic: boolean;
+  };
+}) {
+  const { formData } = payload;
+  const res = await axiosInstance.post(`${baseURL}/projects`, formData);
   return res.data.data;
 }
 
 // * 更新專案資訊
-export async function patchProject(payload) {
+export async function patchProject(payload: {
+  projectId: string;
+  formData: {
+    name: string;
+    description: string;
+    isPublic: boolean;
+  };
+}) {
   const { projectId, formData } = payload;
   const res = await axiosInstance.patch(
     `${baseURL}/projects/${projectId}`,
@@ -66,14 +82,19 @@ export async function patchProject(payload) {
 }
 
 // * 刪除一個專案
-export async function deleteProject(payload) {
+export async function deleteProject(payload: { projectId: string }) {
   const { projectId } = payload;
   const res = await axiosInstance.delete(`${baseURL}/projects/${projectId}`);
   return res.data.data;
 }
 
 // * 新增專案成員
-export async function addMember(payload) {
+export async function addMember(payload: {
+  projectId: string;
+  formData: {
+    email: string;
+  };
+}) {
   const { projectId, formData } = payload;
   const res = await axiosInstance.post(
     `${baseURL}/projects/${projectId}/members`,
@@ -83,7 +104,10 @@ export async function addMember(payload) {
 }
 
 // * 移除專案成員
-export async function removeMember(payload) {
+export async function removeMember(payload: {
+  projectId: string;
+  memberId: string;
+}) {
   const { projectId, memberId } = payload;
   const res = await axiosInstance.delete(
     `${baseURL}/projects/${projectId}/members/${memberId}`,

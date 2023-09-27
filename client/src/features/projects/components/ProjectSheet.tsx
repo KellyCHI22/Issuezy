@@ -78,7 +78,13 @@ export function ProjectSheet() {
   });
 
   function onSubmit(values: z.infer<typeof projectFormSchema>) {
-    projectMutation.mutate(values);
+    projectMutation.mutate({
+      formData: {
+        name: values.name,
+        description: values.description,
+        isPublic: values.isPublic,
+      },
+    });
   }
 
   return (

@@ -50,7 +50,7 @@ export function DeleteCategoryAlert({
     e.preventDefault();
     projectMutation.mutate({
       projectId,
-      categoryId: category.id,
+      categoryId: category.id.toString(),
     });
   };
 

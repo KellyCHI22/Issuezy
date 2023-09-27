@@ -15,8 +15,8 @@ import { useState } from "react";
 import { XOctagon } from "lucide-react";
 
 interface DeleteCommentAlertProps extends React.HTMLAttributes<HTMLDivElement> {
-  projectId?: string;
-  issueId?: string;
+  projectId: string;
+  issueId: string;
   comment: Comment;
   showDeleteDialog: boolean;
   setShowDeleteDialog: React.Dispatch<React.SetStateAction<boolean>>;
@@ -57,7 +57,11 @@ export function DeleteCommentAlert({
 
   const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    commentMutation.mutate({ projectId, issueId, commentId: comment.id });
+    commentMutation.mutate({
+      projectId,
+      issueId,
+      commentId: comment.id.toString(),
+    });
   };
 
   return (

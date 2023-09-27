@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronsUpDown, Plus, Pencil, Trash2 } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +20,7 @@ export function CategoriesList({ project }: { project: Project }) {
   const [isOpen, setIsOpen] = useState(false);
   const categoriesQuery = useQuery({
     queryKey: ["projects", project.id.toString(), "categories"],
-    queryFn: () => getCategories(project.id),
+    queryFn: () => getCategories({ projectId: project.id.toString() }),
   });
 
   if (categoriesQuery.isLoading || categoriesQuery.isFetching)

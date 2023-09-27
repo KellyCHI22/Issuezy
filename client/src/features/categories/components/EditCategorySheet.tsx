@@ -78,7 +78,7 @@ export function EditCategorySheet({
   function onSubmit(values: z.infer<typeof categoryFormSchema>) {
     categoryMutation.mutate({
       projectId,
-      categoryId: category.id,
+      categoryId: category.id.toString(),
       name: values.name,
     });
   }

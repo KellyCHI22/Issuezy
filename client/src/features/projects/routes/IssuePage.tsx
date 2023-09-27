@@ -32,16 +32,17 @@ export function IssuePage() {
     queries: [
       {
         queryKey: ["projects", id],
-        queryFn: () => getProject(id),
+        queryFn: () => id && getProject({ projectId: id }),
       },
 
       {
         queryKey: ["projects", id, "issues", iid],
-        queryFn: () => getIssue({ projectId: id, issueId: iid }),
+        queryFn: () => id && iid && getIssue({ projectId: id, issueId: iid }),
       },
       {
         queryKey: ["projects", id, "issues", iid, "comments"],
-        queryFn: () => getComments({ projectId: id, issueId: iid }),
+        queryFn: () =>
+          id && iid && getComments({ projectId: id, issueId: iid }),
       },
     ],
   });
@@ -164,7 +165,7 @@ export function IssuePage() {
         <div className="mb-3 flex flex-grow-0 items-center justify-between">
           <h3 className="text-xl font-bold tracking-tight">Comments</h3>
           <div className="space-x-2">
-            <CommentSheet projectId={id} issueId={iid} />
+            <CommentSheet projectId={id as string} issueId={iid as string} />
           </div>
         </div>
         <ScrollArea>
@@ -178,8 +179,8 @@ export function IssuePage() {
                 <CommentCard
                   key={comment.id}
                   comment={comment}
-                  projectId={id}
-                  issueId={iid}
+                  projectId={id as string}
+                  issueId={iid as string}
                 />
               ))
             )}

@@ -16,11 +16,11 @@ export function ProjectPage() {
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const projectQuery = useQuery({
     queryKey: ["projects", id],
-    queryFn: () => getProject(id),
+    queryFn: () => getProject({ projectId: id as string }),
   });
   const issuesQuery = useQuery({
     queryKey: ["projects", id, "issues"],
-    queryFn: () => getIssues(id),
+    queryFn: () => getIssues({ projectId: id as string }),
   });
 
   if (projectQuery.status === "loading" || issuesQuery.status === "loading")
