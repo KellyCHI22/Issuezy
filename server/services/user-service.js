@@ -92,6 +92,30 @@ const userService = {
       return cb(err);
     }
   },
+  patchUser: async (req, cb) => {
+    try {
+      const { firstname, lastname } = req.body;
+      const userId = req.params.id;
+      const currentUserId = req.user.id;
+      if (!firstname.trim().length || !lastname.trim().length)
+        throw customError(400, 'All fields are required!');
+      if (parseInt(userId) !== currentUserId)
+        throw customError(
+          400,
+          'You are not allowed to change other users info!'
+        );
+
+      const user = await User.findByPk(userId);
+      if (!user) throw customError(400, 'User does not exist!');
+      const updatedUser = await user.update({
+        firstname,
+        lastname,
+      });
+      return cb(null, { updatedUser });
+    } catch (err) {
+      return cb(err);
+    }
+  },
 };
 
 module.exports = userService;

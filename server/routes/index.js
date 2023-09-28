@@ -14,6 +14,8 @@ router.post('/users/signin', userController.signIn);
 router.post('/users/permission', userController.checkPermission);
 router.get('/users/current', authenticated, userController.getCurrentUser);
 
+router.patch('/users/:id', authenticated, userController.patchUser);
+
 // * projects
 router.delete(
   '/projects/:id/members/:uid',

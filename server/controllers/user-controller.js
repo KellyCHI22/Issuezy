@@ -25,6 +25,12 @@ const userController = {
       res.json({ status: 'success', data });
     });
   },
+  patchUser: (req, res, next) => {
+    userService.patchUser(req, (err, data) => {
+      if (err) return next(err);
+      res.json({ status: 'success', data });
+    });
+  },
 };
 
 module.exports = userController;
