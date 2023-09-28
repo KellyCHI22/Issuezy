@@ -1,4 +1,5 @@
 import {
+  Navigate,
   Route,
   createBrowserRouter,
   createRoutesFromElements,
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
           <Route path="/account" element={<AccountPage />} />
         </Route>
       </Route>
+      <Route path="*" element={<Navigate to="." />} />
     </>,
   ),
 );

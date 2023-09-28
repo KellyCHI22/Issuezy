@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// todo need to change when server is deployed
 const baseURL = "http://localhost:3000/api";
 
 const axiosInstance = axios.create({

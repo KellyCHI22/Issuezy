@@ -113,7 +113,7 @@ export function LoginCard() {
             <div className="mt-3 text-sm text-muted-foreground">
               Don't have an account yet?{" "}
               <Link to="/signup" className="underline hover:text-primary">
-                sign up
+                Sign up
               </Link>
             </div>
           </CardFooter>

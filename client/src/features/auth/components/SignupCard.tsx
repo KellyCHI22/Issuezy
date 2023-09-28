@@ -32,7 +32,7 @@ const signupFormSchema = z
     firstname: z
       .string()
       .min(1, {
-        message: "First name cannot be blank",
+        message: "Required",
       })
       .max(20, {
         message: "First name cannot be more than 20 characters",
@@ -40,7 +40,7 @@ const signupFormSchema = z
     lastname: z
       .string()
       .min(1, {
-        message: "Last name cannot be blank",
+        message: "Required",
       })
       .max(20, {
         message: "Last name cannot be more than 20 characters",
@@ -93,7 +93,7 @@ export function SignupCard() {
         <div className="absolute left-6 top-6">
           <ModeToggle />
         </div>
-        <CardTitle className="pt-7 text-center text-2xl">
+        <CardTitle className="pt-10 text-center text-2xl">
           Create an account
         </CardTitle>
       </CardHeader>
@@ -111,7 +111,7 @@ export function SignupCard() {
                   <FormItem className="grid">
                     <FormLabel>First name</FormLabel>
                     <FormControl>
-                      <Input type="text" placeholder="John Doe" {...field} />
+                      <Input type="text" placeholder="John" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -124,7 +124,7 @@ export function SignupCard() {
                   <FormItem className="grid">
                     <FormLabel>Last name</FormLabel>
                     <FormControl>
-                      <Input type="text" placeholder="John Doe" {...field} />
+                      <Input type="text" placeholder="Doe" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -178,7 +178,7 @@ export function SignupCard() {
             <div className="mt-3 text-sm text-muted-foreground">
               Already have an account?{" "}
               <Link to="/login" className="underline hover:text-primary">
-                login
+                Login
               </Link>
             </div>
           </CardFooter>
