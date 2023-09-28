@@ -22,10 +22,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { X } from "lucide-react";
 import UserAvatar from "@/components/UserAvatar";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CurrentUser, getCurrentUser, patchUser } from "../apis/user-api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CurrentUser, patchUser } from "../apis/user-api";
 import { AxiosError } from "axios";
 import { ErrorResponseData } from "@/lib/axios";
+
+interface UserProfileFormProps extends React.HTMLAttributes<HTMLDivElement> {
+  currentUser: CurrentUser;
+}
 
 const userProfileFormSchema = z.object({
   firstname: z
@@ -46,15 +50,10 @@ const userProfileFormSchema = z.object({
     }),
 });
 
-export default function UserProfileForm() {
+export default function UserProfileForm({ currentUser }: UserProfileFormProps) {
   const [editProfileError, setEditProfileError] = useState<string | undefined>(
     "",
   );
-  const { data } = useQuery({
-    queryKey: ["currentUser"],
-    queryFn: getCurrentUser,
-  });
-  const currentUser = data.currentUser as CurrentUser;
   const queryClient = useQueryClient();
   const userMutation = useMutation({
     mutationFn: patchUser,
