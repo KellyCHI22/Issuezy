@@ -7,9 +7,13 @@ interface AlertMessageProps extends React.HTMLAttributes<HTMLDivElement> {
   message: string;
 }
 
-export function AlertMessage({ variant, message }: AlertMessageProps) {
+export function AlertMessage({
+  variant,
+  message,
+  className,
+}: AlertMessageProps) {
   return (
-    <Alert variant={variant}>
+    <Alert variant={variant} className={className}>
       {variant === "default" ? (
         <Info className="h-4 w-4" />
       ) : (
