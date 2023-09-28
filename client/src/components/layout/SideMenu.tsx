@@ -67,14 +67,14 @@ export default function SideMenu({ className }: SideMenuProps) {
                 </Button>
               )}
             </NavLink>
-            <NavLink to="/account" className="flex items-center">
+            <NavLink to="/settings" className="flex items-center">
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "secondary" : "ghost"}
                   className="w-full justify-start"
                 >
                   <Settings className="mr-2 h-4 w-4" />
-                  <span>Account</span>
+                  <span>Settings</span>
                 </Button>
               )}
             </NavLink>

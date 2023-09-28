@@ -11,7 +11,7 @@ import {
   ProjectPage,
   IssuePage,
 } from "@/features/projects";
-import { AccountPage, TasksPage } from "@/features/users";
+import { SettingsPage, TasksPage } from "@/features/users";
 
 import ProtectedRoutes from "@/components/ProtectedRoutes";
 import RootLayout from "@/components/layout/RootLayout";
@@ -28,7 +28,7 @@ const router = createBrowserRouter(
           <Route path="/projects/:id/dashboard" element={<DashboardPage />} />
           <Route path="/projects/:id/issues/:iid" element={<IssuePage />} />
           <Route path="/tasks" element={<TasksPage />} />
-          <Route path="/account" element={<AccountPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="." />} />

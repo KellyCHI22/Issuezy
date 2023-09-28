@@ -30,7 +30,7 @@ export default function ButtomMenu({ className }: ButtomMenuProps) {
             </Button>
           )}
         </NavLink>
-        <NavLink to="/account" className="flex items-center">
+        <NavLink to="/settings" className="flex items-center">
           {({ isActive }) => (
             <Button variant={isActive ? "secondary" : "ghost"} className="px-6">
               <Settings className="h-5 w-5" />
