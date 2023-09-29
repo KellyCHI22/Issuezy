@@ -1,7 +1,14 @@
 import axios from "axios";
 
-// todo need to change when server is deployed
-const baseURL = "http://localhost:3000/api";
+function getBaseUrl() {
+  if (import.meta.env.MODE === "development") {
+    return import.meta.env.VITE_API_ENDPOINT;
+  } else {
+    return process.env.API_ENDPOINT;
+  }
+}
+
+const baseURL = getBaseUrl();
 
 const axiosInstance = axios.create({
   baseURL,
