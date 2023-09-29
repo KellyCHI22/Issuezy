@@ -1,14 +1,6 @@
 import axios from "axios";
 
-function getBaseUrl() {
-  if (import.meta.env.MODE === "development") {
-    return import.meta.env.VITE_API_ENDPOINT;
-  } else {
-    return process.env.API_ENDPOINT;
-  }
-}
-
-const baseURL = getBaseUrl();
+const baseURL = import.meta.env.VITE_API_ENDPOINT;
 
 const axiosInstance = axios.create({
   baseURL,
