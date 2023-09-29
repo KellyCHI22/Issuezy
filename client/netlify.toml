@@ -2,3 +2,9 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "http://issuezy-env-2.eba-p4jhvue9.eu-west-3.elasticbeanstalk.com/*"
+  to = "https://issuezy-env-2.eba-p4jhvue9.eu-west-3.elasticbeanstalk.com/:splat"
+  status = 301
+  force = true
