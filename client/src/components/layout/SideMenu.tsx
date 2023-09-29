@@ -86,7 +86,7 @@ export default function SideMenu({ className }: SideMenuProps) {
               <LogOut className="mr-2 h-4 w-4" />
               <span>Log out</span>
             </Button>
-            <div className="px-4">
+            <div className="px-4 pt-2">
               <ModeToggle />
             </div>
           </div>
