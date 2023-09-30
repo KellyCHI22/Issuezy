@@ -1,10 +1,4 @@
 [[redirects]]
-  from = "/api/*"
-  to = "http://issuezy-env-2.eba-p4jhvue9.eu-west-3.elasticbeanstalk.com/api/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
