@@ -5,6 +5,30 @@
 
 </div>
 
+### 📜 Table of Contents
+
+<details>
+<summary>Click me</summary>
+
+- [💡 Overview](#-overview)
+- [👀 Live demo: https://issuezy.netlify.app](#-live-demo-httpsissuezynetlifyapp)
+- [🧩 Built with](#-built-with)
+  - [Front-end](#front-end)
+  - [Back-end](#back-end)
+- [✨ Key features](#-key-features)
+  - [Other features](#other-features)
+  - [🤔 Future Features](#-future-features)
+- [🚀 Run Locally](#-run-locally)
+  - [Back-end](#back-end-1)
+  - [Front-end](#front-end-1)
+- [🤯 Development Process](#-development-process)
+  - [ERD (Entity Relationship Diagram)](#erd-entity-relationship-diagram)
+  - [📦 File Structure](#-file-structure)
+  - [Others](#others)
+- [🔒 License](#-license)
+
+</details>
+
 ## 💡 Overview
 
 Issuezy is a full-stack project management and issue tracking app where you can keep your team organized. Easily track bugs, tasks, or improvements, all while collaborating effortlessly.
@@ -85,7 +109,7 @@ Toggle between **dark** 🌙 and **light** ☀️ mode
 - Activity log: show activities of a project or a user
 - And more...
 
-### 🚀 Run Locally
+## 🚀 Run Locally
 
 1. Clone this project to your local environment
 
@@ -159,7 +183,7 @@ password：(the seed password)
 ctrl + c
 ```
 
-### 🤯 Development Process
+## 🤯 Development Process
 
 #### ERD (Entity Relationship Diagram)
 
@@ -168,6 +192,7 @@ ctrl + c
 #### 📦 File Structure
 
 <details>
+<summary>Details</summary>
 
 ```
 /client
@@ -210,10 +235,12 @@ ctrl + c
 #### Others
 
 <details>
+<summary>Details</summary>
 
 ![](client/public/screenshots/postman.png)
 
 </details>
+
 ## 🔒 License
 
 Copyright Notice and Statement: currently not offering any license. Permission only to view and download.
