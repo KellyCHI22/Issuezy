@@ -49,7 +49,7 @@ db.Sequelize = Sequelize;
 
 db.sequelize
   .authenticate()
-  .then(() => console.log('Database connected!!'))
+  .then(() => console.log('Database connected'))
   .catch((err) => console.log(err));
 
 module.exports = db;

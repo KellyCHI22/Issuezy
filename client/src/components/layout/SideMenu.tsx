@@ -17,7 +17,7 @@ interface SideMenuProps extends React.HTMLAttributes<HTMLDivElement> {}
 export default function SideMenu({ className }: SideMenuProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { status, error, data } = useQuery({
+  const { status, data } = useQuery({
     queryKey: ["currentUser"],
     queryFn: getCurrentUser,
   });
@@ -30,7 +30,7 @@ export default function SideMenu({ className }: SideMenuProps) {
 
   if (status === "loading") return <Spinner />;
   if (status === "error") {
-    return <h1>{JSON.stringify(error)}</h1>;
+    return <p>Something went wrong</p>;
   }
 
   const currentUser = data.currentUser as CurrentUser;

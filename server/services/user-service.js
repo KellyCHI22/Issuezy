@@ -49,9 +49,8 @@ const userService = {
       const userData = user.toJSON();
       delete userData.password;
 
-      // todo need to change expire time before deploy
       const token = jwt.sign(userData, process.env.JWT_SECRET, {
-        expiresIn: '30d',
+        expiresIn: '24h',
       });
       return cb(null, {
         token,

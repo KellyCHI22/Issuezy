@@ -19,5 +19,5 @@ export default function ProtectedRoutes() {
     permissionMutation.mutate({ token });
   }, []);
 
-  return <Outlet />;
+  return permissionMutation.isSuccess ? <Outlet /> : null;
 }

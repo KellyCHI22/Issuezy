@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "seed": "npx sequelize-cli db:seed:all",
-    "unseed": "npx sequelize-cli db:seed:undo:all",
+    "db:migrate": "npx sequelize-cli db:migrate",
+    "db:seed": "npx sequelize-cli db:seed:all",
+    "db:unseed": "npx sequelize-cli db:seed:undo:all",
     "lint": "eslint \"**/*.js\" --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

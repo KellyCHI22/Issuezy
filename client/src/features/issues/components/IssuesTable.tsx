@@ -165,7 +165,12 @@ export function IssuesTable<TData, TValue>({
         </div>
         <Button
           variant="outline"
-          onClick={() => table.resetColumnFilters()}
+          onClick={() => {
+            setSelectedCategory("");
+            setSelectedStatus("");
+            setSelectedPriority("");
+            table.resetColumnFilters();
+          }}
           className="w-fit px-2 font-bold lg:px-3"
         >
           Reset
