@@ -5,7 +5,7 @@
 
 </div>
 
-### 📜 Table of Contents
+### 📜 Table of contents
 
 <details>
 <summary>Click me</summary>
@@ -17,13 +17,13 @@
   - [Back-end](#back-end)
 - [✨ Key features](#-key-features)
   - [Other features](#other-features)
-  - [🤔 Future Features](#-future-features)
-- [🚀 Run Locally](#-run-locally)
+  - [🤔 Future features](#-future-features)
+- [🚀 Run locally](#-run-locally)
   - [Back-end](#back-end-1)
   - [Front-end](#front-end-1)
-- [🤯 Development Process](#-development-process)
+- [🤯 Development process](#-development-process)
   - [ERD (Entity Relationship Diagram)](#erd-entity-relationship-diagram)
-  - [📦 File Structure](#-file-structure)
+  - [📦 File structure](#-file-structure)
   - [Others](#others)
 - [🔒 License](#-license)
 
@@ -35,17 +35,21 @@ Issuezy is a full-stack project management and issue tracking app where you can 
 
 ## 👀 Live demo: https://issuezy.netlify.app
 
-Deployed on Netlify (front-end) and Railway (server + DB)
+Deployed on [Netlify](https://www.netlify.com/) (front-end) and [Railway](https://railway.app/) (server + DB)
+
+![](client/public/screenshots/issuezy_desktop.png)
+
+![](client/public/screenshots/issuezy_mobile.png)
 
 ## 🧩 Built with
 
 #### Front-end
 
 - [TypeScript]() - Statically typed superset of JavaScript
-- [React](https://react.dev/) - Frontend framework
+- [React](https://react.dev/) - Frontend framework for creating reusable components
 - [React Router](https://reactrouter.com/) - Library for general routing & navigation
 - [React Query](https://tanstack.com/query/v4/docs/react/overview) - Library for data fetching & state management
-- [Tailwind](https://tailwindcss.com/) - Utility-first CSS framework
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Shadcn-ui](https://ui.shadcn.com/) - Beautifully designed & customizable component library
 - [React Hook Form](https://react-hook-form.com/) - Library for flexible & extensible forms
 - [Zod]() - TypeScript-first schema declaration and validation library
@@ -86,21 +90,29 @@ Toggle between **dark** 🌙 and **light** ☀️ mode
 
 ### Other features
 
-- Authentication (login and sign up with username & password)
+- Authentication (login / sign up with email & password)
+
+**Project management**
+
 - Create projects, with the ability to set up private or public projects
-- Project owners can add members for collaboration and customize project-specific issue categories
-- Manage issues, including title, description, status, priority, and category settings
-- Easily sort and filter issues with an intuitive table, using parameters like title, priority, category, status, and creation time
+- Project owners can add members for collaboration
+- Project owners can customize project-specific issue categories
 - Visualize issue statistics in different categories with beautiful charts
+
+**Issue management**
+
+- Create and update issues, including title, description, status, priority, and category settings
+- Easily sort and filter issues with an intuitive table, using parameters like title, priority, category, status, and creation time
 - Team members can assign issues to themselves or others
 - Comment on issues to provide feedback
+
+**Others**
+
 - Update user profiles in the settings
 - Dark mode toggle with local storage save
 - Clean, accessible and responsive UI across all screens
 
-![](client/public/screenshots/mobile.png)
-
-### 🤔 Future Features
+### 🤔 Future features
 
 - View issues assigned to the current user by columns in different categories
 - Drag and drop issues to update issue status
@@ -109,7 +121,7 @@ Toggle between **dark** 🌙 and **light** ☀️ mode
 - Activity log: show activities of a project or a user
 - And more...
 
-## 🚀 Run Locally
+## 🚀 Run locally
 
 1. Clone this project to your local environment
 
@@ -183,13 +195,13 @@ password：(the seed password)
 ctrl + c
 ```
 
-## 🤯 Development Process
+## 🤯 Development process
 
 #### ERD (Entity Relationship Diagram)
 
 ![](client/public/ERD.png)
 
-#### 📦 File Structure
+#### 📦 File structure
 
 <details>
 <summary>Details</summary>
